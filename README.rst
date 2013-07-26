@@ -23,6 +23,16 @@ Manuall Installation
 
 Run `pip install aldryn-people`.
 
+Add below apps to ``INSTALLED_APPS``: ::
+
+    INSTALLED_APPS = [
+        …
+
+        'aldryn_people',
+        'hvad',
+        …
+    ]
+
 Download vCard
 ==============
 

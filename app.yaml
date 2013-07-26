@@ -1,0 +1,14 @@
+name: People
+package-name: aldryn-people
+url: https://github.com/aldryn/aldryn-people
+author:
+  name: Divio AG
+  url: https://www.divio.ch
+installed-apps:
+  - aldryn_people
+  - hvad
+version: 0.0.1
+description: People management in django CMS
+license:
+  name: BSD
+  text: !literal-include LICENSE.txt
