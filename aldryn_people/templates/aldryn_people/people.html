@@ -1,0 +1,8 @@
+<ul class="people">
+    {% for person in instance.people.all %}
+        <li class="person">
+            <span>{{ person.name }}</span>
+            <a href="{% url 'download_vcard' person.pk %}">vCard</a>
+        </li>
+    {% endfor %}
+</ul>
