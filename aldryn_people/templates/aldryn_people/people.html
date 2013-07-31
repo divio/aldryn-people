@@ -1,8 +1,16 @@
 <ul class="people">
-    {% for person in instance.people.all %}
-        <li class="person">
-            <span>{{ person.name }}</span>
-            <a href="{% url 'download_vcard' person.pk %}">vCard</a>
-        </li>
-    {% endfor %}
+	{% for person in people %}
+		<li class="person">
+			{% if person.name %}<div>{{ person.name }}</div>{% endif %}
+			{% if person.phone %}<div>{{ person.phone }}</div>{% endif %}
+			{% if person.mobile %}<div>{{ person.mobile }}</div>{% endif %}
+			{% if person.email %}<div>{{ person.email }}</div>{% endif %}
+
+			{% if person.group.company_name %}<div>{{ person.group.company_name }}</div>{% endif %}
+			{% if person.group.postal_code or person.group.city %}<div>{{ person.group.postal_code }} {{ person.group.city }}</div>{% endif %}
+			{% if person.group.phone %}<div>{{ person.group.phone }}</div>{% endif %}
+
+			{% if show_vcard %}<a href="{% url 'download_vcard' person.pk %}">vCard</a>{% endif %}
+		</li>
+	{% endfor %}
 </ul>

@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class PeopleApp(CMSApp):
-    name = _('People')
+    name = _('People (vcard download)')
     urls = ['aldryn_people.urls']
 
 apphook_pool.register(PeopleApp)
