@@ -7,7 +7,7 @@ author:
 installed-apps:
   - aldryn_people
   - hvad
-version: 0.0.1
+version: 0.0.2
 description: People management in django CMS
 license:
   name: BSD
