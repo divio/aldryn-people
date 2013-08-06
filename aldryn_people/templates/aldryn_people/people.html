@@ -1,16 +1,29 @@
-<ul class="people">
-	{% for person in people %}
-		<li class="person">
-			{% if person.name %}<div>{{ person.name }}</div>{% endif %}
-			{% if person.phone %}<div>{{ person.phone }}</div>{% endif %}
-			{% if person.mobile %}<div>{{ person.mobile }}</div>{% endif %}
-			{% if person.email %}<div>{{ person.email }}</div>{% endif %}
+{% load i18n thumbnail %}
 
-			{% if person.group.company_name %}<div>{{ person.group.company_name }}</div>{% endif %}
-			{% if person.group.postal_code or person.group.city %}<div>{{ person.group.postal_code }} {{ person.group.city }}</div>{% endif %}
-			{% if person.group.phone %}<div>{{ person.group.phone }}</div>{% endif %}
-
-			{% if show_vcard %}<a href="{% url 'download_vcard' person.pk %}">vCard</a>{% endif %}
+<div class="plugin-people">
+	{% comment %}
+	THIS SHOULD BE SHOWN ONLY ONCE
+	{% if person.group %}
+	<h2>{{ person.group.company_name }}</h2>
+	<p>
+		{% if person.group.phone %}{% trans "Phone:" %} <span>{{ person.group.phone }}</span><br />{% endif %}
+		{% trans "Address:" %} {{ person.group.address }}<br />
+		{{ person.group.postal_code }} {{ person.group.city }}
+	</p>
+	{% endif %}
+	{% endcomment %}
+	<ul class="people-items">
+		{% for person in people %}
+		<li>
+			<h2>{{ person.name }}, {{ person.function }}</h2>
+			{% if person.visual %}<p class="people-visual"><img src="{% thumbnail person.visual 200x100 crop %}" alt="{{ person.name }}" /></p>{% endif %}
+			<p class="people-desc">
+				{% if person.phone %}{% trans "Phone:" %} <span>{{ person.phone }}</span><br />{% endif %}
+				{% if person.mobile %}{% trans "Mobile:" %} <span>{{ person.mobile }}</span><br />{% endif %}
+				{% trans "E-Mail:" %} <a href="mailto:{{ person.email }}">{{ person.email }}</a>
+				{% if show_vcard %}<br /><a href="{% url 'download_vcard' person.pk %}">{% trans "Download vCard" %}</a>{% endif %}
+			</p>
 		</li>
-	{% endfor %}
-</ul>
+		{% endfor %}
+	</ul>
+</div>
