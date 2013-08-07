@@ -11,7 +11,7 @@ from aldryn_people import models
 class PeoplePlugin(CMSPluginBase):
 
     module = 'People'
-    render_template = 'aldryn_people/people.html'
+    render_template = 'aldryn_people/plugins/people.html'
     name = _('Renders a list of people')
     model = models.PeoplePlugin
 
