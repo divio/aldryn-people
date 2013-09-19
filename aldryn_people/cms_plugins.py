@@ -17,7 +17,7 @@ class PeoplePlugin(CMSPluginBase):
 
     def render(self, context, instance, placeholder):
         context['instance'] = instance
-        context['people'] = instance.people.select_related('group')
+        context['people'] = instance.people.select_related('group', 'visual')
         try:
             reverse('download_vcard', args=(1,))
             context['show_vcard'] = True

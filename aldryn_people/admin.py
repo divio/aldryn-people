@@ -14,7 +14,7 @@ class PersonAdmin(TranslatableAdmin):
     search_fields = ('name', 'email', 'function')
 
     fieldsets = (
-        (None, {'fields': ('name', 'function')}),
+        (None, {'fields': ('name', 'function', 'visual')}),
         (_('Contact'), {'fields': ('phone', 'mobile', 'email')}),
         (None, {'fields': ('group', 'comment',)}),
     )

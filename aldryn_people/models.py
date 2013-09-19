@@ -5,6 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from cms.models.pluginmodel import CMSPlugin
 from phonenumber_field.modelfields import PhoneNumberField
 from hvad.models import TranslatableModel, TranslatedFields
+from filer.fields.image import FilerImageField
 
 import vobject
 
@@ -38,6 +39,7 @@ class Person(TranslatableModel):
     email = models.EmailField(verbose_name=_("email"))
     group = models.ForeignKey(Group, verbose_name=_('group'),
                               blank=True, null=True)
+    visual = FilerImageField(null=True, blank=True, default=None, on_delete=models.SET_NULL)
 
     def __unicode__(self):
         return self.name

@@ -6,6 +6,7 @@ REQUIREMENTS = [
     'django-hvad',
     'django-phonenumber-field',
     'vobject',
+    'django-filer',
 ]
 
 CLASSIFIERS = [
