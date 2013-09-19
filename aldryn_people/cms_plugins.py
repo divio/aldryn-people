@@ -14,6 +14,7 @@ class PeoplePlugin(CMSPluginBase):
     render_template = 'aldryn_people/plugins/people.html'
     name = _('Renders a list of people')
     model = models.PeoplePlugin
+    filter_horizontal = ('people',)
 
     def render(self, context, instance, placeholder):
         context['instance'] = instance
