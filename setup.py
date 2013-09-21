@@ -7,6 +7,7 @@ REQUIREMENTS = [
     'django-phonenumber-field',
     'vobject',
     'django-filer',
+    'django-sortedm2m',
 ]
 
 CLASSIFIERS = [

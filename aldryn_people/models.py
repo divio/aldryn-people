@@ -3,9 +3,14 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from cms.models.pluginmodel import CMSPlugin
+
 from phonenumber_field.modelfields import PhoneNumberField
+
 from hvad.models import TranslatableModel, TranslatedFields
+
 from filer.fields.image import FilerImageField
+
+from sortedm2m.fields import SortedManyToManyField
 
 import vobject
 
@@ -30,13 +35,13 @@ class Group(TranslatableModel):
 class Person(TranslatableModel):
 
     translations = TranslatedFields(
-        function=models.CharField(_('function'), max_length=255),
+        function=models.CharField(_('function'), max_length=255, blank=True, default=''),
         comment=models.TextField(_('comment'), blank=True, default='')
     )
     name = models.CharField(verbose_name=_('name'), max_length=255)
     phone = PhoneNumberField(verbose_name=_('phone'), null=True, blank=True)
     mobile = PhoneNumberField(verbose_name=_('mobile'), null=True, blank=True)
-    email = models.EmailField(verbose_name=_("email"))
+    email = models.EmailField(verbose_name=_("email"), blank=True, default='')
     group = models.ForeignKey(Group, verbose_name=_('group'),
                               blank=True, null=True)
     visual = FilerImageField(null=True, blank=True, default=None, on_delete=models.SET_NULL)
@@ -48,8 +53,10 @@ class Person(TranslatableModel):
         vcard = vobject.vCard()
         vcard.add('n').value = vobject.vcard.Name(given=self.name)
         vcard.add('fn').value = self.name
-        vcard.add('email').value = self.email
-        vcard.add('title').value = self.function
+        if self.email:
+            vcard.add('email').value = self.email
+        if self.function:
+            vcard.add('title').value = self.function
         if self.phone:
             tel = vcard.add('tel')
             tel.value = unicode(self.phone)
@@ -80,7 +87,7 @@ class Person(TranslatableModel):
 
 
 class PeoplePlugin(CMSPlugin):
-    people = models.ManyToManyField(Person, blank=True, null=True)
+    people = SortedManyToManyField(Person, blank=True, null=True)
 
     def __unicode__(self):
         return str(self.pk)
