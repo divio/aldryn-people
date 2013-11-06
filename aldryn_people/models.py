@@ -22,9 +22,9 @@ class Group(TranslatableModel):
         company_name=models.CharField(_('company name'), max_length=255),
         company_description=HTMLField(_('company description'), blank=True),
     )
-    address = models.TextField(verbose_name=_('address'))
-    postal_code = models.CharField(verbose_name=_('postal code'), max_length=20)
-    city = models.CharField(verbose_name=_('city'), max_length=255)
+    address = models.TextField(verbose_name=_('address'), blank=True)
+    postal_code = models.CharField(verbose_name=_('postal code'), max_length=20, blank=True)
+    city = models.CharField(verbose_name=_('city'), max_length=255, blank=True)
     phone = PhoneNumberField(verbose_name=_('phone'), null=True, blank=True)
 
     def __unicode__(self):
@@ -91,6 +91,11 @@ class Person(TranslatableModel):
 
 class PeoplePlugin(CMSPlugin):
     people = SortedManyToManyField(Person, blank=True, null=True)
+    group_by_group = models.BooleanField(
+        verbose_name=_('group by group'),
+        default=True,
+        help_text=_('when checked, people are grouped by their group')
+    )
 
     def __unicode__(self):
         return str(self.pk)

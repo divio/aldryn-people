@@ -1,30 +1,26 @@
 {% load i18n thumbnail %}
 
 <div class="plugin-people">
-	{% comment %}
-	THIS SHOULD BE SHOWN ONLY ONCE
-	{% if person.group %}
-	<h2>{{ person.group.company_name }}</h2>
-	{{ person.group.company_description|safe }}
-	<p>
-		{% if person.group.phone %}{% trans "Phone:" %} <span>{{ person.group.phone }}</span><br />{% endif %}
-		{% trans "Address:" %} {{ person.group.address }}<br />
-		{{ person.group.postal_code }} {{ person.group.city }}
-	</p>
-	{% endif %}
-	{% endcomment %}
-	<ul class="people-items">
-		{% for person in people %}
-		<li>
-			<h2>{{ person.name }}, {{ person.function }}</h2>
-			{% if person.visual %}<p class="people-visual"><img src="{% thumbnail person.visual 200x100 crop %}" alt="{{ person.name }}" /></p>{% endif %}
-			<p class="people-desc">
-				{% if person.phone %}{% trans "Phone:" %} <span>{{ person.phone }}</span><br />{% endif %}
-				{% if person.mobile %}{% trans "Mobile:" %} <span>{{ person.mobile }}</span><br />{% endif %}
-				{% trans "E-Mail:" %} <a href="mailto:{{ person.email }}">{{ person.email }}</a>
-				{% if show_vcard %}<br /><a href="{% url 'download_vcard' person.pk %}">{% trans "Download vCard" %}</a>{% endif %}
+	{% if people_groups %}
+		{# Because of hvad I have to activate the plugin's language :( #}
+		{% language instance.language %}
+		{% for group, people_list in people_groups.items %}
+			<h2>{{ group.company_name }}</h2>
+			{{ group.company_description|safe }}
+			<p>
+				{% if group.phone %}{% trans "Phone:" %} <span>{{ group.phone }}</span><br />{% endif %}
+				{% trans "Address:" %} {{ group.address }}<br />
+				{{ group.postal_code }} {{ group.city }}
 			</p>
-		</li>
+		{% if people_list %}
+			{% include "aldryn_people/includes/person_list.html" with people=people_list %}
+		{% endif %}
 		{% endfor %}
-	</ul>
+		{% endlanguage %}
+		{% if group_less_people %}
+			{% include "aldryn_people/includes/person_list.html" with people=group_less_people %}
+		{% endif %}
+	{% else %}
+		{% include "aldryn_people/includes/person_list.html" %}
+	{% endif %}
 </div>
