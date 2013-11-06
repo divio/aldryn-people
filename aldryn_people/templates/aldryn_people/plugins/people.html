@@ -5,6 +5,7 @@
 	THIS SHOULD BE SHOWN ONLY ONCE
 	{% if person.group %}
 	<h2>{{ person.group.company_name }}</h2>
+	{{ person.group.company_description|safe }}
 	<p>
 		{% if person.group.phone %}{% trans "Phone:" %} <span>{{ person.group.phone }}</span><br />{% endif %}
 		{% trans "Address:" %} {{ person.group.address }}<br />

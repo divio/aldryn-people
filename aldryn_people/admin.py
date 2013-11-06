@@ -26,7 +26,7 @@ class GroupAdmin(TranslatableAdmin):
     search_filter = ['company_name']
 
     fieldsets = (
-        (None, {'fields': ('company_name', 'phone')}),
+        (None, {'fields': ('company_name', 'company_description', 'phone')}),
         (_('Address'), {'fields': ('address', 'postal_code', 'city')}),
     )
 

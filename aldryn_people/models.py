@@ -12,12 +12,15 @@ from filer.fields.image import FilerImageField
 
 from sortedm2m.fields import SortedManyToManyField
 
+from djangocms_text_ckeditor.fields import HTMLField
+
 import vobject
 
 
 class Group(TranslatableModel):
     translations = TranslatedFields(
         company_name=models.CharField(_('company name'), max_length=255),
+        company_description=HTMLField(_('company description'), blank=True),
     )
     address = models.TextField(verbose_name=_('address'))
     postal_code = models.CharField(verbose_name=_('postal code'), max_length=20)

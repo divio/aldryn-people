@@ -8,6 +8,7 @@ REQUIREMENTS = [
     'vobject',
     'django-filer',
     'django-sortedm2m',
+    'djangocms-text-ckeditor',
 ]
 
 CLASSIFIERS = [
