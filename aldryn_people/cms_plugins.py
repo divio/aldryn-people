@@ -13,8 +13,8 @@ from aldryn_people import models
 class PeoplePlugin(CMSPluginBase):
 
     module = 'People'
-    render_template = 'aldryn_people/plugins/people.html'
-    name = _('Renders a list of people')
+    render_template = 'aldryn_people/plugins/people_list.html'
+    name = _('People list')
     model = models.PeoplePlugin
 
     def group_people(self, people, language):
