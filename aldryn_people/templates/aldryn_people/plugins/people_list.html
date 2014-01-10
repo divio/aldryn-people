@@ -1,17 +1,21 @@
 {% load i18n thumbnail %}
 
-<div class="plugin-people">
+<div class="plugin plugin-people">
 {% if people_groups %}
 	{# Because of hvad I have to activate the plugin's language :( #}
 	{% language instance.language %}
 	{% for group, people_list in people_groups.items %}
-		<h2>{{ group.company_name }}</h2>
-		{{ group.company_description|safe }}
-		<p class="people-group">
-			{% if group.phone %}{% trans "Phone:" %} <span>{{ group.phone }}</span><br />{% endif %}
-			{% trans "Address:" %} {{ group.address }}<br />
-			{{ group.postal_code }} {{ group.city }}
-		</p>
+		{% if group.company_name %}
+		<div class="people-group">
+			<h2>{{ group.company_name }}</h2>
+			<div class="people-lead">{{ group.company_description|safe }}</div>
+			<p class="people-desc">
+				{% if group.phone %}{% trans "Phone:" %} <span>{{ group.phone }}</span><br />{% endif %}
+				{% trans "Address:" %}
+				<span>{{ group.address }}</span>
+			</p>
+		</div>
+		{% endif %}
 		{% include "aldryn_people/includes/people_items.html" with people=people_list %}
 	{% endfor %}
 	{% endlanguage %}

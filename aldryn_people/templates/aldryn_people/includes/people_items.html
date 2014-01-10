@@ -3,13 +3,13 @@
 <ul class="people-items">
 	{% for person in people %}
 	<li>
-		<h2>{{ person.name }}, {{ person.function }}</h2>
+		<h2>{{ person.name }} <span>{{ person.function }}</span></h2>
 		{% if person.visual %}<p class="people-visual"><img src="{% thumbnail person.visual 200x100 crop %}" alt="{{ person.name }}" /></p>{% endif %}
 		<p class="people-desc">
 			{% if person.phone %}{% trans "Phone:" %} <span>{{ person.phone }}</span><br />{% endif %}
 			{% if person.mobile %}{% trans "Mobile:" %} <span>{{ person.mobile }}</span><br />{% endif %}
 			{% trans "E-Mail:" %} <a href="mailto:{{ person.email }}">{{ person.email }}</a>
-			{% if show_vcard %}<br /><a href="{% url 'download_vcard' person.pk %}">{% trans "Download vCard" %}</a>{% endif %}
+			{% if show_vcard %}<br /><a href="{% url 'download_vcard' person.pk %}" class="btn-download">{% trans "Download vCard" %}</a>{% endif %}
 		</p>
 	</li>
 	{% endfor %}
