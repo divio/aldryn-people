@@ -6,7 +6,8 @@
 	"package-name": "aldryn-people",
 	"installed-apps": [
 		"aldryn_people",
-		"hvad"
+		"hvad",
+		"sortedm2m"
 	],
 	"author": {
 		"name": "Divio AG",
