@@ -11,7 +11,7 @@ class PersonAdmin(TranslatableAdmin):
 
     list_display = ['__unicode__', 'email', 'all_translations']
     list_filter = ['group']
-    search_fields = ('name', 'email', 'function')
+    search_fields = ('name', 'email', 'translations__function')
 
     fieldsets = (
         (None, {'fields': ('name', 'function', 'visual')}),
