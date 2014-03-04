@@ -96,6 +96,7 @@ class PeoplePlugin(CMSPlugin):
         default=True,
         help_text=_('when checked, people are grouped by their group')
     )
+    show_links = models.BooleanField(verbose_name=_('Show links to Detail Page'), default=False)
 
     def __unicode__(self):
         return str(self.pk)
