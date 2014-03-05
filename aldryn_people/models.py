@@ -36,7 +36,6 @@ class Group(TranslatableModel):
 
 
 class Person(TranslatableModel):
-
     translations = TranslatedFields(
         function=models.CharField(_('function'), max_length=255, blank=True, default=''),
         comment=models.TextField(_('comment'), blank=True, default='')
@@ -48,6 +47,7 @@ class Person(TranslatableModel):
     group = models.ForeignKey(Group, verbose_name=_('group'),
                               blank=True, null=True)
     visual = FilerImageField(null=True, blank=True, default=None, on_delete=models.SET_NULL)
+    slug = models.CharField(verbose_name=_('unique slug'), max_length=255, blank=True, null=True, unique=True)
 
     def __unicode__(self):
         return self.name

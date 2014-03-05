@@ -13,5 +13,6 @@ class DownloadVcardView(DetailView):
         response['Content-Disposition'] = 'attachment; filename=%s' % filename
         return response
 
+
 class PersonView(DetailView):
     model = Person
