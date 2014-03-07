@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="plugin plugin-people">
+	<div class="people-detail">
+		{% include "aldryn_people/includes/people_item.html" with person=person %}
+	</div>
+</div>
+{% endblock content %}

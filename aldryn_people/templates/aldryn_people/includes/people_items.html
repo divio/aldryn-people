@@ -2,16 +2,6 @@
 
 <ul class="people-items">
 	{% for person in people %}
-	<li>
-		<h2>{{ person.name }} <span>{{ person.function }}</span></h2>
-		{% if person.visual %}<p class="people-visual"><img src="{% thumbnail person.visual 200x100 crop subject_location=person.visual.subject_location %}" alt="{{ person.name }}" /></p>{% endif %}
-		<p class="people-meta">
-			{% if person.phone %}{% trans "Phone:" %} <span>{{ person.phone }}</span><br />{% endif %}
-			{% if person.mobile %}{% trans "Mobile:" %} <span>{{ person.mobile }}</span><br />{% endif %}
-			{% if person.email %}{% trans "E-Mail:" %} <a href="mailto:{{ person.email }}">{{ person.email }}</a>{% endif %}
-			{% if show_vcard %}<br /><a href="{% url 'download_vcard' person.pk %}" class="btn-download">{% trans "Download vCard" %}</a>{% endif %}
-		</p>
-		{% if person.comment %}<div class="people-desc">{{ person.comment|safe }}</div>{% endif %}
-	</li>
+	<li>{% include "aldryn_people/includes/people_item.html" with person=person %}</li>
 	{% endfor %}
 </ul>

@@ -2,9 +2,10 @@
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
-from aldryn_people.models import Person, Group
-
 from hvad.admin import TranslatableAdmin
+
+from .models import Person, Group
+from .forms import PersonForm
 
 
 class PersonAdmin(TranslatableAdmin):
@@ -14,10 +15,12 @@ class PersonAdmin(TranslatableAdmin):
     search_fields = ('name', 'email', 'translations__function')
 
     fieldsets = (
-        (None, {'fields': ('name', 'function', 'visual')}),
+        (None, {'fields': ('name', 'function', 'slug', 'visual')}),
         (_('Contact'), {'fields': ('phone', 'mobile', 'email')}),
         (None, {'fields': ('group', 'comment',)}),
     )
+
+    form = PersonForm
 
 
 class GroupAdmin(TranslatableAdmin):

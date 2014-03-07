@@ -12,3 +12,7 @@ class DownloadVcardView(DetailView):
         response = HttpResponse(person.get_vcard(), mimetype="text/x-vCard")
         response['Content-Disposition'] = 'attachment; filename=%s' % filename
         return response
+
+
+class PersonView(DetailView):
+    model = Person
