@@ -12,8 +12,9 @@ from aldryn_people import models
 
 class PeoplePlugin(CMSPluginBase):
 
+    TEMPLATE_NAME = 'aldryn_people/plugins/%s/people_list.html'
     module = 'People'
-    render_template = 'aldryn_people/plugins/people_list.html'
+    render_template = TEMPLATE_NAME % models.PeoplePlugin.STYLE_CHOICES[0][0]
     name = _('People list')
     model = models.PeoplePlugin
 
@@ -29,6 +30,7 @@ class PeoplePlugin(CMSPluginBase):
 
     def render(self, context, instance, placeholder):
         people = instance.people.select_related('group', 'visual')
+        self.render_template = self.TEMPLATE_NAME % instance.style
 
         context['instance'] = instance
         context['people'] = people

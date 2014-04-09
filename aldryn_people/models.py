@@ -1,21 +1,15 @@
 # -*- coding: utf-8 -*-
+import vobject
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-
 from cms.models.pluginmodel import CMSPlugin
-
 from phonenumber_field.modelfields import PhoneNumberField
-
 from hvad.models import TranslatableModel, TranslatedFields
-
 from filer.fields.image import FilerImageField
-
 from sortedm2m.fields import SortedManyToManyField
-
 from djangocms_text_ckeditor.fields import HTMLField
 
-import vobject
-
+from .utils import get_additional_styles
 
 class Group(TranslatableModel):
     translations = TranslatedFields(
@@ -90,6 +84,14 @@ class Person(TranslatableModel):
 
 
 class PeoplePlugin(CMSPlugin):
+
+    STYLE_CHOICES = [
+        ('standard', _('Standard')),
+        ('feature', _('Feature'))
+    ] + get_additional_styles()
+
+    style = models.CharField(
+        _('Style'), choices=STYLE_CHOICES, default=STYLE_CHOICES[0][0], max_length=50)
     people = SortedManyToManyField(Person, blank=True, null=True)
     group_by_group = models.BooleanField(
         verbose_name=_('group by group'),
