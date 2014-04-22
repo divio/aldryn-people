@@ -1,12 +1,19 @@
 # -*- coding: utf-8 -*-
 import vobject
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+
 from cms.models.pluginmodel import CMSPlugin
+
 from phonenumber_field.modelfields import PhoneNumberField
+
 from hvad.models import TranslatableModel, TranslatedFields
+
 from filer.fields.image import FilerImageField
+
 from sortedm2m.fields import SortedManyToManyField
+
 from djangocms_text_ckeditor.fields import HTMLField
 
 from .utils import get_additional_styles
@@ -20,6 +27,7 @@ class Group(TranslatableModel):
     postal_code = models.CharField(verbose_name=_('postal code'), max_length=20, blank=True)
     city = models.CharField(verbose_name=_('city'), max_length=255, blank=True)
     phone = PhoneNumberField(verbose_name=_('phone'), null=True, blank=True)
+    email = models.EmailField(verbose_name=_('email'), blank=True, default='')
 
     def __unicode__(self):
         return self.lazy_translation_getter('company_name', str(self.pk))
@@ -32,7 +40,7 @@ class Group(TranslatableModel):
 class Person(TranslatableModel):
     translations = TranslatedFields(
         function=models.CharField(_('function'), max_length=255, blank=True, default=''),
-        comment=models.TextField(_('comment'), blank=True, default='')
+        description=models.TextField(_('Description'), blank=True, default='')
     )
     name = models.CharField(verbose_name=_('name'), max_length=255)
     phone = PhoneNumberField(verbose_name=_('phone'), null=True, blank=True)
@@ -46,14 +54,28 @@ class Person(TranslatableModel):
     def __unicode__(self):
         return self.name
 
+    @property
+    def comment(self):
+        return self.lazy_translation_getter('description', '')
+
+    def get_absolute_url(self):
+        if self.slug:
+            kwargs = {'slug': self.slug}
+        else:
+            kwargs = {'pk': self.pk}
+        return reverse('detail', kwargs=kwargs)
+
     def get_vcard(self):
+        company_name = self.group.lazy_translation_getter('company_name')
+        function = self.lazy_translation_getter('function')
+
         vcard = vobject.vCard()
         vcard.add('n').value = vobject.vcard.Name(given=self.name)
         vcard.add('fn').value = self.name
         if self.email:
             vcard.add('email').value = self.email
-        if self.function:
-            vcard.add('title').value = self.function
+        if function:
+            vcard.add('title').value = function
         if self.phone:
             tel = vcard.add('tel')
             tel.value = unicode(self.phone)
@@ -64,7 +86,8 @@ class Person(TranslatableModel):
             tel.type_param = 'MOBILE'
 
         if self.group:
-            vcard.add('org').value = [self.group.company_name]
+            if company_name:
+                vcard.add('org').value = [company_name]
             vcard.add('adr')
             vcard.adr.type_param = 'WORK'
             vcard.adr.value = vobject.vcard.Address(

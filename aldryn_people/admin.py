@@ -17,7 +17,7 @@ class PersonAdmin(TranslatableAdmin):
     fieldsets = (
         (None, {'fields': ('name', 'function', 'slug', 'visual')}),
         (_('Contact'), {'fields': ('phone', 'mobile', 'email')}),
-        (None, {'fields': ('group', 'comment',)}),
+        (None, {'fields': ('group', 'description',)}),
     )
 
     form = PersonForm
@@ -29,7 +29,9 @@ class GroupAdmin(TranslatableAdmin):
     search_filter = ['company_name']
 
     fieldsets = (
-        (None, {'fields': ('company_name', 'company_description', 'phone')}),
+        (None,
+            {'fields': ('company_name', 'company_description', 'phone', 'email')}
+        ),
         (_('Address'), {'fields': ('address', 'postal_code', 'city')}),
     )
 

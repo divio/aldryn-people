@@ -1,17 +1,17 @@
-{% load i18n thumbnail %}
+{% load aldryn_people_tags i18n thumbnail %}
 
 <div class="people-item">
 	<h2>{{ person.name }} <span>{{ person.function }}</span></h2>
 	{% if person.visual %}<p class="people-visual">
-		{% if instance.show_links %}<a href="{% url 'detail' person.slug %}">{% endif %}
+		{% if instance.show_links %}<a href="{{ person.get_absolute_url }}">{% endif %}
 			<img src="{% thumbnail person.visual 200x100 crop subject_location=person.visual.subject_location %}" alt="{{ person.name }}" />
 		{% if instance.show_links %}</a>{% endif %}
 		</p>{% endif %}
 	<p class="people-meta">
-		{% if person.phone %}{% trans "Phone:" %} <span>{{ person.phone }}</span><br />{% endif %}
-		{% if person.mobile %}{% trans "Mobile:" %} <span>{{ person.mobile }}</span><br />{% endif %}
+		{% if person.phone %}{% trans "Phone:" %} <span>{{ person.phone|phoneformat }}</span><br />{% endif %}
+		{% if person.mobile %}{% trans "Mobile:" %} <span>{{ person.mobile|phoneformat }}</span><br />{% endif %}
 		{% if person.email %}{% trans "E-Mail:" %} <a href="mailto:{{ person.email }}">{{ person.email }}</a>{% endif %}
 		{% if show_vcard %}<br /><a href="{% url 'download_vcard' person.slug %}" class="btn-download">{% trans "Download vCard" %}</a>{% endif %}
 	</p>
-	{% if person.comment %}<div class="people-desc">{{ person.comment|safe }}</div>{% endif %}
+	{% if person.description %}<div class="people-desc">{{ person.description|safe }}</div>{% endif %}
 </div>
