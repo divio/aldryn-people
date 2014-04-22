@@ -30,6 +30,7 @@ Add below apps to ``INSTALLED_APPS``: ::
 
         'aldryn_people',
         'hvad',
+        'sortedm2m',
         …
     ]
 
