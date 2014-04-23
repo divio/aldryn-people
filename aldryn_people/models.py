@@ -1,22 +1,19 @@
 # -*- coding: utf-8 -*-
 import vobject
+
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from cms.models.pluginmodel import CMSPlugin
-
-from phonenumber_field.modelfields import PhoneNumberField
-
-from hvad.models import TranslatableModel, TranslatedFields
-
+from djangocms_text_ckeditor.fields import HTMLField
 from filer.fields.image import FilerImageField
-
+from hvad.models import TranslatableModel, TranslatedFields
+from phonenumber_field.modelfields import PhoneNumberField
 from sortedm2m.fields import SortedManyToManyField
 
-from djangocms_text_ckeditor.fields import HTMLField
-
 from .utils import get_additional_styles
+
 
 class Group(TranslatableModel):
     translations = TranslatedFields(
@@ -50,6 +47,7 @@ class Person(TranslatableModel):
                               blank=True, null=True)
     visual = FilerImageField(null=True, blank=True, default=None, on_delete=models.SET_NULL)
     slug = models.CharField(verbose_name=_('unique slug'), max_length=255, blank=True, null=True, unique=True)
+    vcard_enabled = models.BooleanField(verbose_name=_('enable vCard download'), default=True)
 
     def __unicode__(self):
         return self.name
@@ -122,6 +120,7 @@ class PeoplePlugin(CMSPlugin):
         help_text=_('when checked, people are grouped by their group')
     )
     show_links = models.BooleanField(verbose_name=_('Show links to Detail Page'), default=False)
+    show_vcard = models.BooleanField(verbose_name=_('Show links to download vCard'), default=False)
 
     def __unicode__(self):
         return str(self.pk)

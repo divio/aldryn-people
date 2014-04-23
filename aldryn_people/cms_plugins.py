@@ -41,11 +41,6 @@ class PeoplePlugin(CMSPluginBase):
         else:
             context['people_groups'] = []
             context['group_less_people'] = []
-        try:
-            reverse('download_vcard', args=(1,))
-            context['show_vcard'] = True
-        except NoReverseMatch:
-            pass
         return context
 
 plugin_pool.register_plugin(PeoplePlugin)

@@ -10,12 +10,12 @@ from .forms import PersonForm
 
 class PersonAdmin(TranslatableAdmin):
 
-    list_display = ['__unicode__', 'email', 'all_translations']
-    list_filter = ['group']
+    list_display = ['__unicode__', 'email', 'vcard_enabled', 'all_translations']
+    list_filter = ['group', 'vcard_enabled']
     search_fields = ('name', 'email', 'translations__function')
 
     fieldsets = (
-        (None, {'fields': ('name', 'function', 'slug', 'visual')}),
+        (None, {'fields': ('name', 'function', 'slug', 'visual', 'vcard_enabled')}),
         (_('Contact'), {'fields': ('phone', 'mobile', 'email')}),
         (None, {'fields': ('group', 'description',)}),
     )
