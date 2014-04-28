@@ -4,7 +4,7 @@ from aldryn_people import __version__
 
 REQUIREMENTS = [
     'django-hvad',
-    'django-phonenumber-field==0.2a3',
+    'phonenumbers',
     'vobject',
     'django-filer',
     'django-sortedm2m',

@@ -9,7 +9,6 @@ from cms.models.pluginmodel import CMSPlugin
 from djangocms_text_ckeditor.fields import HTMLField
 from filer.fields.image import FilerImageField
 from hvad.models import TranslatableModel, TranslatedFields
-from phonenumber_field.modelfields import PhoneNumberField
 from sortedm2m.fields import SortedManyToManyField
 
 from .utils import get_additional_styles
@@ -23,7 +22,7 @@ class Group(TranslatableModel):
     address = models.TextField(verbose_name=_('address'), blank=True)
     postal_code = models.CharField(verbose_name=_('postal code'), max_length=20, blank=True)
     city = models.CharField(verbose_name=_('city'), max_length=255, blank=True)
-    phone = PhoneNumberField(verbose_name=_('phone'), null=True, blank=True)
+    phone = models.CharField(verbose_name=_('phone'), null=True, blank=True, max_length=100)
     email = models.EmailField(verbose_name=_('email'), blank=True, default='')
 
     def __unicode__(self):
@@ -40,8 +39,8 @@ class Person(TranslatableModel):
         description=models.TextField(_('Description'), blank=True, default='')
     )
     name = models.CharField(verbose_name=_('name'), max_length=255)
-    phone = PhoneNumberField(verbose_name=_('phone'), null=True, blank=True)
-    mobile = PhoneNumberField(verbose_name=_('mobile'), null=True, blank=True)
+    phone = models.CharField(verbose_name=_('phone'), null=True, blank=True, max_length=100)
+    mobile = models.CharField(verbose_name=_('mobile'), null=True, blank=True, max_length=100)
     email = models.EmailField(verbose_name=_("email"), blank=True, default='')
     group = models.ForeignKey(Group, verbose_name=_('group'),
                               blank=True, null=True)
