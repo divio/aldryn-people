@@ -1,7 +1,7 @@
 {
 	"name": "People",
 	"description": "People management in django CMS",
-	"version": "0.1.8",
+	"version": "0.2.0",
 	"url": "https://github.com/aldryn/aldryn-people",
 	"package-name": "aldryn-people",
 	"installed-apps": [
