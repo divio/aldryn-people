@@ -5,6 +5,7 @@ from aldryn_people import __version__
 REQUIREMENTS = [
     'django-hvad',
     'phonenumbers',
+    'django-phonenumber-field',  # only here as quick-fix because old migrations depend on this field
     'vobject',
     'django-filer',
     'django-sortedm2m',
