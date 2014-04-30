@@ -17,7 +17,7 @@ class PersonAdmin(TranslatableAdmin):
 
     fieldsets = (
         (None, {'fields': ('name', 'function', 'slug', 'visual', 'vcard_enabled')}),
-        (_('Contact'), {'fields': ('phone', 'mobile', 'email')}),
+        (_('Contact'), {'fields': ('phone', 'mobile', 'fax', 'email', 'website')}),
         (None, {'fields': ('group', 'description',)}),
     )
 
@@ -31,7 +31,7 @@ class GroupAdmin(TranslatableAdmin):
 
     fieldsets = (
         (None,
-            {'fields': ('company_name', 'company_description', 'phone', 'email')}
+            {'fields': ('company_name', 'company_description', 'phone', 'fax', 'email', 'website')}
         ),
         (_('Address'), {'fields': ('address', 'postal_code', 'city')}),
     )

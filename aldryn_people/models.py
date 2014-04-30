@@ -23,7 +23,9 @@ class Group(TranslatableModel):
     postal_code = models.CharField(verbose_name=_('postal code'), max_length=20, blank=True)
     city = models.CharField(verbose_name=_('city'), max_length=255, blank=True)
     phone = models.CharField(verbose_name=_('phone'), null=True, blank=True, max_length=100)
+    fax = models.CharField(verbose_name=_('fax'), null=True, blank=True, max_length=100)
     email = models.EmailField(verbose_name=_('email'), blank=True, default='')
+    website = models.URLField(verbose_name=_('website'), null=True, blank=True)
 
     def __unicode__(self):
         return self.lazy_translation_getter('company_name', str(self.pk))
@@ -41,7 +43,9 @@ class Person(TranslatableModel):
     name = models.CharField(verbose_name=_('name'), max_length=255)
     phone = models.CharField(verbose_name=_('phone'), null=True, blank=True, max_length=100)
     mobile = models.CharField(verbose_name=_('mobile'), null=True, blank=True, max_length=100)
+    fax = models.CharField(verbose_name=_('fax'), null=True, blank=True, max_length=100)
     email = models.EmailField(verbose_name=_("email"), blank=True, default='')
+    website = models.URLField(verbose_name=_('website'), null=True, blank=True)
     group = models.ForeignKey(Group, verbose_name=_('group'),
                               blank=True, null=True)
     visual = FilerImageField(null=True, blank=True, default=None, on_delete=models.SET_NULL)
@@ -81,20 +85,38 @@ class Person(TranslatableModel):
             tel = vcard.add('tel')
             tel.value = unicode(self.mobile)
             tel.type_param = 'MOBILE'
+        if self.fax:
+            fax = vcard.add('tel')
+            fax.value = unicode(self.fax)
+            fax.type_param = 'FAX'
+        if self.website:
+            website = vcard.add('url')
+            website.value = unicode(self.website)
 
         if self.group:
             if company_name:
                 vcard.add('org').value = [company_name]
-            vcard.add('adr')
-            vcard.adr.type_param = 'WORK'
-            vcard.adr.value = vobject.vcard.Address(
-                street=self.group.address,
-                city=self.group.city,
-                code=self.group.postal_code)
+            if self.group.address or self.group.city or self.group.postal_code:
+                vcard.add('adr')
+                vcard.adr.type_param = 'WORK'
+                vcard.adr.value = vobject.vcard.Address()
+                if self.group.address:
+                    vcard.adr.value.street = self.group.address
+                if self.group.city:
+                    vcard.adr.value.city = self.group.city
+                if self.group.postal_code:
+                    vcard.adr.value.code = self.group.postal_code
             if self.group.phone:
                 tel = vcard.add('tel')
                 tel.value = unicode(self.group.phone)
                 tel.type_param = 'WORK'
+            if self.group.fax:
+                fax = vcard.add('tel')
+                fax.value = unicode(self.group.fax)
+                fax.type_param = 'FAX'
+            if self.group.website:
+                website = vcard.add('url')
+                website.value = unicode(self.group.website)
 
         return vcard.serialize()
 
