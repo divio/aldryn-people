@@ -76,7 +76,7 @@ class Person(TranslatableModel):
         if self.phone:
             tel = vcard.add('tel')
             tel.value = unicode(self.phone)
-            tel.type_param = 'HOME'
+            tel.type_param = 'WORK'
         if self.mobile:
             tel = vcard.add('tel')
             tel.value = unicode(self.mobile)
