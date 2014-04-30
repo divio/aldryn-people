@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import base64
+import urlparse
 import vobject
 
 from django.core.urlresolvers import reverse
@@ -66,13 +68,28 @@ class Person(TranslatableModel):
             kwargs = {'pk': self.pk}
         return reverse('detail', kwargs=kwargs)
 
-    def get_vcard(self):
+    def get_vcard(self, request=None):
         company_name = self.group.lazy_translation_getter('company_name')
         function = self.lazy_translation_getter('function')
 
         vcard = vobject.vCard()
         vcard.add('n').value = vobject.vcard.Name(given=self.name)
         vcard.add('fn').value = self.name
+
+        if self.visual:
+            try:
+                with open(self.visual.path, 'rb') as f:
+                    photo = vcard.add('photo')
+                    photo.type_param = self.visual.extension.upper()
+                    photo.value = base64.b64encode(f.read())
+                    photo.encoded = True
+                    photo.encoding_param = 'B'
+            except IOError:
+                if self.request:
+                    photo = vcard.add('photo')
+                    photo.type_param = self.visual.extension.upper()
+                    photo.value = urlparse.urljoin(request.build_absolute_uri(), self.visual.url)
+
         if self.email:
             vcard.add('email').value = self.email
         if function:
