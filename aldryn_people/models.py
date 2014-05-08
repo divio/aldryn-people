@@ -85,7 +85,7 @@ class Person(TranslatableModel):
                     photo.encoded = True
                     photo.encoding_param = 'B'
             except IOError:
-                if self.request:
+                if request:
                     photo = vcard.add('photo')
                     photo.type_param = self.visual.extension.upper()
                     photo.value = urlparse.urljoin(request.build_absolute_uri(), self.visual.url)
