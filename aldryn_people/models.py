@@ -4,6 +4,7 @@ import urlparse
 import vobject
 
 from django.core.urlresolvers import reverse
+from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -53,6 +54,7 @@ class Person(TranslatableModel):
     visual = FilerImageField(null=True, blank=True, default=None, on_delete=models.SET_NULL)
     slug = models.CharField(verbose_name=_('unique slug'), max_length=255, blank=True, null=True, unique=True)
     vcard_enabled = models.BooleanField(verbose_name=_('enable vCard download'), default=True)
+    user = models.ForeignKey(getattr(settings, 'AUTH_USER_MODEL', 'auth.User'), null=True, blank=True, unique=True)
 
     def __unicode__(self):
         return self.name

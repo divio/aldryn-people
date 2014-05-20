@@ -14,10 +14,11 @@ class PersonAdmin(TranslatableAdmin):
     list_filter = ['group', 'vcard_enabled']
     search_fields = ('name', 'email', 'translations__function')
     prepopulated_fields = {'slug': ('name',)}
+    raw_id_fields = ('user',)
 
     fieldsets = (
         (None, {'fields': ('name', 'function', 'slug', 'visual', 'vcard_enabled')}),
-        (_('Contact'), {'fields': ('phone', 'mobile', 'fax', 'email', 'website')}),
+        (_('Contact'), {'fields': ('phone', 'mobile', 'fax', 'email', 'website', 'user')}),
         (None, {'fields': ('group', 'description',)}),
     )
 
