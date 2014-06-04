@@ -13,7 +13,12 @@ class DownloadVcardView(DetailView):
             raise Http404
 
         filename = "%s.vcf" % person.name
-        response = HttpResponse(person.get_vcard(request), mimetype="text/x-vCard")
+        vcard = person.get_vcard(request)
+        try:
+            vcard = vcard.decode('utf-8').encode('ISO-8859-1')
+        except:
+            pass
+        response = HttpResponse(vcard, mimetype="text/x-vCard")
         response['Content-Disposition'] = 'attachment; filename="%s"' % filename
         return response
 
