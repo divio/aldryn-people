@@ -41,7 +41,7 @@ class Group(TranslatableModel):
 class Person(TranslatableModel):
     translations = TranslatedFields(
         function=models.CharField(_('function'), max_length=255, blank=True, default=''),
-        description=models.TextField(_('Description'), blank=True, default='')
+        description=HTMLField(_('Description'), blank=True, default='')
     )
     name = models.CharField(verbose_name=_('name'), max_length=255)
     phone = models.CharField(verbose_name=_('phone'), null=True, blank=True, max_length=100)
