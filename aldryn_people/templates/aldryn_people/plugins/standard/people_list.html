@@ -5,10 +5,10 @@
 	{# Because of hvad I have to activate the plugin's language :( #}
 	{% language instance.language %}
 	{% for group, people_list in people_groups.items %}
-		{% if group.company_name %}
+		{% if group.name %}
 		<div class="people-group">
-			<h2>{{ group.company_name }}</h2>
-			<div class="people-lead">{{ group.company_description|safe }}</div>
+			<h2>{{ group.name }}</h2>
+			<div class="people-lead">{{ group.description|safe }}</div>
 			<p class="people-desc">
 				{% if group.phone %}{% trans "Phone:" %} <span>{{ group.phone }}</span><br />{% endif %}
 				{% trans "Address:" %}
