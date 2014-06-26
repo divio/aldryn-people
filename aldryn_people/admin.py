@@ -28,11 +28,11 @@ class PersonAdmin(TranslatableAdmin):
 class GroupAdmin(TranslatableAdmin):
 
     list_display = ['__unicode__', 'city', 'all_translations']
-    search_filter = ['company_name']
+    search_filter = ['name']
 
     fieldsets = (
         (None,
-            {'fields': ('company_name', 'company_description', 'phone', 'fax', 'email', 'website')}
+            {'fields': ('name', 'description', 'phone', 'fax', 'email', 'website')}
         ),
         (_('Address'), {'fields': ('address', 'postal_code', 'city')}),
     )

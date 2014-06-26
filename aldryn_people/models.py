@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import base64
 import urlparse
+import warnings
 import vobject
 
 from django.core.urlresolvers import reverse
@@ -19,8 +20,8 @@ from .utils import get_additional_styles
 
 class Group(TranslatableModel):
     translations = TranslatedFields(
-        company_name=models.CharField(_('company name'), max_length=255),
-        company_description=HTMLField(_('company description'), blank=True),
+        name=models.CharField(_('name'), max_length=255),
+        description=HTMLField(_('description'), blank=True),
     )
     address = models.TextField(verbose_name=_('address'), blank=True)
     postal_code = models.CharField(verbose_name=_('postal code'), max_length=20, blank=True)
@@ -30,8 +31,18 @@ class Group(TranslatableModel):
     email = models.EmailField(verbose_name=_('email'), blank=True, default='')
     website = models.URLField(verbose_name=_('website'), null=True, blank=True)
 
+    @property
+    def company_name(self):
+        warnings.warn('"Group.company_name" has been refactored to "Group.name"', DeprecationWarning)
+        return self.lazy_translation_getter('name')
+
+    @property
+    def company_description(self):
+        warnings.warn('"Group.company_description" has been refactored to "Group.description"', DeprecationWarning)
+        return self.lazy_translation_getter('company_description')
+
     def __unicode__(self):
-        return self.lazy_translation_getter('company_name', str(self.pk))
+        return self.lazy_translation_getter('name', str(self.pk))
 
     class Meta:
         verbose_name = _('Group')
@@ -71,7 +82,7 @@ class Person(TranslatableModel):
         return reverse('detail', kwargs=kwargs)
 
     def get_vcard(self, request=None):
-        company_name = self.group.lazy_translation_getter('company_name')
+        group_name = self.group.lazy_translation_getter('name')
         function = self.lazy_translation_getter('function')
 
         vcard = vobject.vCard()
@@ -113,8 +124,8 @@ class Person(TranslatableModel):
             website.value = unicode(self.website)
 
         if self.group:
-            if company_name:
-                vcard.add('org').value = [company_name]
+            if group_name:
+                vcard.add('org').value = [group_name]
             if self.group.address or self.group.city or self.group.postal_code:
                 vcard.add('adr')
                 vcard.adr.type_param = 'WORK'
