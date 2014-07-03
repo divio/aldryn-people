@@ -7,6 +7,11 @@ from django.db import models
 
 class Migration(SchemaMigration):
 
+    depends_on = (
+        ("filer", "0001_initial"),
+        ("cms", "0001_initial"),
+    )
+
     def forwards(self, orm):
         # Adding field 'Person.visual'
         db.add_column(u'aldryn_people_person', 'visual',
