@@ -1,7 +1,6 @@
 {
 	"name": "People",
 	"description": "People management in django CMS",
-	"version": "0.2.7",
 	"url": "https://github.com/aldryn/aldryn-people",
 	"package-name": "aldryn-people",
 	"installed-apps": [
@@ -15,6 +14,5 @@
 	},
 	"license": {
 		"name": "BSD",
-		"text": "!literal-include LICENSE.txt"
 	}
 }
