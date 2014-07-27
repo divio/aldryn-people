@@ -79,7 +79,7 @@ class Person(TranslatableModel):
             kwargs = {'slug': self.slug}
         else:
             kwargs = {'pk': self.pk}
-        return reverse('detail', kwargs=kwargs)
+        return reverse('person-detail', kwargs=kwargs)
 
     def get_vcard(self, request=None):
         group_name = self.group.lazy_translation_getter('name')
