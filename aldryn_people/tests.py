@@ -61,6 +61,9 @@ class PeopleAddTest(TestCase, BaseCMSTestCase):
         self.assertFalse(Group.objects.using_translations().filter(name=name))
 
     def test_add_people_app(self):
+        """
+        We add a person to the app
+        """
         self.page.application_urls = 'PeopleApp'
         self.page.publish(self.language)
 
@@ -70,13 +73,19 @@ class PeopleAddTest(TestCase, BaseCMSTestCase):
         response = self.client.get(url)
         self.assertContains(response, 'michael')
 
-    def test_create_gruop(self):
+    def test_create_group(self):
+        """
+        we create a group
+        """
         name = 'Gruppe Neu'
         group = Group.objects.create(name=name)
         self.assertEqual(group.name, name)
         self.assertEqual(Group.objects.all()[0], group)
 
-    def test_person_add_to_group(self):
+    def test_add_person_to_group(self):
+        """
+        We create a person and add her to the created group
+        """
         personname = 'Daniel'
         person = Person.objects.create(name=personname)
         name = 'Group One'
@@ -86,6 +95,9 @@ class PeopleAddTest(TestCase, BaseCMSTestCase):
         self.assertIn(person, group.person_set.all())
 
     def test_add_people_list_plugin_api(self):
+        """
+        We add a person to the People Plugin and look her up
+        """
         name = 'Donald'
         Person.objects.create(name=name)
         plugin = api.add_plugin(self.placeholder, PeoplePlugin, self.language)
@@ -94,10 +106,12 @@ class PeopleAddTest(TestCase, BaseCMSTestCase):
 
         url = self.page.get_absolute_url()
         response = self.client.get(url)
-        print response
-        self.assertContains(response, 'Donald')
+        self.assertContains(response, name)
 
     def test_add_people_list_plugin_client(self):
+        """
+        We log into the PeoplePlugin
+        """
         self.client.login(username=self.su_username, password=self.su_password)
 
         plugin_data = {
