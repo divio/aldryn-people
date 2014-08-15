@@ -16,10 +16,6 @@ class PeopleAddTest(TestCase, BaseCMSTestCase):
     su_username = 'user'
     su_password = 'pass'
 
-    # Test data
-    EMAILS = ['test@example.org', 'someone@something.com']
-    MOBILE = ['012153353']
-
     def setUp(self):
         self.template = get_cms_setting('TEMPLATES')[0][0]
         self.language = settings.LANGUAGES[0][0]
@@ -81,14 +77,25 @@ class PeopleAddTest(TestCase, BaseCMSTestCase):
         self.assertEqual(Group.objects.all()[0], group)
 
     def test_person_add_to_group(self):
-        firstname = 'Person Add'
-        person = Person.objects.create(name=firstname)
-        name = 'Group Add'
+        personname = 'Daniel'
+        person = Person.objects.create(name=personname)
+        name = 'Group One'
         group = Group.objects.create(name=name)
         person.group = group
+        person.save()
+        self.assertIn(person, group.person_set.all())
 
     def test_add_people_list_plugin_api(self):
-        api.add_plugin(self.placeholder, PeoplePlugin, self.language)
+        name = 'Donald'
+        Person.objects.create(name=name)
+        plugin = api.add_plugin(self.placeholder, PeoplePlugin, self.language)
+        plugin.people = Person.objects.all()
+        self.page.publish(self.language)
+
+        url = self.page.get_absolute_url()
+        response = self.client.get(url)
+        print response
+        self.assertContains(response, 'Donald')
 
     def test_add_people_list_plugin_client(self):
         self.client.login(username=self.su_username, password=self.su_password)
