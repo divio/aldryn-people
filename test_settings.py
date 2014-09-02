@@ -10,7 +10,4 @@ HELPER_SETTINGS = {
         'filer.thumbnail_processors.scale_and_crop_with_subject_location',
         'easy_thumbnails.processors.filters',
     ),
-    'NOSE_ARGS': [
-        '--with-xunit', '--xunit-file=shippable/testresults/test.xml',
-    ],
 }
