@@ -174,7 +174,7 @@ class PeoplePlugin(CMSPlugin):
     show_vcard = models.BooleanField(verbose_name=_('Show links to download vCard'), default=False)
 
     def __unicode__(self):
-        return str(self.pk)
+        return unicode(self.pk)
 
     def copy_relations(self, oldinstance):
         self.people = oldinstance.people.all()
