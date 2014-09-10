@@ -155,7 +155,7 @@ class Person(TranslatableModel):
         verbose_name_plural = _('People')
 
 
-class PeoplePlugin(CMSPlugin):
+class BasePeoplePlugin(CMSPlugin):
 
     STYLE_CHOICES = [
         ('standard', _('Standard')),
@@ -173,8 +173,17 @@ class PeoplePlugin(CMSPlugin):
     show_links = models.BooleanField(verbose_name=_('Show links to Detail Page'), default=False)
     show_vcard = models.BooleanField(verbose_name=_('Show links to download vCard'), default=False)
 
+    class Meta:
+        abstract = True
+
     def __unicode__(self):
         return unicode(self.pk)
 
     def copy_relations(self, oldinstance):
         self.people = oldinstance.people.all()
+
+
+class PeoplePlugin(BasePeoplePlugin):
+
+    class Meta:
+        abstract = False
