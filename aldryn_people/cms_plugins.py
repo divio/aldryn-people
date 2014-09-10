@@ -29,7 +29,7 @@ class PeoplePlugin(CMSPluginBase):
         return groups
 
     def render(self, context, instance, placeholder):
-        people = instance.people.select_related('group', 'visual')
+        people = instance.get_selected_people()
         self.render_template = self.TEMPLATE_NAME % instance.style
 
         context['instance'] = instance

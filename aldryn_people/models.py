@@ -182,6 +182,9 @@ class BasePeoplePlugin(CMSPlugin):
     def copy_relations(self, oldinstance):
         self.people = oldinstance.people.all()
 
+    def get_selected_people(self):
+        return self.people.select_related('group', 'visual')
+
 
 class PeoplePlugin(BasePeoplePlugin):
 
