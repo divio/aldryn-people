@@ -1,18 +1,12 @@
 language: python
-
-python:
-  - "2.7"
-
-reset_minion: true
-
+python: 2.7
 env:
-  - DJANGO=1.7
-  - DJANGO=1.6
-  - DJANGO=1.5
+  - TOX_ENV=py27-dj14
+  - TOX_ENV=py27-dj15
+  - TOX_ENV=py27-dj16
 
 install:
-  - pip install Django\<$DJANGO djangocms-helper pysqlite
-  - python setup.py install
+  - pip install tox
 
 script:
-  - make runtest
+  - tox -e $TOX_ENV
