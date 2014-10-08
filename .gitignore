@@ -6,3 +6,5 @@ build/*
 .idea
 env/
 .tox
+.coverage
+htmlcov/

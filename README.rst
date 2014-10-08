@@ -5,6 +5,9 @@ Aldryn People
 .. image:: https://travis-ci.org/aldryn/aldryn-people.svg?branch=master
     :target: https://travis-ci.org/aldryn/aldryn-people
 
+.. image:: https://img.shields.io/coveralls/aldryn/aldryn-people.svg
+  :target: https://coveralls.io/r/aldryn/aldryn-people
+
 This add-on allows you to:
 
 - add people/groups
