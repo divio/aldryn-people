@@ -12,8 +12,8 @@ from cms.utils import get_cms_setting
 from cms.models import CMSPlugin
 from cms.test_utils.testcases import BaseCMSTestCase, URL_CMS_PLUGIN_ADD
 
-from .models import Person, Group
-from .cms_plugins import PeoplePlugin
+from ..models import Person, Group
+from ..cms_plugins import PeoplePlugin
 
 
 class PeopleAddTest(TestCase, BaseCMSTestCase):
@@ -74,11 +74,17 @@ class PeopleAddTest(TestCase, BaseCMSTestCase):
         self.page.publish(self.language)
 
         person = Person.objects.create(
-            name='michael', phone='0785214521', email='michael@mit.ch')
-
+            name='Michael', phone='0785214521', email='michael@mit.ch',
+            slug='michael'
+        )
+        # By slug
+        url = reverse('person-detail', kwargs={'slug': person.slug})
+        response = self.client.get(url)
+        self.assertContains(response, 'Michael')
+        # By pk
         url = reverse('person-detail', kwargs={'pk': person.pk})
         response = self.client.get(url)
-        self.assertContains(response, 'michael')
+        self.assertContains(response, 'Michael')
 
     def test_create_another_group(self):
         """
