@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+
+from __future__ import unicode_literals
+
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -73,7 +77,7 @@ class PeopleAddTest(TestCase, BaseCMSTestCase):
         response = self.client.get(url)
         self.assertContains(response, 'michael')
 
-    def test_create_group(self):
+    def test_create_another_group(self):
         """
         we create a group
         """
