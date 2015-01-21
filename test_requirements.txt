@@ -1,4 +1,11 @@
 coverage==3.7.1
-python-coveralls==2.4.2
+django-filer
+django-hvad
+django-phonenumber-field
+django-sortedm2m
 djangocms-helper
+djangocms-text-ckeditor
+phonenumbers
 pysqlite
+python-coveralls==2.4.2
+vobject
