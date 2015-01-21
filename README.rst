@@ -24,8 +24,8 @@ Choose a site you want to install the add-on to from the dashboard. Then go to `
 
 Redeploy the site.
 
-Manuall Installation
---------------------
+Manual Installation
+-------------------
 
 Run `pip install aldryn-people`.
 
@@ -33,10 +33,10 @@ Add below apps to ``INSTALLED_APPS``: ::
 
     INSTALLED_APPS = [
         …
-
         'aldryn_people',
         'hvad',
         'sortedm2m',
+        'django-phonenumber-field',
         …
     ]
 
