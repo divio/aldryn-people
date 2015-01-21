@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+
+from __future__ import unicode_literals
+
 import base64
 import urlparse
 import warnings
@@ -7,6 +10,7 @@ import vobject
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.db import models
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from cms.models.pluginmodel import CMSPlugin
@@ -18,30 +22,45 @@ from sortedm2m.fields import SortedManyToManyField
 from .utils import get_additional_styles
 
 
+@python_2_unicode_compatible
 class Group(TranslatableModel):
     translations = TranslatedFields(
         name=models.CharField(_('name'), max_length=255),
         description=HTMLField(_('description'), blank=True),
     )
-    address = models.TextField(verbose_name=_('address'), blank=True)
-    postal_code = models.CharField(verbose_name=_('postal code'), max_length=20, blank=True)
-    city = models.CharField(verbose_name=_('city'), max_length=255, blank=True)
-    phone = models.CharField(verbose_name=_('phone'), null=True, blank=True, max_length=100)
-    fax = models.CharField(verbose_name=_('fax'), null=True, blank=True, max_length=100)
-    email = models.EmailField(verbose_name=_('email'), blank=True, default='')
-    website = models.URLField(verbose_name=_('website'), null=True, blank=True)
+    address = models.TextField(
+        verbose_name=_('address'), blank=True)
+    postal_code = models.CharField(
+        verbose_name=_('postal code'), max_length=20, blank=True)
+    city = models.CharField(
+        verbose_name=_('city'), max_length=255, blank=True)
+    phone = models.CharField(
+        verbose_name=_('phone'), null=True, blank=True, max_length=100)
+    fax = models.CharField(
+        verbose_name=_('fax'), null=True, blank=True, max_length=100)
+    email = models.EmailField(
+        verbose_name=_('email'), blank=True, default='')
+    website = models.URLField(
+        verbose_name=_('website'), null=True, blank=True)
 
     @property
     def company_name(self):
-        warnings.warn('"Group.company_name" has been refactored to "Group.name"', DeprecationWarning)
+        warnings.warn(
+            '"Group.company_name" has been refactored to "Group.name"',
+            DeprecationWarning
+        )
         return self.lazy_translation_getter('name')
 
     @property
     def company_description(self):
-        warnings.warn('"Group.company_description" has been refactored to "Group.description"', DeprecationWarning)
+        warnings.warn(
+            '"Group.company_description" has been refactored to '
+            '"Group.description"',
+            DeprecationWarning
+        )
         return self.lazy_translation_getter('company_description')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.lazy_translation_getter('name', str(self.pk))
 
     class Meta:
@@ -49,25 +68,44 @@ class Group(TranslatableModel):
         verbose_name_plural = _('Groups')
 
 
+@python_2_unicode_compatible
 class Person(TranslatableModel):
     translations = TranslatedFields(
-        function=models.CharField(_('function'), max_length=255, blank=True, default=''),
-        description=HTMLField(_('Description'), blank=True, default='')
+        function=models.CharField(
+            _('function'), max_length=255, blank=True, default=''),
+        description=HTMLField(
+            _('Description'), blank=True, default='')
     )
-    name = models.CharField(verbose_name=_('name'), max_length=255)
-    phone = models.CharField(verbose_name=_('phone'), null=True, blank=True, max_length=100)
-    mobile = models.CharField(verbose_name=_('mobile'), null=True, blank=True, max_length=100)
-    fax = models.CharField(verbose_name=_('fax'), null=True, blank=True, max_length=100)
-    email = models.EmailField(verbose_name=_("email"), blank=True, default='')
-    website = models.URLField(verbose_name=_('website'), null=True, blank=True)
-    group = models.ForeignKey(Group, verbose_name=_('group'),
-                              blank=True, null=True)
-    visual = FilerImageField(null=True, blank=True, default=None, on_delete=models.SET_NULL)
-    slug = models.CharField(verbose_name=_('unique slug'), max_length=255, blank=True, null=True, unique=True)
-    vcard_enabled = models.BooleanField(verbose_name=_('enable vCard download'), default=True)
-    user = models.ForeignKey(getattr(settings, 'AUTH_USER_MODEL', 'auth.User'), null=True, blank=True, unique=True)
+    name = models.CharField(
+        verbose_name=_('name'), max_length=255)
+    phone = models.CharField(
+        verbose_name=_('phone'), null=True, blank=True, max_length=100)
+    mobile = models.CharField(
+        verbose_name=_('mobile'), null=True, blank=True, max_length=100)
+    fax = models.CharField(
+        verbose_name=_('fax'), null=True, blank=True, max_length=100)
+    email = models.EmailField(
+        verbose_name=_("email"), blank=True, default='')
+    website = models.URLField(
+        verbose_name=_('website'), null=True, blank=True)
+    group = models.ForeignKey(
+        Group, verbose_name=_('group'), blank=True, null=True)
+    visual = FilerImageField(
+        null=True, blank=True, default=None, on_delete=models.SET_NULL)
+    slug = models.CharField(
+        verbose_name=_('unique slug'), max_length=255, blank=True, null=True,
+        unique=True)
+    vcard_enabled = models.BooleanField(
+        verbose_name=_('enable vCard download'), default=True)
+    user = models.ForeignKey(
+        getattr(settings, 'AUTH_USER_MODEL', 'auth.User'),
+        null=True, blank=True, unique=True)
 
-    def __unicode__(self):
+    class Meta:
+        verbose_name = _('Person')
+        verbose_name_plural = _('People')
+
+    def __str__(self):
         return self.name
 
     @property
@@ -101,7 +139,8 @@ class Person(TranslatableModel):
                 if request:
                     photo = vcard.add('photo')
                     photo.type_param = self.visual.extension.upper()
-                    photo.value = urlparse.urljoin(request.build_absolute_uri(), self.visual.url)
+                    photo.value = urlparse.urljoin(
+                        request.build_absolute_uri(), self.visual.url)
 
         if self.email:
             vcard.add('email').value = self.email
@@ -150,11 +189,8 @@ class Person(TranslatableModel):
 
         return vcard.serialize()
 
-    class Meta:
-        verbose_name = _('Person')
-        verbose_name_plural = _('People')
 
-
+@python_2_unicode_compatible
 class BasePeoplePlugin(CMSPlugin):
 
     STYLE_CHOICES = [
@@ -163,20 +199,23 @@ class BasePeoplePlugin(CMSPlugin):
     ] + get_additional_styles()
 
     style = models.CharField(
-        _('Style'), choices=STYLE_CHOICES, default=STYLE_CHOICES[0][0], max_length=50)
+        _('Style'), choices=STYLE_CHOICES,
+        default=STYLE_CHOICES[0][0], max_length=50)
     people = SortedManyToManyField(Person, blank=True, null=True)
     group_by_group = models.BooleanField(
         verbose_name=_('group by group'),
         default=True,
         help_text=_('when checked, people are grouped by their group')
     )
-    show_links = models.BooleanField(verbose_name=_('Show links to Detail Page'), default=False)
-    show_vcard = models.BooleanField(verbose_name=_('Show links to download vCard'), default=False)
+    show_links = models.BooleanField(
+        verbose_name=_('Show links to Detail Page'), default=False)
+    show_vcard = models.BooleanField(
+        verbose_name=_('Show links to download vCard'), default=False)
 
     class Meta:
         abstract = True
 
-    def __unicode__(self):
+    def __str__(self):
         return unicode(self.pk)
 
     def copy_relations(self, oldinstance):

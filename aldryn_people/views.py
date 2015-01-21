@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+
+from __future__ import unicode_literals
+
 from django.http import Http404, HttpResponse
 from django.views.generic import DetailView
 
@@ -19,7 +23,8 @@ class DownloadVcardView(DetailView):
         except:
             pass
         response = HttpResponse(vcard, mimetype="text/x-vCard")
-        response['Content-Disposition'] = 'attachment; filename="%s"' % filename
+        response['Content-Disposition'] = 'attachment; filename="{0}"'.format(
+            filename)
         return response
 
 

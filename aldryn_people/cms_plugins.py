@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+
+from __future__ import unicode_literals
+
 from collections import defaultdict
 
-from django.core.urlresolvers import reverse, NoReverseMatch
 from django.utils.translation import ugettext_lazy as _
 
 from cms.plugin_base import CMSPluginBase
@@ -35,8 +37,10 @@ class PeoplePlugin(CMSPluginBase):
         context['instance'] = instance
         context['people'] = people
 
-        if models.Group.objects.filter(person__in=people).exists() and instance.group_by_group:
-            context['people_groups'] = self.group_people(people, instance.language)
+        if (models.Group.objects.filter(person__in=people).exists() and
+                instance.group_by_group):
+            context['people_groups'] = self.group_people(
+                people, instance.language)
             context['group_less_people'] = people.filter(group__isnull=True)
         else:
             context['people_groups'] = []

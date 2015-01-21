@@ -23,12 +23,14 @@ class PeopleAddTest(TestCase, BaseCMSTestCase):
     def setUp(self):
         self.template = get_cms_setting('TEMPLATES')[0][0]
         self.language = settings.LANGUAGES[0][0]
-        self.page = api.create_page('page', self.template, self.language, published=True)
+        self.page = api.create_page(
+            'page', self.template, self.language, published=True)
         self.placeholder = self.page.placeholders.all()[0]
         self.superuser = self.create_superuser()
 
     def create_superuser(self):
-        return User.objects.create_superuser(self.su_username, 'email@example.com', self.su_password)
+        return User.objects.create_superuser(
+            self.su_username, 'email@example.com', self.su_password)
 
     def test_create_person(self):
         """
@@ -71,7 +73,8 @@ class PeopleAddTest(TestCase, BaseCMSTestCase):
         self.page.application_urls = 'PeopleApp'
         self.page.publish(self.language)
 
-        person = Person.objects.create(name='michael', phone='0785214521', email='michael@mit.ch')
+        person = Person.objects.create(
+            name='michael', phone='0785214521', email='michael@mit.ch')
 
         url = reverse('person-detail', kwargs={'pk': person.pk})
         response = self.client.get(url)
