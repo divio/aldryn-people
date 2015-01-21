@@ -3,6 +3,7 @@ HELPER_SETTINGS = {
     'INSTALLED_APPS': [
         'filer',
         'easy_thumbnails',
+        'aldryn_people',
     ],
     'THUMBNAIL_PROCESSORS': (
         'easy_thumbnails.processors.colorspace',
