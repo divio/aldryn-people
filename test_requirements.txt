@@ -3,7 +3,7 @@ django-filer
 django-hvad
 django-phonenumber-field
 django-sortedm2m
-djangocms-helper
+-e git+https://github.com/nephila/djangocms-helper.git#egg=djangocms-helper
 djangocms-text-ckeditor
 phonenumbers
 pysqlite
