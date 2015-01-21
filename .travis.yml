@@ -1,33 +1,35 @@
+# Config file for automatic testing at travis-ci.org
+
 language: python
-python:
-  - 2.6
-  - 2.7
-  - 3.3
-  - 3.4
+
+# Use container based infrastructure
+sudo: false
+
 env:
-  - TOX_ENV=dj14
-  - TOX_ENV=dj15
-  - TOX_ENV=dj16
-  - TOX_ENV=dj17
+  - CMD=./test
+
+python:
+  - 2.7
+  - 2.6
+  - 3.4
+  - 3.3
 
 matrix:
   # allow_failures:
-  exclude:
-    - python: 2.6
-      env: TOX_ENV=dj17
-    - python: 3.3
-      env: TOX_ENV=dj14
-    - python: 3.4
-      env: TOX_ENV=dj14
+  #   - env: CMD="flake8 aldryn_faq"
+  fast_finish: true
   include:
     - python: 2.7
-      env: TOX_ENV=pep8
+      env: CMD="flake8 aldryn_faq"
+
+cache:
+  directories:
+    - $HOME/.wheelhouse
 
 install:
-  - pip install tox coveralls
+  - pip wheel --wheel-dir $HOME/.wheelhouse -r test_requirements.txt
+  - pip install --use-wheel --no-index --find-links=$HOME/.wheelhouse -r test_requirements.txt
 
-script:
-  - tox -e $TOX_ENV
+script: coverage run test_settings.py
 
-after_success:
-  - coveralls
+after_success: coveralls
