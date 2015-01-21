@@ -11,3 +11,11 @@ HELPER_SETTINGS = {
         'easy_thumbnails.processors.filters',
     ),
 }
+
+
+def run():
+    from djangocms_helper import runner
+    runner.cms('aldryn_people')
+
+if __name__ == "__main__":
+    run()
