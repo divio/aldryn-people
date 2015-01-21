@@ -9,7 +9,6 @@ env:
   - TOX_ENV=dj15
   - TOX_ENV=dj16
   - TOX_ENV=dj17
-  - TOX_ENV=pep8
 
 matrix:
   # allow_failures:
