@@ -16,11 +16,11 @@ python:
 
 matrix:
   # allow_failures:
-  #   - env: CMD="flake8 aldryn_faq"
+  #   - env: CMD="flake8 aldryn_people"
   fast_finish: true
   include:
     - python: 2.7
-      env: CMD="flake8 aldryn_faq"
+      env: CMD="flake8 aldryn_people"
 
 cache:
   directories:
