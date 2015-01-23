@@ -9,27 +9,28 @@ env:
   - CMD=./test
 
 python:
-  - 2.7
   - 2.6
-  - 3.4
+  - 2.7
   - 3.3
+  - 3.4
 
 matrix:
+  - DJANGO=1.6
+  - DJANGO=1.7
+
   allow_failures:
     - python: 3.3
     - python: 3.4
+
   fast_finish: true
+
   include:
     - python: 2.7
       env: CMD="flake8 aldryn_people"
 
-cache:
-  directories:
-    - $HOME/.wheelhouse
 
 install:
-  - pip wheel --wheel-dir $HOME/.wheelhouse -r test_requirements.txt
-  - pip install --use-wheel --no-index --find-links=$HOME/.wheelhouse -r test_requirements.txt
+  - pip install -q -r "test_requirements/django-$DJANGO.txt"
 
 script: coverage run test_settings.py
 
