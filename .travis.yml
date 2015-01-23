@@ -12,10 +12,9 @@ python:
   - 3.4
 
 env:
-  - CMD=./test
   matrix:
-    - DJANGO=1.6
-    - DJANGO=1.7
+    - DJANGO=1.6 CMD=./test
+    - DJANGO=1.7 CMD=./test
 
 matrix:
   allow_failures:
@@ -25,7 +24,6 @@ matrix:
   include:
     - python: 2.7
       env: CMD="flake8 aldryn_people"
-
 
 install:
   - pip install -q -r "test_requirements/django-$DJANGO.txt"
