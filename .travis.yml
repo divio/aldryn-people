@@ -23,7 +23,7 @@ matrix:
   fast_finish: true
   include:
     - python: 2.7
-      env: CMD="flake8 aldryn_people"
+      env: DJANGO=1.6 CMD="flake8 aldryn_people"
 
 install:
   - pip install -q -r "test_requirements/django-$DJANGO.txt"
