@@ -17,13 +17,10 @@ python:
 matrix:
   - DJANGO=1.6
   - DJANGO=1.7
-
   allow_failures:
     - python: 3.3
     - python: 3.4
-
   fast_finish: true
-
   include:
     - python: 2.7
       env: CMD="flake8 aldryn_people"
