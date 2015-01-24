@@ -25,13 +25,13 @@ matrix:
   # allow_failures:
   #   - python: 3.3
   #   - python: 3.4
-  fast_finish: true
-  include:
-    - python: 2.7
-      env: DJANGO=1.6 CMD="flake8 aldryn_people"
   exclude:
     - python: 2.6
       env: DJANGO=1.7 CMD=./test
+  fast_finish: true
+  include:
+    - python: 2.7
+      env: DJANGO=1.7 CMD="flake8 aldryn_people"
 
 install:
   - pip install -q -r "test_requirements/django-$DJANGO.txt"
