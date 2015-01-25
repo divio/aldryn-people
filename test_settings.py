@@ -50,7 +50,7 @@ def run():
     # sys.argv.append('--extra-settings=test_settings.py')
     # runner.cms('aldryn_people')
     from djangocms_helper import runner
-    runner.cms('aldryn_faq')
+    runner.cms('aldryn_people')
 
 if __name__ == "__main__":
     run()
