@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
-
 import base64
 import urlparse
 import warnings
@@ -58,7 +57,7 @@ class Group(TranslatableModel):
             '"Group.description"',
             DeprecationWarning
         )
-        return self.lazy_translation_getter('company_description')
+        return self.lazy_translation_getter('description')
 
     def __str__(self):
         return self.lazy_translation_getter('name', str(self.pk))
