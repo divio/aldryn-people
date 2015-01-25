@@ -1,6 +1,6 @@
 [run]
 source = aldryn_people
-omit = *migrations*
+omit = *migrations*, *tests*
 
 [report]
 exclude_lines =
