@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 from aldryn_people import __version__
 
 REQUIREMENTS = [
-    'django-hvad',
+    'django-parler',
     'phonenumbers',
     'django-phonenumber-field',  # only here as quick-fix because old migrations depend on this field
     'vobject',

@@ -30,7 +30,7 @@ HELPER_SETTINGS = {
         'aldryn_people',
         'easy_thumbnails',
         'filer',
-        'hvad',
+        'parler',
         'sortedm2m',
     ],
     'THUMBNAIL_PROCESSORS': (
@@ -43,12 +43,6 @@ HELPER_SETTINGS = {
 
 
 def run():
-    # import sys
-    # from djangocms_helper import runner
-    # if len(sys.argv) == 1:
-    #     sys.argv.append('test')
-    # sys.argv.append('--extra-settings=test_settings.py')
-    # runner.cms('aldryn_people')
     from djangocms_helper import runner
     runner.cms('aldryn_people')
 

@@ -15,7 +15,7 @@ from django.utils.translation import ugettext_lazy as _
 from cms.models.pluginmodel import CMSPlugin
 from djangocms_text_ckeditor.fields import HTMLField
 from filer.fields.image import FilerImageField
-from hvad.models import TranslatableModel, TranslatedFields
+from parler.models import TranslatableModel, TranslatedFields
 from sortedm2m.fields import SortedManyToManyField
 
 from .utils import get_additional_styles
@@ -48,7 +48,7 @@ class Group(TranslatableModel):
             '"Group.company_name" has been refactored to "Group.name"',
             DeprecationWarning
         )
-        return self.lazy_translation_getter('name')
+        return self.safe_translation_getter('name')
 
     @property
     def company_description(self):
@@ -57,10 +57,10 @@ class Group(TranslatableModel):
             '"Group.description"',
             DeprecationWarning
         )
-        return self.lazy_translation_getter('description')
+        return self.safe_translation_getter('description')
 
     def __str__(self):
-        return self.lazy_translation_getter('name', str(self.pk))
+        return self.safe_translation_getter('name', str(self.pk))
 
     class Meta:
         verbose_name = _('Group')
@@ -109,7 +109,7 @@ class Person(TranslatableModel):
 
     @property
     def comment(self):
-        return self.lazy_translation_getter('description', '')
+        return self.safe_translation_getter('description', '')
 
     def get_absolute_url(self):
         if self.slug:
@@ -120,10 +120,10 @@ class Person(TranslatableModel):
 
     def get_vcard(self, request=None):
         if self.group:
-            group_name = self.group.lazy_translation_getter('name')
+            group_name = self.group.safe_translation_getter('name')
         else:
             group_name = ''
-        function = self.lazy_translation_getter('function')
+        function = self.safe_translation_getter('function')
 
         vcard = vobject.vCard()
         vcard.add('n').value = vobject.vcard.Name(given=self.name)

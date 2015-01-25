@@ -24,8 +24,8 @@ class PeopleIndex(get_index_base()):
         return {'translations__language_code': language}
 
     def get_index_queryset(self, language):
-        queryset = self.get_model().objects.all()
-        return queryset.filter(translations__language_code=language)
+        return self.get_model().objects.active_translations(
+            language_code=language)
 
     def get_model(self):
         return Person

@@ -1,6 +1,6 @@
 coverage==3.7.1
 django-filer
-django-hvad
+django-parler
 django-phonenumber-field
 django-sortedm2m
 -e git+https://github.com/nephila/djangocms-helper.git#egg=djangocms-helper

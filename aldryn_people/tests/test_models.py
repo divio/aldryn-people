@@ -61,8 +61,10 @@ class TestBasicGroupModel(TransactionTestCase):
         """We can delete a group."""
         name = 'Group Delete'
         Group.objects.create(name=name)
-        Group.objects.using_translations().get(name=name).delete()
-        self.assertFalse(Group.objects.using_translations().filter(name=name))
+        group = Group.objects.translated(name=name)
+        if group:
+            group[0].delete()
+        self.assertFalse(Group.objects.translated(name=name))
 
     def test_create_another_group(self):
         """we create a group."""
@@ -92,7 +94,7 @@ class TestPersonModelTranslation(BasePeopleTest):
         )
         person1 = self.reload(self.person1, 'de')
         self.assertEqual(
-            person1.lazy_translation_getter('function'),
+            person1.safe_translation_getter('function'),
             self.data['person1']['de']['function']
         )
 

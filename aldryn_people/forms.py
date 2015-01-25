@@ -2,7 +2,7 @@
 
 from __future__ import unicode_literals
 
-from hvad.forms import TranslatableModelForm
+from parler.forms import TranslatableModelForm
 
 from .models import Person
 

@@ -5,7 +5,7 @@
 	"package-name": "aldryn-people",
 	"installed-apps": [
 		"aldryn_people",
-		"hvad",
+		"parler",
 		"sortedm2m"
 	],
 	"author": {

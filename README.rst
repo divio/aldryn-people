@@ -43,7 +43,7 @@ Manual Installation
 
     INSTALLED_APPS = [
         …
-        'hvad',
+        'parler',
         'sortedm2m',
         'aldryn_people',
         …
