@@ -22,7 +22,7 @@ class DownloadVcardView(DetailView):
             vcard = vcard.decode('utf-8').encode('ISO-8859-1')
         except:
             pass
-        response = HttpResponse(vcard, mimetype="text/x-vCard")
+        response = HttpResponse(vcard, content_type="text/x-vCard")
         response['Content-Disposition'] = 'attachment; filename="{0}"'.format(
             filename)
         return response
