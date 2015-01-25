@@ -89,11 +89,12 @@ HVAD > Parler
 ~~~~~~~~~~~~~
 
 This project was converted from using django-hvad to django-parler from version
-0.4.0. If you require HVAD in your project, check out tag `0.3.5`.
+0.4.0. If you require HVAD in your project, checkout git tag v0.3.5_.
 
+.. _v0.3.5: https://github.com/aldryn/aldryn-people/tree/0.3.5
 
-Python 3 compatibility
-~~~~~~~~~~~~~~~~~~~~~~
+Python 3 (in-)compatibility
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Due to a dependency on the OSS project vobject_, which was last updated in 2009
 and seems to strive to maintain Py2.4 compatibility, this project is currently
