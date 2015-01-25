@@ -2,6 +2,8 @@
 
 from __future__ import unicode_literals
 
+from django.utils.translation import force_text
+
 from cms import api
 from cms.models import CMSPlugin
 from cms.test_utils.testcases import URL_CMS_PLUGIN_ADD
@@ -22,6 +24,7 @@ class TestPersonPlugins(BasePeopleTest):
         Person.objects.create(name=name)
         plugin = api.add_plugin(self.placeholder, PeoplePlugin, self.language)
         plugin.people = Person.objects.all()
+        self.assertEqual(force_text(plugin), force_text(plugin.pk))
         self.page.publish(self.language)
 
         url = self.page.get_absolute_url()
