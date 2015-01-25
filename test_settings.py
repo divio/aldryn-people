@@ -43,12 +43,14 @@ HELPER_SETTINGS = {
 
 
 def run():
-    import sys
+    # import sys
+    # from djangocms_helper import runner
+    # if len(sys.argv) == 1:
+    #     sys.argv.append('test')
+    # sys.argv.append('--extra-settings=test_settings.py')
+    # runner.cms('aldryn_people')
     from djangocms_helper import runner
-    if len(sys.argv) == 1:
-        sys.argv.append('test')
-    sys.argv.append('--extra-settings=test_settings.py')
-    runner.cms('aldryn_people')
+    runner.cms('aldryn_faq')
 
 if __name__ == "__main__":
     run()
