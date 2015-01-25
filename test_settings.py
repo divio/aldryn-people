@@ -27,9 +27,11 @@ HELPER_SETTINGS = {
     'TIME_ZONE': 'Europe/Zurich',
     'HAYSTACK_CONNECTIONS': HAYSTACK_CONNECTIONS,
     'INSTALLED_APPS': [
-        'filer',
-        'easy_thumbnails',
         'aldryn_people',
+        'easy_thumbnails',
+        'filer',
+        'hvad',
+        'sortedm2m',
     ],
     'THUMBNAIL_PROCESSORS': (
         'easy_thumbnails.processors.colorspace',
