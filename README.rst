@@ -49,13 +49,11 @@ Manual Installation
         …
     ]
 
-3) Run migrations: `python manage.py migrate aldryn_people`. N.B. we support
-   both South and Django 1.7 migrations.
+3) Run migrations: `python manage.py migrate aldryn_people`.
 
-   NOTE: ::
-
-   If your version of South is older than 1.0.2, you may need to add the
-   following to your settings: ::
+   NOTE: aldryn_people supports both South and Django 1.7 migrations. However,
+   If your project uses a version of South older than 1.0.2, you may need to add
+   the following to your settings: ::
 
        MIGRATION_MODULES = [
            …
@@ -64,6 +62,7 @@ Manual Installation
        ]
 
 4) (Re-)Start your application server.
+
 
 Download vCard
 ~~~~~~~~~~~~~~
