@@ -52,16 +52,16 @@ Manual Installation
 3) Run migrations: `python manage.py migrate aldryn_people`. N.B. we support
    both South and Django 1.7 migrations.
 
-   NOTE::
+   NOTE: ::
 
-       If your version of South is older than
-       1.0.2, you may need to add the following to your settings: ::
+   If your version of South is older than 1.0.2, you may need to add the
+   following to your settings: ::
 
-        MIGRATION_MODULES = [
-            …
-            'aldryn_people': 'aldryn_people.south_migrations',
-            …
-        ]
+       MIGRATION_MODULES = [
+           …
+           'aldryn_people': 'aldryn_people.south_migrations',
+           …
+       ]
 
 4) (Re-)Start your application server.
 
