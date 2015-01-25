@@ -11,3 +11,11 @@ python-coveralls==2.4.2
 six
 sphinx
 vobject
+
+# The following are for aldryn-search
+django-appconf==0.6
+aldryn-common
+django-haystack>=2.0.0
+django-spurl
+django-standard-form
+-e git+https://github.com/aldryn/aldryn-search.git#egg=aldryn-search
