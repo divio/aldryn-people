@@ -59,7 +59,7 @@ class TestBasicGroupModel(TransactionTestCase):
 
     def test_delete_group(self):
         """We can delete a group."""
-        name = 'Gruop Delete'
+        name = 'Group Delete'
         Group.objects.create(name=name)
         Group.objects.using_translations().get(name=name).delete()
         self.assertFalse(Group.objects.using_translations().filter(name=name))
