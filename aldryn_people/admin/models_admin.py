@@ -7,8 +7,9 @@ from django.utils.translation import ugettext_lazy as _
 
 from parler.admin import TranslatableAdmin
 
-from .models import Person, Group
-from .forms import PersonForm
+from ..models import Person, Group
+from ..forms import PersonForm
+
 from . import AllTranslationsAdminMixin
 
 
