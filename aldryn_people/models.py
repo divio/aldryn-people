@@ -120,7 +120,10 @@ class Person(TranslatableModel):
         return reverse('person-detail', kwargs=kwargs)
 
     def get_vcard(self, request=None):
-        group_name = self.group.lazy_translation_getter('name')
+        if self.group:
+            group_name = self.group.lazy_translation_getter('name')
+        else:
+            group_name = ''
         function = self.lazy_translation_getter('function')
 
         vcard = vobject.vCard()
