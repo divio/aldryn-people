@@ -116,7 +116,7 @@ class Person(TranslatableModel):
             kwargs = {'slug': self.slug}
         else:
             kwargs = {'pk': self.pk}
-        return reverse('person-detail', kwargs=kwargs)
+        return reverse('aldryn_people:person-detail', kwargs=kwargs)
 
     def get_vcard(self, request=None):
         if self.group:

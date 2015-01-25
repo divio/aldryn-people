@@ -40,13 +40,13 @@ class TestBasicPeopleModels(TransactionTestCase):
         with override('en'):
             self.assertEqual(
                 person.get_absolute_url(),
-                '/en/{0}/'.format(slug)
+                '/en/people/{0}/'.format(slug)
             )
             # Now test that it will work when there's no slug too.
             person.slug = ''
             self.assertEqual(
                 person.get_absolute_url(),
-                '/en/{0}/'.format(person.pk),
+                '/en/people/{0}/'.format(person.pk),
             )
 
 

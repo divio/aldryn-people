@@ -16,6 +16,7 @@ class TestPersonAppHook(BasePeopleTest):
         We add a person to the app
         """
         self.page.application_urls = 'PeopleApp'
+        self.page.application_namespace = 'aldryn_people'
         self.page.publish(self.language)
 
         person = Person.objects.create(
@@ -23,11 +24,11 @@ class TestPersonAppHook(BasePeopleTest):
             slug='michael'
         )
         # By slug
-        url = reverse('person-detail', kwargs={'slug': person.slug})
+        url = reverse('aldryn_people:person-detail', kwargs={'slug': person.slug})
         response = self.client.get(url)
         self.assertContains(response, 'Michael')
 
         # By pk
-        url = reverse('person-detail', kwargs={'pk': person.pk})
+        url = reverse('aldryn_people:person-detail', kwargs={'pk': person.pk})
         response = self.client.get(url)
         self.assertContains(response, 'Michael')

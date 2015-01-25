@@ -24,6 +24,8 @@ HAYSTACK_CONNECTIONS = {
 }
 
 HELPER_SETTINGS = {
+    # Use of this custom URLs provides a shortcut when testing apphooks
+    'ROOT_URLCONF': 'aldryn_people.tests.urls',
     'TIME_ZONE': 'Europe/Zurich',
     'HAYSTACK_CONNECTIONS': HAYSTACK_CONNECTIONS,
     'INSTALLED_APPS': [

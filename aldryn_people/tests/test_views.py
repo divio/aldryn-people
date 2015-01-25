@@ -17,7 +17,7 @@ class TestDownloadVcardView(BasePeopleTest, CMSRequestBasedTest):
         person1 = self.reload(self.person1, "en")
         person1.slug = 'person1-slug'
         kwargs = {"slug": person1.slug}
-        person1_url = reverse('person-detail', kwargs=kwargs)
+        person1_url = reverse('aldryn_people:person-detail', kwargs=kwargs)
         factory = RequestFactory()
         request = factory.get(person1_url)
         response = DownloadVcardView.as_view()(request, **kwargs)
