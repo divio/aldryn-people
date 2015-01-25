@@ -49,13 +49,19 @@ Manual Installation
         …
     ]
 
-3) Run migrations: `python manage.py migrate aldryn_people`. N.B. we support both South and Django 1.7 migrations. If your version of South is older than 1.0.2, you may need to add the following to your settings: ::
+3) Run migrations: `python manage.py migrate aldryn_people`. N.B. we support
+   both South and Django 1.7 migrations.
 
-    MIGRATION_MODULES = [
-        …
-        'aldryn_people': 'aldryn_people.south_migrations',
-        …
-    ]
+   NOTE::
+
+       If your version of South is older than
+       1.0.2, you may need to add the following to your settings: ::
+
+        MIGRATION_MODULES = [
+            …
+            'aldryn_people': 'aldryn_people.south_migrations',
+            …
+        ]
 
 4) (Re-)Start your application server.
 
@@ -76,9 +82,23 @@ Available Plug-ins
 ``People`` plugin lets you display list of people on a CMS page.
 
 
+NOTES
+-----
+
+
+HVAD > Parler
+~~~~~~~~~~~~~
+
+This project was converted from using django-hvad to django-parler from version
+0.4.0. If you require HVAD in your project, check out tag `0.3.5`.
+
+
 Python 3 compatibility
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Due to dependency on the OSS project vobject_, which was last updated in 2009 and seems to strive to maintain Py2.4 compatibility, this project is currently *not* Python 3 compatible. Pull requests for a Py3 compatible version vobject are wellcome.
+Due to a dependency on the OSS project vobject_, which was last updated in 2009
+and seems to strive to maintain Py2.4 compatibility, this project is currently
+*not* Python 3 compatible. Pull requests for a Py3-compatible version of vobject
+would be graciously accepted.
 
 .. _vobject: http://vobject.skyhouseconsulting.com/
