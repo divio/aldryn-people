@@ -38,5 +38,6 @@ setup(
     install_requires=REQUIREMENTS,
     classifiers=CLASSIFIERS,
     include_package_data=True,
-    zip_safe=False
+    zip_safe=False,
+    test_suite='cms_helper.run',
 )
