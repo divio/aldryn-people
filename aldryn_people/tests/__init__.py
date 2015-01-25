@@ -20,7 +20,7 @@ from djangocms_helper.utils import create_user
 from ..models import Group, Person
 
 
-class BasePeopleTest(TestCase, BaseCMSTestCase):
+class BasePeopleTest(BaseCMSTestCase, TestCase):
     su_username = 'user'
     su_password = 'pass'
 
@@ -101,6 +101,10 @@ class BasePeopleTest(TestCase, BaseCMSTestCase):
         self.person2.slug = 'person2-slug'
         self.person2.save()
         self.group2.save()
+
+    def tearDown(self):
+        Person.objects.all().delete()
+        Group.objects.all().delete()
 
     def create_superuser(self):
         return User.objects.create_superuser(
