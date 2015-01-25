@@ -9,9 +9,10 @@ from parler.admin import TranslatableAdmin
 
 from .models import Person, Group
 from .forms import PersonForm
+from . import AllTranslationsAdminMixin
 
 
-class PersonAdmin(TranslatableAdmin):
+class PersonAdmin(AllTranslationsAdminMixin, TranslatableAdmin):
 
     list_display = [
         '__str__', 'email', 'vcard_enabled', 'all_translations']
@@ -41,7 +42,7 @@ class PersonAdmin(TranslatableAdmin):
     form = PersonForm
 
 
-class GroupAdmin(TranslatableAdmin):
+class GroupAdmin(AllTranslationsAdminMixin, TranslatableAdmin):
 
     list_display = ['__str__', 'city', 'all_translations']
     search_filter = ['name']
