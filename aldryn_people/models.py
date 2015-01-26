@@ -11,6 +11,7 @@ from django.conf import settings
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
+from django.utils.text import slugify
 
 from cms.models.pluginmodel import CMSPlugin
 from djangocms_text_ckeditor.fields import HTMLField
@@ -190,6 +191,11 @@ class Person(TranslatableModel):
                 website.value = unicode(self.group.website)
 
         return vcard.serialize()
+
+    def save(self, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        return super(Person, self).save(**kwargs)
 
 
 @python_2_unicode_compatible
