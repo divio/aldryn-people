@@ -11,7 +11,11 @@ from django.conf import settings
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
-from django.utils.text import slugify
+try:
+    from django.utils.text import slugify
+except ImportError:
+    # In Djano <= 1.4 slugify is here
+    from django.template.defaultfilters import slugify
 
 from cms.models.pluginmodel import CMSPlugin
 from djangocms_text_ckeditor.fields import HTMLField
