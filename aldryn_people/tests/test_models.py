@@ -49,6 +49,13 @@ class TestBasicPeopleModels(TransactionTestCase):
                 '/en/people/{0}/'.format(person.pk),
             )
 
+    def test_auto_slugify(self):
+        name = 'Melchior Hoffman'
+        slug = 'melchior-hoffman'
+        person = Person.objects.create(name=name)
+        person.save()
+        self.assertEquals(person.slug, slug)
+
 
 class TestBasicGroupModel(TransactionTestCase):
 
