@@ -1,3 +1,5 @@
+.. image:: https://badge.fury.io/py/aldryn_people.svg
+    :target: http://badge.fury.io/py/aldryn_people
 .. image:: https://travis-ci.org/divio/django-cms.svg?branch=develop
     :target: https://travis-ci.org/divio/django-cms
 .. image:: https://img.shields.io/coveralls/aldryn/aldryn-people.svg
