@@ -35,6 +35,9 @@ HELPER_SETTINGS = {
         'parler',
         'sortedm2m',
     ],
+    'MIGRATION_MODULES': {
+        'filer': 'filer.migrations_django',
+    },
     'THUMBNAIL_PROCESSORS': (
         'easy_thumbnails.processors.colorspace',
         'easy_thumbnails.processors.autocrop',
