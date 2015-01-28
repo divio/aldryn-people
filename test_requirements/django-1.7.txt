@@ -1,3 +1,5 @@
-django>=1.7,<1.8
+# NOTE: Django 1.7.4, released within 1 day of this writing, specifically does
+# not work.
+django==1.7.3
 
 -r base.txt
