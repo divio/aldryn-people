@@ -1,5 +1,8 @@
+#
 # NOTE: Django 1.7.4, released within 1 day of this writing, specifically does
-# not work.
+# not work. Ticket opened at:
+#     https://github.com/gregmuellegger/django-sortedm2m/issues/43
+#
 django==1.7.3
 
 -r base.txt
