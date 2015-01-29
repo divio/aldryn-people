@@ -10,7 +10,7 @@ from parler.admin import TranslatableAdmin
 from ..models import Person, Group
 from ..forms import PersonForm
 
-from . import AllTranslationsAdminMixin
+from .base import AllTranslationsAdminMixin
 
 
 class PersonAdmin(AllTranslationsAdminMixin, TranslatableAdmin):
