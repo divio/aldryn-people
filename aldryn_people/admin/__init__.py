@@ -6,6 +6,8 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.translation import get_language
 
+from .models_admin import GroupAdmin, PersonAdmin  # flake8: noqa
+
 
 class AllTranslationsAdminMixin(object):
     """To use this, apply this mixin to your Admin class, then add
