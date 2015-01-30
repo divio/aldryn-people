@@ -2,7 +2,7 @@ coverage==3.7.1
 django-filer
 django-parler
 django-phonenumber-field
-django-sortedm2m
+-e git+http://https://github.com/gregmuellegger/django-sortedm2m#egg=django-sortedm2m
 -e git+https://github.com/nephila/djangocms-helper.git#egg=djangocms-helper
 djangocms-text-ckeditor
 flake8

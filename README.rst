@@ -86,6 +86,14 @@ Available Plug-ins
 NOTES
 -----
 
+SortedM2M
+~~~~~~~~~
+
+When using this project with Django 1.7.4 or later, please install the latest
+version of `django-sortedm2m from its GitHub repository`__. Or, a version from
+PyPI which is 0.8.2 or later.
+
+__ https://github.com/gregmuellegger/django-sortedm2m
 
 HVAD > Parler
 ~~~~~~~~~~~~~
