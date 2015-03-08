@@ -10,6 +10,7 @@ REQUIREMENTS = [
     'django-filer',
     'aldryn-common>=0.1.1',
     'djangocms-text-ckeditor',
+    'aldryn-boilerplates',
 ]
 
 CLASSIFIERS = [
