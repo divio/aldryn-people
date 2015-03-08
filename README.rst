@@ -63,7 +63,9 @@ Manual Installation
            …
        ]
 
-4) (Re-)Start your application server.
+4) Install aldryn-boilerplates
+
+5) (Re-)Start your application server.
 
 
 Download vCard
