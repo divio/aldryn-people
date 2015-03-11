@@ -11,6 +11,7 @@ python-coveralls==2.4.2
 six
 sphinx
 vobject
+aldryn-boilerplates
 
 # The following are for aldryn-search
 django-appconf==0.6

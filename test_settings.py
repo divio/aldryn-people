@@ -34,6 +34,10 @@ HELPER_SETTINGS = {
         'filer',
         'parler',
         'sortedm2m',
+        'aldryn_boilerplates',
+    ],
+    'TEMPLATE_CONTEXT_PROCESSORS': [
+        'aldryn_boilerplates.context_processors.boilerplate',
     ],
     'MIGRATION_MODULES': {
         'filer': 'filer.migrations_django',
@@ -44,7 +48,20 @@ HELPER_SETTINGS = {
         'filer.thumbnail_processors.scale_and_crop_with_subject_location',
         'easy_thumbnails.processors.filters',
     ),
+    'STATICFILES_FINDERS': [
+        'django.contrib.staticfiles.finders.FileSystemFinder',
+        # important! place right before django.contrib.staticfiles.finders.AppDirectoriesFinder
+        'aldryn_boilerplates.staticfile_finders.AppDirectoriesFinder',
+        'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    ],
+    'TEMPLATE_LOADERS': [
+        'django.template.loaders.filesystem.Loader',
+        # important! place right before django.template.loaders.app_directories.Loader
+        'aldryn_boilerplates.template_loaders.AppDirectoriesLoader',
+        'django.template.loaders.app_directories.Loader',
+    ]
 }
+ALDRYN_BOILERPLATE_NAME = 'legacy'
 
 
 def run():
