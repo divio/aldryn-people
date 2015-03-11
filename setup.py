@@ -5,7 +5,7 @@ from aldryn_people import __version__
 REQUIREMENTS = [
     'django-parler',
     'phonenumbers',
-    'django-phonenumber-field',  # only here as quick-fix because old migrations depend on this field
+    'django-phonenumber-field>=0.7.2',  # only here as quick-fix because old migrations depend on this field
     'vobject',
     'django-filer',
     'django-sortedm2m',
