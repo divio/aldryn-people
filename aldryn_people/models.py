@@ -3,6 +3,7 @@
 from __future__ import unicode_literals
 import base64
 import urlparse
+import aldryn_common
 import warnings
 import vobject
 
@@ -21,7 +22,7 @@ from cms.models.pluginmodel import CMSPlugin
 from djangocms_text_ckeditor.fields import HTMLField
 from filer.fields.image import FilerImageField
 from parler.models import TranslatableModel, TranslatedFields
-from sortedm2m.fields import SortedManyToManyField
+import aldryn_common.admin_fields.sortedm2m
 
 from .utils import get_additional_styles
 
@@ -213,7 +214,8 @@ class BasePeoplePlugin(CMSPlugin):
     style = models.CharField(
         _('Style'), choices=STYLE_CHOICES,
         default=STYLE_CHOICES[0][0], max_length=50)
-    people = SortedManyToManyField(Person, blank=True, null=True)
+    people = aldryn_common.admin_fields.sortedm2m.SortedM2MModelField(
+        Person, blank=True, null=True)
     group_by_group = models.BooleanField(
         verbose_name=_('group by group'),
         default=True,
