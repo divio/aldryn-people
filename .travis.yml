@@ -41,4 +41,4 @@ script: coverage run test_settings.py
 after_success: coveralls
 
 notifications:
-  webhooks: http://aldryn-addons.com/en/travis-endpoint/
+  webhooks: http://addons.us-iad-rs.aldryn.io/en/travis-endpoint/
