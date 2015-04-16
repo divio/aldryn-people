@@ -4,7 +4,8 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.core.urlresolvers import reverse
-from django.utils.translation import get_language
+
+from cms.utils.i18n import get_current_language
 
 
 class AllTranslationsAdminMixin(object):
@@ -33,7 +34,7 @@ class AllTranslationsAdminMixin(object):
                 url=change_form_url,
                 lang=lang,
             )
-            if lang == get_language():
+            if lang == get_current_language():
                 link = "<strong>{0}</strong>".format(link)
             langs[idx] = link
         return ', '.join(langs)
