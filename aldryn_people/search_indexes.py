@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 from django.conf import settings
 
 from aldryn_search.utils import get_index_base, strip_tags
+from parler.utils.context import switch_language
 
 from .models import Person
 
@@ -15,7 +16,8 @@ class PeopleIndex(get_index_base()):
     INDEX_TITLE = True
 
     def get_title(self, obj):
-        return obj.name
+        with switch_language(obj):
+            return obj.name
 
     def get_description(self, obj):
         return obj.description
