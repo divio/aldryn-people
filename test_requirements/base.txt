@@ -5,6 +5,7 @@ django-phonenumber-field
 #-e git+https://github.com/gregmuellegger/django-sortedm2m#egg=django-sortedm2m
 django-sortedm2m
 #-e git+https://github.com/nephila/djangocms-helper.git#egg=djangocms-helper
+djangocms-helper
 djangocms-text-ckeditor
 flake8
 phonenumbers
