@@ -2,7 +2,10 @@
 
 from __future__ import unicode_literals
 
-from django.utils.translation import force_text
+try:
+    from django.utils.translation import force_unicode as force_text
+except ImportError:
+    from django.utils.encoding import force_text
 
 from cms import api
 from cms.models import CMSPlugin
