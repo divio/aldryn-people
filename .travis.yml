@@ -14,9 +14,6 @@ python:
 
 env:
   matrix:
-    # django-cms<3.1 support Django>=1.4
-    - DJANGO=1.4 CMD=./test
-    - DJANGO=1.5 CMD=./test
     # django-cms>=3.1 support Django>=1.6
     - DJANGO=1.6 CMD=./test
     - DJANGO=1.7 CMD=./test
