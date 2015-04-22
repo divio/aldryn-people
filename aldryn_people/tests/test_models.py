@@ -2,9 +2,12 @@
 
 from __future__ import unicode_literals
 
-from django.core.urlresolvers import reverse
 from django.test import TransactionTestCase
-from django.utils.translation import override, force_text
+from django.utils.translation import override
+try:
+    from django.utils.translation import force_unicode as force_text
+except ImportError:
+    from django.utils.encoding import force_text
 
 from ..models import Person, Group
 

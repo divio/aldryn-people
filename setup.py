@@ -3,7 +3,8 @@ from setuptools import setup, find_packages
 from aldryn_people import __version__
 
 REQUIREMENTS = [
-    'django-parler',
+    'Django>1.4,<1.8',
+    'django-parler==1.4',
     'phonenumbers',
     'django-phonenumber-field',  # only here as quick-fix because old migrations depend on this field
     'vobject',
