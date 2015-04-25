@@ -8,7 +8,7 @@ REQUIREMENTS = [
     'django-phonenumber-field>=0.7.2',  # only here as quick-fix because old migrations depend on this field
     'vobject',
     'django-filer',
-    'aldryn-common>=0.1.1',
+    'aldryn-common>=0.1.3',
     'djangocms-text-ckeditor',
     'aldryn-boilerplates',
 ]
