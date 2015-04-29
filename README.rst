@@ -4,6 +4,9 @@
     :target: https://travis-ci.org/divio/django-cms
 .. image:: https://img.shields.io/coveralls/aldryn/aldryn-people.svg
     :target: https://coveralls.io/r/aldryn/aldryn-people
+.. image:: https://codeclimate.com/github/aldryn/aldryn-people/badges/gpa.svg
+   :target: https://codeclimate.com/github/aldryn/aldryn-people
+   :alt: Code Climate
 
 ===============
 Aldryn People
