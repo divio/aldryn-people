@@ -10,6 +10,7 @@ from .models import Person
 class PersonForm(TranslatableModelForm):
     class Meta:
         model = Person
+        fields = '__all__'
 
     def clean_slug(self):
         return self.cleaned_data['slug'] or None
