@@ -3,7 +3,6 @@
 from __future__ import unicode_literals
 import base64
 import urlparse
-import aldryn_common
 import warnings
 import vobject
 
@@ -19,10 +18,15 @@ except ImportError:
     from django.template.defaultfilters import slugify
 
 from cms.models.pluginmodel import CMSPlugin
+
 from djangocms_text_ckeditor.fields import HTMLField
+
 from filer.fields.image import FilerImageField
+
 from parler.models import TranslatableModel, TranslatedFields
-import aldryn_common.admin_fields.sortedm2m
+
+from aldryn_common.slugs import unique_slugify
+from aldryn_common.admin_fields.sortedm2m import SortedM2MModelField
 
 from .utils import get_additional_styles
 
@@ -199,7 +203,7 @@ class Person(TranslatableModel):
 
     def save(self, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            unique_slugify(instance=self, value=self.name)
         return super(Person, self).save(**kwargs)
 
 
@@ -214,7 +218,7 @@ class BasePeoplePlugin(CMSPlugin):
     style = models.CharField(
         _('Style'), choices=STYLE_CHOICES,
         default=STYLE_CHOICES[0][0], max_length=50)
-    people = aldryn_common.admin_fields.sortedm2m.SortedM2MModelField(
+    people = SortedM2MModelField(
         Person, blank=True, null=True)
     group_by_group = models.BooleanField(
         verbose_name=_('group by group'),
