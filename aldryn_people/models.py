@@ -6,6 +6,8 @@ import urlparse
 import warnings
 import vobject
 
+import six
+
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.db import models
@@ -115,7 +117,11 @@ class Person(TranslatableModel):
         verbose_name_plural = _('People')
 
     def __str__(self):
-        return self.name
+        pkstr = str(self.pk)
+
+        if six.PY2:
+            pkstr = six.u(pkstr)
+        return self.name.strip() or pkstr
 
     @property
     def comment(self):
