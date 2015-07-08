@@ -56,6 +56,20 @@ class TestBasicPeopleModels(TransactionTestCase):
         person.save()
         self.assertEquals(person.slug, slug)
 
+    def test_auto_slugify_same_name(self):
+        name_1 = 'Melchior Hoffman'
+        slug_1 = 'melchior-hoffman'
+        person_1 = Person.objects.create(name=name_1)
+        person_1.save()
+
+        name_2 = 'Melchior Hoffman'
+        slug_2 = 'melchior-hoffman-2'
+        person_2 = Person.objects.create(name=name_2)
+        person_2.save()
+
+        self.assertEquals(person_1.slug, slug_1)
+        self.assertEquals(person_2.slug, slug_2)
+
 
 class TestBasicGroupModel(TransactionTestCase):
 
