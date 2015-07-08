@@ -121,7 +121,8 @@ class Person(TranslatableModel):
 
         if six.PY2:
             pkstr = six.u(pkstr)
-        return self.name.strip() or pkstr
+        name = self.name.strip()
+        return name if len(name) > 0 else pkstr
 
     @property
     def comment(self):
