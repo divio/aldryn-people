@@ -1,27 +1,33 @@
 {% load i18n thumbnail %}
 
-<div class="plugin plugin-people">
-{% if people_groups %}
-	{# Because of hvad I have to activate the plugin's language :( #}
-	{% language instance.language %}
-	{% for group, people_list in people_groups.items %}
-		{% if group.name %}
-		<div class="people-group">
-			<h2>{{ group.name }}</h2>
-			<div class="people-lead">{{ group.description|safe }}</div>
-			<p class="people-desc">
-				{% if group.phone %}{% trans "Phone:" %} <span>{{ group.phone }}</span><br />{% endif %}
-				{% trans "Address:" %}
-				<span>{{ group.address }}</span>
-			</p>
-		</div>
-		{% endif %}
-		{% include "aldryn_people/includes/people_items.html" with people=people_list %}
-	{% endfor %}
-	{% endlanguage %}
-{% endif %}
-
-{% if not people_groups %}
-	{% include "aldryn_people/includes/people_items.html" %}
-{% endif %}
+<div class="aldryn aldryn-people">
+    {% if not people_groups %}
+        {# if grouping is disabled, list only people #}
+        <div class="aldryn-people-list">
+            {% for person in people %}
+                {% include "aldryn_people/includes/person.html" with person=person %}
+            {% endfor %}
+        </div>
+    {% else %}
+        {# if enabled, we group the people by categories defined #}
+        {# IMPORTANT: only people with a group are shown #}
+        <div class="aldryn-people-list-group">
+            {% language instance.language %}
+                {% for group, people_list in people_groups.items %}
+                    {% if group.name %}
+                        <div class="people-group">
+                            <h2>{{ group.name }}</h2>
+                            <div class="people-lead">{{ group.description|safe }}</div>
+                            <p class="people-desc">
+                                {% if group.phone %}{% trans "Phone:" %} <span>{{ group.phone }}</span><br />{% endif %}
+                                {% trans "Address:" %}
+                                <span>{{ group.address }}</span>
+                            </p>
+                        </div>
+                    {% endif %}feature/
+                    {% include "aldryn_people/includes/person.html" with people=people_list %}
+                {% endfor %}
+            {% endlanguage %}
+        </div>
+    {% endif %}
 </div>
