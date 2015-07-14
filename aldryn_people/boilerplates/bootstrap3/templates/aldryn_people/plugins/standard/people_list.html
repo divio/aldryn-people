@@ -1,4 +1,4 @@
-{% load i18n thumbnail %}
+{% load i18n %}
 
 <div class="aldryn aldryn-people">
     {% if not people_groups %}
@@ -13,19 +13,11 @@
         {# IMPORTANT: only people with a group are shown #}
         <div class="aldryn-people-list-group">
             {% language instance.language %}
-                {% for group, people_list in people_groups.items %}
+                {% for group, person in people_groups.items %}
                     {% if group.name %}
-                        <div class="people-group">
-                            <h2>{{ group.name }}</h2>
-                            <div class="people-lead">{{ group.description|safe }}</div>
-                            <p class="people-desc">
-                                {% if group.phone %}{% trans "Phone:" %} <span>{{ group.phone }}</span><br />{% endif %}
-                                {% trans "Address:" %}
-                                <span>{{ group.address }}</span>
-                            </p>
-                        </div>
-                    {% endif %}feature/
-                    {% include "aldryn_people/includes/person.html" with people=people_list %}
+                        {% include "aldryn_people/includes/group.html" %}
+                    {% endif %}
+                    {% include "aldryn_people/includes/person.html" with people=person group="true" %}
                 {% endfor %}
             {% endlanguage %}
         </div>
