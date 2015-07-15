@@ -7,7 +7,7 @@
     {% if not group %}</h2>{% else %}</h3>{% endif %}
 
     {% if person.visual %}
-        <p class="people-visual">
+        <p class="visual">
             {% if instance.show_links %}
                 <a href="{{ person.get_absolute_url }}">
             {% endif %}
@@ -17,7 +17,8 @@
             {% endif %}
         </p>
     {% endif %}
-    <p class="people-meta">
+
+    <p class="meta">
         {% if person.phone %}
             <strong>{% trans "Phone:" %}</strong>
             {{ person.phone|phoneformat }}<br>
@@ -46,8 +47,8 @@
     {% endif %}
 
     {% if instance.show_vcard and person.vcard_enabled %}
-        <span class="fa fa-fw fa-download" aria-hidden="true"></span>
-        <a href="{# url 'download_vcard' person.slug #}" class="btn-download">
+        <a href="{# url 'download_vcard' person.slug #}" class="btn btn-default btn-sm">
+            <span class="fa fa-fw fa-download" aria-hidden="true"></span>
             {% trans "Download vCard" %}
         </a>
     {% endif %}
