@@ -10,14 +10,21 @@
         </div>
     {% else %}
         {# if enabled, we group the people by categories defined #}
-        {# IMPORTANT: only people with a group are shown #}
         <div class="aldryn-people-list-group">
             {% language instance.language %}
+                {# IMPORTANT: first sow people with a group #}
                 {% for group, person in people_groups.items %}
                     {% if group.name %}
                         {% include "aldryn_people/includes/group.html" %}
+                        {% include "aldryn_people/includes/person.html" with person=person group="true" %}
                     {% endif %}
-                    {% include "aldryn_people/includes/person.html" with people=person group="true" %}
+                {% endfor %}
+                {# IMPORTANT: and than the remaining #}
+                {% for group, person in people_groups.items %}
+                    {% if not group.name %}
+                        <h2>{% trans "Uncategorized" %}</h2>
+                        {% include "aldryn_people/includes/person.html" with person=person group="true" %}
+                    {% endif %}
                 {% endfor %}
             {% endlanguage %}
         </div>
