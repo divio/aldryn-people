@@ -1,17 +1,54 @@
 {% load i18n thumbnail aldryn_people_tags %}
+{% load url from future %}
 
 <article class="aldryn-people-article">
-    <h2>{{ person.name }} <span>{{ person.function }}</span></h2>
-    {% if person.visual %}<p class="people-visual">
-        {% if instance.show_links %}<a href="{{ person.get_absolute_url }}">{% endif %}
-            <img src="{% thumbnail person.visual 200x100 crop subject_location=person.visual.subject_location %}" alt="{{ person.name }}" />
-        {% if instance.show_links %}</a>{% endif %}
-        </p>{% endif %}
+    {% if not group %}<h2>{% else %}<h3>{% endif %}
+        {{ person.name }} <small>{{ person.function }}</small>
+    {% if not group %}</h2>{% else %}</h3>{% endif %}
+
+    {% if person.visual %}
+        <p class="people-visual">
+            {% if instance.show_links %}
+                <a href="{{ person.get_absolute_url }}">
+            {% endif %}
+                <img src="{% thumbnail person.visual 200x100 crop subject_location=person.visual.subject_location %}" alt="{{ person.name }}">
+            {% if instance.show_links %}
+                </a>
+            {% endif %}
+        </p>
+    {% endif %}
     <p class="people-meta">
-        {% if person.phone %}{% trans "Phone:" %} <span>{{ person.phone|phoneformat }}</span><br />{% endif %}
-        {% if person.mobile %}{% trans "Mobile:" %} <span>{{ person.mobile|phoneformat }}</span><br />{% endif %}
-        {% if person.email %}{% trans "E-Mail:" %} <a href="mailto:{{ person.email }}">{{ person.email }}</a>{% endif %}
-        {% if instance.show_vcard and person.vcard_enabled %}<br /><a href="{% url 'download_vcard' person.slug %}" class="btn-download">{% trans "Download vCard" %}</a>{% endif %}
+        {% if person.phone %}
+            <strong>{% trans "Phone:" %}</strong>
+            {{ person.phone|phoneformat }}<br>
+        {% endif %}
+        {% if person.mobile %}
+            <strong>{% trans "Mobile:" %}</strong>
+            {{ person.mobile|phoneformat }}<br>
+        {% endif %}
+        {% if person.fax %}
+            <strong>{% trans "Fax:" %}</strong>
+            {{ person.fax }}<br>
+        {% endif %}
+        {% if person.email %}
+            <strong>{% trans "Email:" %}</strong>
+            <span class="fa fa-fw fa-envelope" aria-hidden="true"></span>
+            <a href="mailto:{{ person.email }}">{{ person.email }}</a><br>
+        {% endif %}
+        {% if person.website %}
+            <strong>{% trans "Website:" %}</strong>
+            <span class="fa fa-fw fa-globe" aria-hidden="true"></span>
+            <a href="{{ person.website }}" target="_blank">{{ person.website }}</a><br>
+        {% endif %}
     </p>
-    {% if person.description %}<div class="people-desc">{{ person.description|safe }}</div>{% endif %}
+    {% if person.description %}
+        <div class="lead">{{ person.description|safe }}</div>
+    {% endif %}
+
+    {% if instance.show_vcard and person.vcard_enabled %}
+        <span class="fa fa-fw fa-download" aria-hidden="true"></span>
+        <a href="{# url 'download_vcard' person.slug #}" class="btn-download">
+            {% trans "Download vCard" %}
+        </a>
+    {% endif %}
 </article>

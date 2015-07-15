@@ -13,17 +13,21 @@
         <div class="aldryn-people-list-group">
             {% language instance.language %}
                 {# IMPORTANT: first sow people with a group #}
-                {% for group, person in people_groups.items %}
+                {% for group, people_list in people_groups.items %}
                     {% if group.name %}
                         {% include "aldryn_people/includes/group.html" %}
-                        {% include "aldryn_people/includes/person.html" with person=person group="true" %}
+                        {% for person in people_list %}
+                            {% include "aldryn_people/includes/person.html" with person=person group="true" %}
+                        {% endfor %}
                     {% endif %}
                 {% endfor %}
                 {# IMPORTANT: and than the remaining #}
                 {% for group, person in people_groups.items %}
                     {% if not group.name %}
                         <h2>{% trans "Uncategorized" %}</h2>
-                        {% include "aldryn_people/includes/person.html" with person=person group="true" %}
+                        {% for person in person %}
+                            {% include "aldryn_people/includes/person.html" with person=person group="true" %}
+                        {% endfor %}
                     {% endif %}
                 {% endfor %}
             {% endlanguage %}
