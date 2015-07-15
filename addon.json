@@ -1,18 +1,8 @@
 {
-	"name": "Aldryn People",
-	"description": "People management in django CMS",
-	"url": "https://github.com/aldryn/aldryn-people",
-	"package-name": "aldryn-people",
-	"installed-apps": [
-		"aldryn_people",
-		"parler",
-		"sortedm2m"
-	],
-	"author": {
-		"name": "Divio AG",
-		"url": "https://www.divio.ch"
-	},
-	"license": {
-		"name": "BSD"
-	}
+    "package-name": "aldryn-people",
+    "installed-apps": [
+        "aldryn_people",
+        "parler",
+        "sortedm2m"
+    ]
 }
