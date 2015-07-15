@@ -12,7 +12,7 @@
         {# if enabled, we group the people by categories defined #}
         <div class="aldryn-people-list-group">
             {% language instance.language %}
-                {# IMPORTANT: first sow people with a group #}
+                {# IMPORTANT: first show people with a group #}
                 {% for group, people_list in people_groups.items %}
                     {% if group.name %}
                         {% include "aldryn_people/includes/group.html" %}
