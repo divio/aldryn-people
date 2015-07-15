@@ -9,7 +9,7 @@
     {% if person.visual %}
         <p class="visual">
             {% if instance.show_links %}
-                <a href="{{ person.get_absolute_url }}">
+                <a href="{% url 'aldryn_people:person-detail' person.slug %}">
             {% endif %}
                 <img src="{% thumbnail person.visual 200x100 crop subject_location=person.visual.subject_location %}" alt="{{ person.name }}">
             {% if instance.show_links %}
@@ -46,8 +46,8 @@
         <div class="lead">{{ person.description|safe }}</div>
     {% endif %}
 
-    {% if instance.show_vcard and person.vcard_enabled %}
-        <a href="{# url 'download_vcard' person.slug #}" class="btn btn-default btn-sm">
+    {% if person.vcard_enabled %}
+        <a href="{% url 'aldryn_people:download_vcard' person.slug %}" class="btn btn-default btn-sm">
             <span class="fa fa-fw fa-download" aria-hidden="true"></span>
             {% trans "Download vCard" %}
         </a>
