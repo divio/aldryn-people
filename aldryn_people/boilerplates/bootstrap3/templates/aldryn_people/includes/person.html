@@ -1,14 +1,12 @@
-{% load i18n thumbnail aldryn_people_tags %}
+{% load cms_tags i18n thumbnail aldryn_people_tags %}
 {% load url from future %}
 
 <article class="aldryn-people-article">
     {% if not group %}<h2>{% else %}<h3>{% endif %}
-        {% if instance.show_links %}
-            <a href="{% url 'aldryn_people:person-detail' person.slug %}">
-        {% endif %}
-        {{ person.name }}
-        {% if instance.show_links %}
-            </a>
+        {% if instance.show_links and not detail_view %}
+            <a href="{{ person.get_absolute_url }}">{{ person.name }}</a>
+        {% else %}
+            {% render_model person 'name' %}
         {% endif %}
         <small>{{ person.function }}</small>
     {% if not group %}</h2>{% else %}</h3>{% endif %}
