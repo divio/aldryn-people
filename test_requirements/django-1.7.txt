@@ -3,6 +3,6 @@
 # not work. Ticket opened at:
 #     https://github.com/gregmuellegger/django-sortedm2m/issues/43
 #
-django==1.7.3
+django>=1.7.5,<1.8
 
 -r base.txt
