@@ -79,10 +79,7 @@ class PeopleToolbar(CMSToolbar):
                     url = "{0}?group={1}".format(base_url, group.pk)
                 else:
                     url = base_url
-                menu.add_modal_item(
-                    _('Add new person'),
-                    url=url
-                )
+                menu.add_modal_item(_('Add new person'), url=url)
 
             if change_person_perm and person:
                 menu.add_modal_item(
