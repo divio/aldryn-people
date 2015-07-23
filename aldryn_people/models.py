@@ -28,20 +28,14 @@ from django.utils.translation import ugettext_lazy as _, ugettext, override
 from aldryn_common.slugs import unique_slugify
 from aldryn_common.admin_fields.sortedm2m import SortedM2MModelField
 from cms.models.pluginmodel import CMSPlugin
-from cms.utils.i18n import get_current_language
+from cms.utils.i18n import get_current_language, get_languages
 from djangocms_text_ckeditor.fields import HTMLField
 from filer.fields.image import FilerImageField
 from parler.models import TranslatableModel, TranslatedFields
 
 from .utils import get_additional_styles
 
-if settings.LANGUAGES:
-    LANGUAGE_CODES = [language[0] for language in settings.LANGUAGES]
-elif settings.LANGUAGE:
-    LANGUAGE_CODES = [settings.LANGUAGE]
-else:
-    raise ImproperlyConfigured(
-        'Neither LANGUAGES nor LANGUAGE was found in settings.')
+LANGUAGE_CODES = [lang[0] for lang in get_languages()]
 
 
 @python_2_unicode_compatible
