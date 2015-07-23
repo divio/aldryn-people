@@ -24,7 +24,8 @@ class TestPersonAppHook(BasePeopleTest):
             slug='michael'
         )
         # By slug
-        url = reverse('aldryn_people:person-detail', kwargs={'slug': person.slug})
+        url = reverse(
+            'aldryn_people:person-detail', kwargs={'slug': person.slug})
         response = self.client.get(url)
         self.assertContains(response, 'Michael')
 

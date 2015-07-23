@@ -9,7 +9,6 @@ import vobject
 import warnings
 
 from django.conf import settings
-from django.core.exceptions import ImproperlyConfigured
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
@@ -17,11 +16,6 @@ try:
     from django.utils.encoding import force_unicode
 except ImportError:
     from django.utils.encoding import force_text as force_unicode
-try:
-    from django.utils.text import slugify
-except ImportError:
-    # In Django <= 1.4 slugify is here
-    from django.template.defaultfilters import slugify
 from django.utils.text import slugify as default_slugify
 from django.utils.translation import ugettext_lazy as _, ugettext, override
 
