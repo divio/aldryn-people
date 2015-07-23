@@ -112,6 +112,13 @@ class Group(TranslatableModel):
                 translations__slug=self.slug).exclude(pk=self.pk).exists():
             return super(Group, self).save(**kwargs)
         for lang in LANGUAGE_CODES:
+            #
+            # We'd much rather just do something like:
+            # Group.objects.translated(lang, slug__startswith=self.slug)
+            # But sadly, this isn't supported by Parler/Django, see:
+            # http://django-parler.readthedocs.org/en/latest/api/\
+            #     parler.managers.html#the-translatablequeryset-class
+            #
             slugs = []
             all_slugs = (
                 Group.objects.language(lang)
