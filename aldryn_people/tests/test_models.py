@@ -102,7 +102,7 @@ class TestBasicGroupModel(TransactionTestCase):
         group = Group.objects.create(name=name)
         person.group = group
         person.save()
-        self.assertIn(person, group.person_set.all())
+        self.assertIn(person, group.persons.all())
 
 
 class TestPersonModelTranslation(BasePeopleTest):
