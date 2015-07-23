@@ -6,6 +6,7 @@ REQUIREMENTS = [
     'Django>=1.6,<1.8',
     'aldryn-boilerplates',
     'aldryn-common>=0.1.3',
+    'aldryn-translation-tools>=0.0.7',
     'django-parler',
     'django-phonenumber-field>=0.7.2',  # only here as quick-fix because old migrations depend on this field
     'django-filer',
