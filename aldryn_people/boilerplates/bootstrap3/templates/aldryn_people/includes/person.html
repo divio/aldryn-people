@@ -46,7 +46,7 @@
         <div class="lead">{{ person.description|safe }}</div>
     {% endif %}
 
-    {% if person.vcard_enabled %}
+    {% if person.show_vcard and person.vcard_enabled %}
         <a href="{% url 'aldryn_people:download_vcard' person.slug %}" class="btn btn-default btn-sm">
             <span class="fa fa-fw fa-download" aria-hidden="true"></span>
             {% trans "Download vCard" %}
