@@ -6,11 +6,12 @@ REQUIREMENTS = [
     'Django>=1.6,<1.8',
     'aldryn-boilerplates',
     'aldryn-common>=0.1.3',
+    'aldryn-translation-tools>=0.0.7',
     'django-cms>=3.0.12,<3.2',
     'django-parler>=1.4',
     'django-filer>=0.9.9,<0.10',
-    'aldryn-translation-tools>=0.0.7',
     'djangocms-text-ckeditor',
+    'easy-thumbnails',
     'phonenumbers',
     'vobject',
 

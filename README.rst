@@ -48,10 +48,11 @@ Manual Installation
 
     INSTALLED_APPS = [
         …
+        'aldryn_people',
+        'easy_thumbnails'
+        'filer',
         'parler',
         'sortedm2m',
-        'filer',
-        'aldryn_people',
         …
     ]
 
