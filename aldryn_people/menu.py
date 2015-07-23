@@ -57,3 +57,4 @@ class GroupMenu(CMSAttachMenu):
         return nodes
 
 menu_pool.register_menu(GroupMenu)
+
