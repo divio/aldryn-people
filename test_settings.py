@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+
+from __future__ import unicode_literals
+
+
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
@@ -61,6 +66,47 @@ HELPER_SETTINGS = {
         'django.template.loaders.app_directories.Loader',
     ],
     'ALDRYN_BOILERPLATE_NAME': 'bootstrap3',
+    'LANGUAGES': (
+        ('en', 'English'),
+        ('de', 'German'),
+        ('fr', 'French'),
+    ),
+    'CMS_LANGUAGES': {
+        1: [
+            {
+                'code': 'de',
+                'name': 'Deutsche',
+                'fallbacks': ['en', ]  # FOR TESTING DO NOT ADD 'fr' HERE
+            },
+            {
+                'code': 'fr',
+                'name': 'Française',
+                'fallbacks': ['en', ]  # FOR TESTING DO NOT ADD 'de' HERE
+            },
+            {
+                'code': 'en',
+                'name': 'English',
+                'fallbacks': ['de', 'fr', ]
+            },
+            {
+                'code': 'it',
+                'name': 'Italiano',
+                'fallbacks': ['fr', ]  # FOR TESTING, LEAVE AS ONLY 'fr'
+            },
+        ],
+    },
+    # app-specific
+    'PARLER_LANGUAGES': {
+        1: (
+            {'code': 'de', },
+            {'code': 'fr', },
+            {'code': 'en', },
+        ),
+        'default': {
+            'hide_untranslated': True,  # PLEASE DO NOT CHANGE THIS
+        }
+    },
+
 }
 
 
