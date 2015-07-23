@@ -50,6 +50,7 @@ Manual Installation
         …
         'parler',
         'sortedm2m',
+        'filer',
         'aldryn_people',
         …
     ]
