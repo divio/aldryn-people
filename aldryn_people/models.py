@@ -32,12 +32,21 @@ from aldryn_common.admin_fields.sortedm2m import SortedM2MModelField
 
 from .utils import get_additional_styles
 
+if settings.LANGUAGES:
+    LANGUAGE_CODES = [language[0] for language in settings.LANGUAGES]
+elif settings.LANGUAGE:
+    LANGUAGE_CODES = [settings.LANGUAGE]
+else:
+    raise ImproperlyConfigured(
+        'Neither LANGUAGES nor LANGUAGE was found in settings.')
+
 
 @python_2_unicode_compatible
 class Group(TranslatableModel):
     translations = TranslatedFields(
         name=models.CharField(_('name'), max_length=255),
         description=HTMLField(_('description'), blank=True),
+        slug=models.SlugField(_('slug'), max_length=255, default=''),
     )
     address = models.TextField(
         verbose_name=_('address'), blank=True)
@@ -77,6 +86,54 @@ class Group(TranslatableModel):
     class Meta:
         verbose_name = _('Group')
         verbose_name_plural = _('Groups')
+
+    def __str__(self):
+        return self.safe_translation_getter(
+            'name', default=_('Group: {0}').format(self.pk))
+
+    def get_absolute_url(self, language=None):
+        if not language:
+            language = get_current_language()
+        if self.slug:
+            kwargs = {'slug': self.slug}
+        else:
+            kwargs = {'pk': self.pk}
+        with override(language):
+            return reverse('aldryn_people:group-detail', kwargs=kwargs)
+
+    def slugify(self, source_text, i=None):
+        slug = default_slugify(source_text)
+        if i is not None:
+            slug += "_%d" % i
+        return slug
+
+    def save(self, **kwargs):
+        language = self.get_current_language()
+        if not self.slug:
+            self.slug = force_unicode(default_slugify(self.name))
+        # If there is still no slug, we must give it something to start with
+        if not self.slug:
+            self.slug = ugettext('unnamed-group')
+        if not Group.objects.language(language).filter(
+                translations__slug=self.slug).exclude(pk=self.pk).exists():
+            return super(Group, self).save(**kwargs)
+        for lang in LANGUAGE_CODES:
+            slugs = []
+            all_slugs = (
+                Group.objects.language(lang)
+                             .exclude(pk=self.pk)
+                             .values_list('translations__slug', flat=True)
+            )
+            for slug in all_slugs:
+                if slug and slug.startswith((self.name, self.slug)):
+                    slugs.append(slug)
+            i = 1
+            while True:
+                slug = self.slugify(self.name or self.slug, i)
+                if slug not in slugs:
+                    self.slug = slug
+                    return super(Group, self).save(**kwargs)
+                i += 1
 
 
 @python_2_unicode_compatible
