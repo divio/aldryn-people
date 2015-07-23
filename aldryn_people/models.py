@@ -1,34 +1,37 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
+
 import base64
-import urlparse
-import warnings
-import vobject
-
 import six
+import urlparse
+import vobject
+import warnings
 
-from django.core.urlresolvers import reverse
 from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
-from django.utils.translation import ugettext_lazy as _
+try:
+    from django.utils.encoding import force_unicode
+except ImportError:
+    from django.utils.encoding import force_text as force_unicode
 try:
     from django.utils.text import slugify
 except ImportError:
-    # In Djano <= 1.4 slugify is here
+    # In Django <= 1.4 slugify is here
     from django.template.defaultfilters import slugify
-
-from cms.models.pluginmodel import CMSPlugin
-
-from djangocms_text_ckeditor.fields import HTMLField
-
-from filer.fields.image import FilerImageField
-
-from parler.models import TranslatableModel, TranslatedFields
+from django.utils.text import slugify as default_slugify
+from django.utils.translation import ugettext_lazy as _, ugettext, override
 
 from aldryn_common.slugs import unique_slugify
 from aldryn_common.admin_fields.sortedm2m import SortedM2MModelField
+from cms.models.pluginmodel import CMSPlugin
+from cms.utils.i18n import get_current_language
+from djangocms_text_ckeditor.fields import HTMLField
+from filer.fields.image import FilerImageField
+from parler.models import TranslatableModel, TranslatedFields
 
 from .utils import get_additional_styles
 
@@ -79,9 +82,6 @@ class Group(TranslatableModel):
             DeprecationWarning
         )
         return self.safe_translation_getter('description')
-
-    def __str__(self):
-        return self.safe_translation_getter('name', str(self.pk))
 
     class Meta:
         verbose_name = _('Group')
@@ -157,7 +157,8 @@ class Person(TranslatableModel):
     website = models.URLField(
         verbose_name=_('website'), null=True, blank=True)
     group = models.ForeignKey(
-        Group, verbose_name=_('group'), blank=True, null=True)
+        Group, verbose_name=_('group'), blank=True, null=True,
+        related_name='persons')
     visual = FilerImageField(
         null=True, blank=True, default=None, on_delete=models.SET_NULL)
     slug = models.CharField(
@@ -167,7 +168,7 @@ class Person(TranslatableModel):
         verbose_name=_('enable vCard download'), default=True)
     user = models.ForeignKey(
         getattr(settings, 'AUTH_USER_MODEL', 'auth.User'),
-        null=True, blank=True, unique=True)
+        null=True, blank=True, unique=True, related_name='persons')
 
     class Meta:
         verbose_name = _('Person')
@@ -185,12 +186,15 @@ class Person(TranslatableModel):
     def comment(self):
         return self.safe_translation_getter('description', '')
 
-    def get_absolute_url(self):
+    def get_absolute_url(self, language=None):
+        if not language:
+            language = get_current_language()
         if self.slug:
             kwargs = {'slug': self.slug}
         else:
             kwargs = {'pk': self.pk}
-        return reverse('aldryn_people:person-detail', kwargs=kwargs)
+        with override(language):
+            return reverse('aldryn_people:person-detail', kwargs=kwargs)
 
     def get_vcard(self, request=None):
         if self.group:
