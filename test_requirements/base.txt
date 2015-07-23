@@ -2,18 +2,11 @@ aldryn-boilerplates
 aldryn-common>=0.1.3
 aldryn-translation-tools>=0.0.7
 coverage>=3.7.1
-django-filer
-django-parler
-django-phonenumber-field>=0.7.2
-django-sortedm2m
 djangocms-helper
-djangocms-text-ckeditor
 flake8
-phonenumbers
 python-coveralls>=2.4.2
 six
 sphinx
-vobject
 
 # The following are for aldryn-search
 django-appconf>=0.6

@@ -6,15 +6,19 @@ REQUIREMENTS = [
     'Django>=1.6,<1.8',
     'aldryn-boilerplates',
     'aldryn-common>=0.1.3',
+    'django-cms>=3.0.12,<3.2',
+    'django-parler>=1.4',
+    'django-filer>=0.9.9,<0.10',
     'aldryn-translation-tools>=0.0.7',
-    'django-parler',
-    'django-phonenumber-field>=0.7.2',  # only here as quick-fix because old migrations depend on this field
-    'django-filer',
     'djangocms-text-ckeditor',
     'phonenumbers',
     'vobject',
+
+    # DO NOT REMOVE THE FOLLOWING, IT IS REQUIRED FOR EXISTING MIGRATIONS
+    'django-phonenumber-field>=0.7.2',
 ]
 
+# https://pypi.python.org/pypi?%3Aaction=list_classifiers
 CLASSIFIERS = [
     'Development Status :: 4 - Beta',
     'Environment :: Web Environment',

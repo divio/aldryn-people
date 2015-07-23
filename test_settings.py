@@ -29,12 +29,12 @@ HELPER_SETTINGS = {
     'TIME_ZONE': 'Europe/Zurich',
     'HAYSTACK_CONNECTIONS': HAYSTACK_CONNECTIONS,
     'INSTALLED_APPS': [
+        'aldryn_boilerplates',
         'aldryn_people',
         'easy_thumbnails',
         'filer',
         'parler',
         'sortedm2m',
-        'aldryn_boilerplates',
     ],
     'TEMPLATE_CONTEXT_PROCESSORS': [
         'aldryn_boilerplates.context_processors.boilerplate',
