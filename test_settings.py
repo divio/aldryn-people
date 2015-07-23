@@ -36,6 +36,8 @@ HELPER_SETTINGS = {
     'INSTALLED_APPS': [
         'aldryn_boilerplates',
         'aldryn_people',
+        'reversion',
+        'aldryn_reversion',
         'easy_thumbnails',
         'filer',
         'parler',
