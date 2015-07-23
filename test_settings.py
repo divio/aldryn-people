@@ -55,13 +55,13 @@ HELPER_SETTINGS = {
     ),
     'STATICFILES_FINDERS': [
         'django.contrib.staticfiles.finders.FileSystemFinder',
-        # important! place right before django.contrib.staticfiles.finders.AppDirectoriesFinder
+        # important! place right before django.contrib.staticfiles.finders.AppDirectoriesFinder  # NOQA
         'aldryn_boilerplates.staticfile_finders.AppDirectoriesFinder',
         'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     ],
     'TEMPLATE_LOADERS': [
         'django.template.loaders.filesystem.Loader',
-        # important! place right before django.template.loaders.app_directories.Loader
+        # important! place right before django.template.loaders.app_directories.Loader  # NOQA
         'aldryn_boilerplates.template_loaders.AppDirectoriesLoader',
         'django.template.loaders.app_directories.Loader',
     ],
