@@ -15,7 +15,7 @@ from .forms import PersonForm
 class PersonAdmin(AllTranslationsMixin, TranslatableAdmin):
 
     list_display = [
-        '__str__', 'email', 'vcard_enabled', 'all_translations']
+        '__str__', 'email', 'vcard_enabled', ]
     list_filter = ['group', 'vcard_enabled']
     search_fields = ('name', 'email', 'translations__function')
     prepopulated_fields = {'slug': ('name',)}
@@ -44,7 +44,7 @@ class PersonAdmin(AllTranslationsMixin, TranslatableAdmin):
 
 class GroupAdmin(AllTranslationsMixin, TranslatableAdmin):
 
-    list_display = ['__str__', 'city', 'all_translations']
+    list_display = ['__str__', 'city', ]
     search_filter = ['name']
 
     fieldsets = (
