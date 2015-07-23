@@ -3,7 +3,14 @@
 
 <article class="aldryn-people-article">
     {% if not group %}<h2>{% else %}<h3>{% endif %}
-        {{ person.name }} <small>{{ person.function }}</small>
+        {% if instance.show_links %}
+            <a href="{% url 'aldryn_people:person-detail' person.slug %}">
+        {% endif %}
+        {{ person.name }}
+        {% if instance.show_links %}
+            </a>
+        {% endif %}
+        <small>{{ person.function }}</small>
     {% if not group %}</h2>{% else %}</h3>{% endif %}
 
     {% if person.visual %}
