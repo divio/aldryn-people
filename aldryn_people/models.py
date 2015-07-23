@@ -88,7 +88,7 @@ class Group(TranslatableModel):
     def get_absolute_url(self, language=None):
         if not language:
             language = get_current_language()
-        if self.slug:
+        if getattr(self, 'slug', ''):
             kwargs = {'slug': self.slug}
         else:
             kwargs = {'pk': self.pk}
