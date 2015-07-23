@@ -37,7 +37,7 @@ class PeoplePlugin(CMSPluginBase):
         context['instance'] = instance
         context['people'] = people
 
-        if (models.Group.objects.filter(person__in=people).exists() and
+        if (models.Group.objects.filter(persons__in=people).exists() and
                 instance.group_by_group):
             context['people_groups'] = self.group_people(
                 people, instance.language)

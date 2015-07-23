@@ -5,7 +5,10 @@ from __future__ import unicode_literals
 from django.http import Http404, HttpResponse
 from django.views.generic import DetailView
 
-from aldryn_people.models import Person
+from menus.utils import set_language_changer
+from parler.views import TranslatableSlugMixin
+
+from .models import Group, Person
 
 
 class DownloadVcardView(DetailView):
@@ -28,5 +31,20 @@ class DownloadVcardView(DetailView):
         return response
 
 
-class PersonView(DetailView):
+class LanguageChangerMixin(object):
+    """
+    Convenience mixin that adds CMS Language Changer support.
+    """
+    def get(self, request, *args, **kwargs):
+        if not hasattr(self, 'object'):
+            self.object = self.get_object()
+        set_language_changer(request, self.object.get_absolute_url)
+        return super(LanguageChangerMixin, self).get(request, *args, **kwargs)
+
+
+class PersonView(LanguageChangerMixin, DetailView):
     model = Person
+
+
+class GroupView(LanguageChangerMixin, TranslatableSlugMixin, DetailView):
+    model = Group

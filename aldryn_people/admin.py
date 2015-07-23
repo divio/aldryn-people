@@ -6,17 +6,16 @@ from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
 from parler.admin import TranslatableAdmin
+from aldryn_translation_tools.admin import AllTranslationsMixin
 
-from ..models import Person, Group
-from ..forms import PersonForm
-
-from .base import AllTranslationsAdminMixin
+from .models import Person, Group
+from .forms import PersonForm
 
 
-class PersonAdmin(AllTranslationsAdminMixin, TranslatableAdmin):
+class PersonAdmin(AllTranslationsMixin, TranslatableAdmin):
 
     list_display = [
-        '__str__', 'email', 'vcard_enabled', 'all_translations']
+        '__str__', 'email', 'vcard_enabled', ]
     list_filter = ['group', 'vcard_enabled']
     search_fields = ('name', 'email', 'translations__function')
     prepopulated_fields = {'slug': ('name',)}
@@ -43,9 +42,9 @@ class PersonAdmin(AllTranslationsAdminMixin, TranslatableAdmin):
     form = PersonForm
 
 
-class GroupAdmin(AllTranslationsAdminMixin, TranslatableAdmin):
+class GroupAdmin(AllTranslationsMixin, TranslatableAdmin):
 
-    list_display = ['__str__', 'city', 'all_translations']
+    list_display = ['__str__', 'city', ]
     search_filter = ['name']
 
     fieldsets = (
