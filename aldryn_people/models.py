@@ -35,7 +35,7 @@ from parler.models import TranslatableModel, TranslatedFields
 
 from .utils import get_additional_styles
 
-LANGUAGE_CODES = [lang[0] for lang in get_languages()]
+LANGUAGE_CODES = [lang['code'] for lang in get_languages()]
 
 
 @python_2_unicode_compatible
