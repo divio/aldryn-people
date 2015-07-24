@@ -32,8 +32,9 @@ def get_obj_from_request(model, request,
         # If the model is translatable, and the given slug is a translated
         # field, then find it the Parler way.
         filter_kwargs = {slug_field: kwargs[slug_url_kwarg]}
+        translated_fields = model._parler_meta.get_translated_fields()
         if (issubclass(model, TranslatableModel) and
-                slug_url_kwarg in model._parler_meta.get_translated_fields()):
+                slug_url_kwarg in translated_fields):
             return mgr.translated(language, **filter_kwargs).first()
         # OK, do it the normal way.
         return mgr.filter(**filter_kwargs).first()
