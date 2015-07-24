@@ -14,12 +14,24 @@ from ..models import Person, Group
 class RevisionTestCase(BasePeopleTest):
     data_raw = {
         'group': {
-            'en': {'name': 'group{0}', 'description': 'description{0}'},
-            'de': {'name': 'Gruppe{0}', 'description': 'Beschreibung{0}'},
+            'en': {
+                'name': 'group{0}',
+                'description': 'description{0}'
+            },
+            'de': {
+                'name': 'Gruppe{0}',
+                'description': 'Beschreibung{0}'
+            },
         },
         'person': {
-            'en': {'function': 'function{0}', 'description': 'description-{0}-en'},
-            'de': {'function': 'Funktion{0}', 'description': 'Beschreibung-{0}-de'},
+            'en': {
+                'function': 'function{0}',
+                'description': 'description-{0}-en'
+            },
+            'de': {
+                'function': 'Funktion{0}',
+               'description': 'Beschreibung-{0}-de'
+            },
         },
 
     }
@@ -134,7 +146,8 @@ class RevisionTestCase(BasePeopleTest):
         self.assertEqual(len(reversion.get_for_object(self.person1)), 1)
         # check that values are actually changed
         self.assertEqual(self.person1.function, rev_1_values_en['function'])
-        self.assertEqual(self.person1.description, rev_1_values_en['description'])
+        self.assertEqual(
+            self.person1.description, rev_1_values_en['description'])
 
         # rev 2: en 1 de 1
         rev_2_values_de = self.make_new_values(
@@ -147,7 +160,8 @@ class RevisionTestCase(BasePeopleTest):
         self.person1 = Person.objects.get(pk=self.person1.pk)
         self.person1.set_current_language('de')
         self.assertEqual(self.person1.function, rev_2_values_de['function'])
-        self.assertEqual(self.person1.description, rev_2_values_de['description'])
+        self.assertEqual(
+            self.person1.description, rev_2_values_de['description'])
 
         # rev 3: en 1 de 2
         rev_3_values_de = self.make_new_values(
@@ -159,12 +173,14 @@ class RevisionTestCase(BasePeopleTest):
         self.person1 = Person.objects.get(pk=self.person1.pk)
         self.person1.set_current_language('de')
         self.assertEqual(self.person1.function, rev_3_values_de['function'])
-        self.assertEqual(self.person1.description, rev_3_values_de['description'])
+        self.assertEqual(
+            self.person1.description, rev_3_values_de['description'])
 
         # check that en values are left the same
         self.person1.set_current_language('en')
         self.assertEqual(self.person1.function, rev_1_values_en['function'])
-        self.assertEqual(self.person1.description, rev_1_values_en['description'])
+        self.assertEqual(
+            self.person1.description, rev_1_values_en['description'])
 
         # revert to rev2 en 1 de 1
         self.revert_to(self.person1, 2)
@@ -191,7 +207,8 @@ class RevisionTestCase(BasePeopleTest):
         ALL OBJECTS THAT ARE PRESENT IN REVISION, which means that from history
         view it would also restore related objects to state of currently
         restored revision.
-        Also this test case doesn't checks against that behavior, so be careful.
+        Also this test case doesn't checks against that behavior,
+        so be careful.
         """
         # rev 1 user1 group 1
         user1 = self.create_user('rev1_user', 'rev1_user')
@@ -234,7 +251,8 @@ class RevisionTestCase(BasePeopleTest):
         self.assertEqual(len(reversion.get_for_object(self.group1)), 1)
         # check that values are actually changed
         self.assertEqual(self.group1.name, rev_1_values_en['name'])
-        self.assertEqual(self.group1.description, rev_1_values_en['description'])
+        self.assertEqual(
+            self.group1.description, rev_1_values_en['description'])
 
         # rev 2: en 1 de 1
         rev_2_values_de = self.make_new_values(
@@ -247,7 +265,8 @@ class RevisionTestCase(BasePeopleTest):
         self.group1 = Group.objects.get(pk=self.group1.pk)
         self.group1.set_current_language('de')
         self.assertEqual(self.group1.name, rev_2_values_de['name'])
-        self.assertEqual(self.group1.description, rev_2_values_de['description'])
+        self.assertEqual(
+            self.group1.description, rev_2_values_de['description'])
 
         # rev 3: en 1 de 2
         rev_3_values_de = self.make_new_values(
@@ -259,12 +278,14 @@ class RevisionTestCase(BasePeopleTest):
         self.group1 = Group.objects.get(pk=self.group1.pk)
         self.group1.set_current_language('de')
         self.assertEqual(self.group1.name, rev_3_values_de['name'])
-        self.assertEqual(self.group1.description, rev_3_values_de['description'])
+        self.assertEqual(
+            self.group1.description, rev_3_values_de['description'])
 
         # check that en values are left the same
         self.group1.set_current_language('en')
         self.assertEqual(self.group1.name, rev_1_values_en['name'])
-        self.assertEqual(self.group1.description, rev_1_values_en['description'])
+        self.assertEqual(
+            self.group1.description, rev_1_values_en['description'])
 
         # revert to rev2 en 1 de 1
         self.revert_to(self.group1, 2)
