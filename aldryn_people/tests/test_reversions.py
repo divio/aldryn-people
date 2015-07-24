@@ -30,7 +30,7 @@ class RevisionTestCase(BasePeopleTest):
             },
             'de': {
                 'function': 'Funktion{0}',
-               'description': 'Beschreibung-{0}-de'
+                'description': 'Beschreibung-{0}-de'
             },
         },
 
