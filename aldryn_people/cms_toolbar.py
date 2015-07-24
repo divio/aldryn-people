@@ -18,6 +18,9 @@ def get_obj_from_request(model, request,
     """
     Given a model and the request, try to extract and return an object
     from an available 'pk' or 'slug', or return None.
+
+    Note that no checking is done that the view's kwargs really are for objects
+    matching the provided model (how would it?) so use only where appropriate.
     """
     language = get_language_from_request(request, check_path=True)
     kwargs = request.resolver_match.kwargs
