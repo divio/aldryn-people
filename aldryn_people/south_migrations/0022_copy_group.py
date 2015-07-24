@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from django.db import connection
+from django.db.transaction import set_autocommit
 from south.utils import datetime_utils as datetime
 from south.db import db
 from south.v2 import DataMigration
@@ -10,6 +12,8 @@ class Migration(DataMigration):
         """
         Migrate a FK to a M2M
         """
+        if connection.vendor == 'sqlite':
+            set_autocommit(True)
         for obj in orm.Person.objects.all():
             if obj.group:
                 obj.groups.add(obj.group)
@@ -20,6 +24,8 @@ class Migration(DataMigration):
         Migrate a M2M to a FK - technically not possible, but we can choose
         the first object and make that the FK
         """
+        if connection.vendor == 'sqlite':
+            set_autocommit(True)
         for obj in orm.Person.objects.all():
             group = obj.groups.first()
             if group:
