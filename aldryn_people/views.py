@@ -73,6 +73,3 @@ class GroupDetailView(LanguageChangerMixin, AllowPKsTooMixin,
 
 class GroupListView(ListView):
     model = Group
-
-    def get_queryset(self):
-        qs =
