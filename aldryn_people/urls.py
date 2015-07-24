@@ -27,6 +27,6 @@ urlpatterns = patterns('',
     url(r'^(?P<slug>[A-Za-z0-9_\-]+)/download/$',
         DownloadVcardView.as_view(), name='download_vcard'),
 
-    url(r'^/$',
+    url(r'^$',
         GroupListView.as_view(), name='group-list'),
 )
