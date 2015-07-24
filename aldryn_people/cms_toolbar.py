@@ -28,9 +28,12 @@ def get_obj_from_request(model, request,
     if pk_url_kwarg in kwargs:
         return qs.filter(pk=kwargs[pk_url_kwarg]).first()
     elif slug_url_kwarg in kwargs:
+        # If the model is translatable, and the given slug is a translated
+        # field, then find it the Parler way.
         if (issubclass(model, TranslatableModel) and
                 slug_url_kwarg in model._parler_meta.get_translated_fields()):
             return qs.translated(language, slug=kwargs[slug_url_kwarg]).first()
+        # OK, do it the normal way.
         return qs.filter(slug=kwargs[slug_url_kwarg]).first()
     else:
         return None
