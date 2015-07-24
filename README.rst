@@ -62,15 +62,26 @@ Manual Installation
    If your project uses a version of South older than 1.0.2, you may need to add
    the following to your settings: ::
 
-       MIGRATION_MODULES = [
-           …
-           'aldryn_people': 'aldryn_people.south_migrations',
-           …
-       ]
+   MIGRATION_MODULES = [
+       …
+       'aldryn_people': 'aldryn_people.south_migrations',
+       …
+   ]
 
-4) Install aldryn-boilerplates
+4) Install aldryn-boilerplates according to the instructions.
 
-5) (Re-)Start your application server.
+5) Install django-filer according to its instructions. In particular, ensure
+   you've added the following to your settings: ::
+
+    THUMBNAIL_PROCESSORS = (
+        'easy_thumbnails.processors.colorspace',
+        'easy_thumbnails.processors.autocrop',
+        #'easy_thumbnails.processors.scale_and_crop',
+        'filer.thumbnail_processors.scale_and_crop_with_subject_location',
+        'easy_thumbnails.processors.filters',
+    )
+
+6) (Re-)Start your application server.
 
 
 Download vCard
