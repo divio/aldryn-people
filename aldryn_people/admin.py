@@ -16,7 +16,7 @@ class PersonAdmin(AllTranslationsMixin, TranslatableAdmin):
 
     list_display = [
         '__str__', 'email', 'vcard_enabled', ]
-    list_filter = ['group', 'vcard_enabled']
+    list_filter = ['groups', 'vcard_enabled']
     search_fields = ('name', 'email', 'translations__function')
     prepopulated_fields = {'slug': ('name',)}
     raw_id_fields = ('user',)

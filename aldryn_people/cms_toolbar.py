@@ -31,7 +31,7 @@ class PeopleToolbar(CMSToolbar):
                 person = None
             elif view_name == 'aldryn_people:person-detail':
                 person = Person.objects.filter(slug=kwargs['slug']).first()
-                group = person.group
+                group = person.primary_group
             else:
                 group = person = None
 
@@ -76,7 +76,7 @@ class PeopleToolbar(CMSToolbar):
             if add_person_perm:
                 base_url = admin_reverse('aldryn_people_person_add')
                 if group:
-                    url = "{0}?group={1}".format(base_url, group.pk)
+                    url = "{0}?groups={1}".format(base_url, group.pk)
                 else:
                     url = base_url
                 menu.add_modal_item(_('Add new person'), url=url)

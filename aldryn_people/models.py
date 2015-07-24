@@ -154,9 +154,6 @@ class Person(TranslatableModel):
         verbose_name=_("email"), blank=True, default='')
     website = models.URLField(
         verbose_name=_('website'), null=True, blank=True)
-    group = models.ForeignKey(
-        Group, verbose_name=_('group'), blank=True, null=True,
-        related_name='persons')
     groups = SortedManyToManyField(
         'aldryn_people.Group', default=None, blank=True, related_name='people',
         help_text=_('Choose and order the groups for this person, the first '
@@ -186,6 +183,7 @@ class Person(TranslatableModel):
 
     @property
     def primary_group(self):
+        """Simply returns the first in `groups`, if any, else None."""
         return self.groups.first()
 
     @property
@@ -203,8 +201,8 @@ class Person(TranslatableModel):
             return reverse('aldryn_people:person-detail', kwargs=kwargs)
 
     def get_vcard(self, request=None):
-        if self.group:
-            group_name = self.group.safe_translation_getter('name')
+        if self.primary_group:
+            group_name = self.primary_group.safe_translation_getter('name')
         else:
             group_name = ''
         function = self.safe_translation_getter('function')
@@ -248,30 +246,31 @@ class Person(TranslatableModel):
             website = vcard.add('url')
             website.value = unicode(self.website)
 
-        if self.group:
+        if self.primary_group:
             if group_name:
                 vcard.add('org').value = [group_name]
-            if self.group.address or self.group.city or self.group.postal_code:
+            if (self.primary_group.address or self.primary_group.city or
+                    self.primary_group.postal_code):
                 vcard.add('adr')
                 vcard.adr.type_param = 'WORK'
                 vcard.adr.value = vobject.vcard.Address()
-                if self.group.address:
-                    vcard.adr.value.street = self.group.address
-                if self.group.city:
-                    vcard.adr.value.city = self.group.city
-                if self.group.postal_code:
-                    vcard.adr.value.code = self.group.postal_code
-            if self.group.phone:
+                if self.primary_group.address:
+                    vcard.adr.value.street = self.primary_group.address
+                if self.primary_group.city:
+                    vcard.adr.value.city = self.primary_group.city
+                if self.primary_group.postal_code:
+                    vcard.adr.value.code = self.primary_group.postal_code
+            if self.primary_group.phone:
                 tel = vcard.add('tel')
-                tel.value = unicode(self.group.phone)
+                tel.value = unicode(self.primary_group.phone)
                 tel.type_param = 'WORK'
-            if self.group.fax:
+            if self.primary_group.fax:
                 fax = vcard.add('tel')
-                fax.value = unicode(self.group.fax)
+                fax.value = unicode(self.primary_group.fax)
                 fax.type_param = 'FAX'
-            if self.group.website:
+            if self.primary_group.website:
                 website = vcard.add('url')
-                website.value = unicode(self.group.website)
+                website.value = unicode(self.primary_group.website)
 
         return vcard.serialize()
 

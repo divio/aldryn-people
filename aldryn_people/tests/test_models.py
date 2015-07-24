@@ -100,9 +100,9 @@ class TestBasicGroupModel(TransactionTestCase):
         person = Person.objects.create(name=personname)
         name = 'Group One'
         group = Group.objects.create(name=name)
-        person.group = group
+        person.groups.add(group)
         person.save()
-        self.assertIn(person, group.persons.all())
+        self.assertIn(person, group.people.all())
 
 
 class TestPersonModelTranslation(BasePeopleTest):
@@ -148,7 +148,7 @@ class TestPersonModelTranslation(BasePeopleTest):
         group1.fax = '+1 (234) 567-8904'
         group1.website = 'www.groupwebsite.com'
         group1.save()
-        person1.group = group1
+        person1.groups.add(group1)
         person1.email = 'person@org.org'
         person1.phone = '+1 (234) 567-8900'
         person1.mobile = '+1 (234) 567-8901'

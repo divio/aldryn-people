@@ -15,7 +15,7 @@ class PersonForm(TranslatableModelForm):
             'email',
             'fax',
             'function',
-            'group',
+            'groups',
             'mobile',
             'name',
             'phone',
