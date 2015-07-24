@@ -17,24 +17,31 @@ class PersonAdmin(AllTranslationsMixin, TranslatableAdmin):
     list_display = [
         '__str__', 'email', 'vcard_enabled', ]
     list_filter = ['groups', 'vcard_enabled']
-    search_fields = ('name', 'email', 'translations__function')
-    prepopulated_fields = {'slug': ('name',)}
+    search_fields = ('translations__name', 'email', 'translations__function')
     raw_id_fields = ('user',)
+
+    def get_prepopulated_fields(self, request, obj=None):
+        # Using method since these are translated fields
+        return {
+            'slug': ('name',)
+        }
 
     fieldsets = (
         (None, {
             'fields': (
-                'name', 'function', 'slug', 'visual', 'vcard_enabled'
+                ('name', 'slug', ),
+                'function', 'description',
             ),
         }),
-        (_('Contact'), {
+        (_('Contact (untranslated)'), {
             'fields': (
-                'phone', 'mobile', 'fax', 'email', 'website', 'user'
+                'visual', 'phone', 'mobile', 'fax', 'email', 'website',
+                'user', 'vcard_enabled'
             ),
         }),
         (None, {
             'fields': (
-                'groups', 'description',
+                'groups',
             ),
         }),
     )
@@ -45,20 +52,22 @@ class PersonAdmin(AllTranslationsMixin, TranslatableAdmin):
 class GroupAdmin(AllTranslationsMixin, TranslatableAdmin):
 
     list_display = ['__str__', 'city', ]
-    search_filter = ['name']
-
+    search_filter = ['translations__name']
     fieldsets = (
         (None, {
             'fields': (
-                'name', 'description', 'phone', 'fax', 'email', 'website'
+                ('name', 'slug', ),
+                'description',
             ),
         }),
-        (_('Address'), {
+        (_('Contact (untranslated)'), {
             'fields': (
+                'phone', 'fax', 'email', 'website',
                 'address', 'postal_code', 'city'
-            ),
+            )
         }),
     )
+
 
 admin.site.register(Person, PersonAdmin)
 admin.site.register(Group, GroupAdmin)

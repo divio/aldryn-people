@@ -20,11 +20,13 @@ class PersonMenu(CMSAttachMenu):
     def get_nodes(self, request):
         nodes = []
         language = get_language_from_request(request, check_path=True)
-        persons = Person.objects.all().order_by('name')
+        persons = Person.objects.language(language)
 
         for person in persons:
             node = NavigationNode(
-                person.name,
+                person.safe_translation_getter(
+                    'name', default=_('person: {0}').format(person.pk),
+                    language_code=language),
                 person.get_absolute_url(language=language),
                 person.pk,
             )

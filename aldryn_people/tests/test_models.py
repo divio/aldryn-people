@@ -23,9 +23,9 @@ class TestBasicPeopleModels(TransactionTestCase):
     def test_delete_person(self):
         """We can delete a person."""
         name = 'Person Delete'
-        Person.objects.create(name=name)
-        Person.objects.get(name=name).delete()
-        self.assertFalse(Person.objects.filter(name=name))
+        person = Person.objects.create(name=name)
+        Person.objects.get(pk=person.pk).delete()
+        self.assertFalse(Person.objects.filter(pk=person.pk))
 
     def test_str(self):
         name = 'Person Str'
@@ -63,7 +63,7 @@ class TestBasicPeopleModels(TransactionTestCase):
         person_1.save()
 
         name_2 = 'Melchior Hoffman'
-        slug_2 = 'melchior-hoffman-2'
+        slug_2 = 'melchior-hoffman_1'
         person_2 = Person.objects.create(name=name_2)
         person_2.save()
 
@@ -162,7 +162,7 @@ class TestPersonModelTranslation(BasePeopleTest):
         )
         # Ensure this works for other langs too
         person1 = self.reload(self.person1, 'de')
-        vcard_de = 'BEGIN:VCARD\r\nVERSION:3.0\r\nADR;TYPE=WORK:;;123 Main Street;Anytown;;12345;\r\nEMAIL:person@org.org\r\nFN:person1\r\nN:;person1;;;\r\nORG:Gruppe1\r\nTEL;TYPE=WORK:+1 (234) 567-8900\r\nTEL;TYPE=CELL:+1 (234) 567-8901\r\nTEL;TYPE=FAX:+1 (234) 567-8902\r\nTEL;TYPE=WORK:+1 (234) 567-8903\r\nTEL;TYPE=FAX:+1 (234) 567-8904\r\nTITLE:Funktion1\r\nURL:www.website.com\r\nURL:www.groupwebsite.com\r\nEND:VCARD\r\n'  # flake8: noqa
+        vcard_de = 'BEGIN:VCARD\r\nVERSION:3.0\r\nADR;TYPE=WORK:;;123 Main Street;Anytown;;12345;\r\nEMAIL:person@org.org\r\nFN:mensch1\r\nN:;mensch1;;;\r\nORG:Gruppe1\r\nTEL;TYPE=WORK:+1 (234) 567-8900\r\nTEL;TYPE=CELL:+1 (234) 567-8901\r\nTEL;TYPE=FAX:+1 (234) 567-8902\r\nTEL;TYPE=WORK:+1 (234) 567-8903\r\nTEL;TYPE=FAX:+1 (234) 567-8904\r\nTITLE:Funktion1\r\nURL:www.website.com\r\nURL:www.groupwebsite.com\r\nEND:VCARD\r\n'  # flake8: noqa
         with override('de'):
             self.assertEqual(
                 person1.get_vcard(),
