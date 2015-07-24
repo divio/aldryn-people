@@ -12,7 +12,9 @@ from parler.models import TranslatableModel
 from .models import Group, Person
 
 
-def get_obj_from_view(model, request):
+def get_obj_from_view(model, request,
+                      pk_url_kwarg='pk',
+                      slug_url_kwarg='slug'):
     """
     Given a model and the request, try to extract and return an object
     from an available 'pk' or 'slug', or return None.
@@ -20,13 +22,13 @@ def get_obj_from_view(model, request):
     language = get_language_from_request(request, check_path=True)
     kwargs = request.resolver_match.kwargs
     qs = model.objects
-    if 'pk' in kwargs:
-        return qs.filter(pk=args['pk']).first()
-    elif 'slug' in kwargs:
+    if pk_url_kwarg in kwargs:
+        return qs.filter(pk=kwargs[pk_url_kwarg]).first()
+    elif slug_url_kwarg in kwargs:
         if (issubclass(model, TranslatableModel) and
-                'slug' in model._parler_meta.get_translated_fields()):
-            return qs.translated(language, slug=kwargs['slug']).first()
-        return qs.filter(slug=kwargs['slug']).first()
+                slug_url_kwarg in model._parler_meta.get_translated_fields()):
+            return qs.translated(language, slug=kwargs[slug_url_kwarg]).first()
+        return qs.filter(slug=kwargs[slug_url_kwarg]).first()
     else:
         return None
 
