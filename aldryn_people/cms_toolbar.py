@@ -36,8 +36,9 @@ def get_obj_from_request(model, request,
         if (issubclass(model, TranslatableModel) and
                 slug_url_kwarg in translated_fields):
             return mgr.translated(language, **filter_kwargs).first()
-        # OK, do it the normal way.
-        return mgr.filter(**filter_kwargs).first()
+        else:
+            # OK, do it the normal way.
+            return mgr.filter(**filter_kwargs).first()
     else:
         return None
 
