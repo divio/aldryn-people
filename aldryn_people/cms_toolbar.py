@@ -7,8 +7,29 @@ from django.utils.translation import ugettext as _, get_language_from_request
 from cms.toolbar_base import CMSToolbar
 from cms.toolbar_pool import toolbar_pool
 from cms.utils.urlutils import admin_reverse
+from parler.models import TranslatableModel
 
 from .models import Group, Person
+
+
+def get_obj_from_view(model, request):
+    """
+    Given a model and the request, try to extract and return an object
+    from an available 'pk' or 'slug', or return None.
+    """
+    language = get_language_from_request(request, check_path=True)
+    args = request.resolver_match.kwargs
+    kwargs = request.resolver_match.kwargs
+    qs = model.objects
+    if 'pk' in args:
+        return qs.filter(pk=args['pk']).first()
+    elif 'slug' in kwargs:
+        if (issubclass(model, TranslatableModel) and
+                'slug' in model._parler_meta.get_translated_fields()):
+            return qs.translated(language, slug=kwargs['slug']).first()
+        return qs.filter(slug=kwargs['slug']).first()
+    else:
+        return None
 
 
 @toolbar_pool.register
@@ -21,19 +42,21 @@ class PeopleToolbar(CMSToolbar):
     def populate(self):
         user = getattr(self.request, 'user', None)
         if user:
-            language = get_language_from_request(self.request, check_path=True)
             view_name = self.request.resolver_match.view_name
-            kwargs = self.request.resolver_match.kwargs
             if view_name == 'aldryn_people:group-detail':
-                group = (Group.objects
-                              .translated(language, slug=kwargs['slug'])
-                              .first())
+                group = get_obj_from_view(Group, self.request)
                 person = None
-            elif view_name == 'aldryn_people:person-detail':
-                person = Person.objects.filter(slug=kwargs['slug']).first()
-                group = person.primary_group
+            elif view_name in [
+                    'aldryn_people:person-detail',
+                    'aldryn_people:download_vcard'
+                    ]:
+                person = get_obj_from_view(Person, self.request)
+                if person and person.groups:
+                    group = person.primary_group
             else:
-                group = person = None
+                # We don't appear to be on any aldryn_people views so this
+                # menu shouldn't even be here.
+                return
 
             menu = self.toolbar.get_or_create_menu('people-app', "People")
             change_group_perm = user.has_perm('aldryn_people.change_group')
