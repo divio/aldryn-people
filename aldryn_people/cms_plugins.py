@@ -24,7 +24,8 @@ class PeoplePlugin(CMSPluginBase):
         groups = defaultdict(list)
 
         for people in people:
-            groups[people.group].append(people)
+            for group in people.groups.all():
+                groups[group].append(people)
 
         # Python/Django bug ?
         groups.default_factory = None
@@ -37,11 +38,11 @@ class PeoplePlugin(CMSPluginBase):
         context['instance'] = instance
         context['people'] = people
 
-        if (models.Group.objects.filter(persons__in=people).exists() and
+        if (models.Group.objects.filter(people__in=people).exists() and
                 instance.group_by_group):
             context['people_groups'] = self.group_people(
                 people, instance.language)
-            context['group_less_people'] = people.filter(group__isnull=True)
+            context['group_less_people'] = people.filter(groups__isnull=True)
         else:
             context['people_groups'] = []
             context['group_less_people'] = []

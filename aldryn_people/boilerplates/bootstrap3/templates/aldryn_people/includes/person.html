@@ -3,7 +3,7 @@
 
 <article class="aldryn-people-article">
     {% if not group %}<h2>{% else %}<h3>{% endif %}
-        {% if instance.show_links and not detail_view %}
+        {% if not detail_view %}
             <a href="{{ person.get_absolute_url }}">{{ person.name }}</a>
         {% else %}
             {% render_model person 'name' %}
@@ -51,7 +51,7 @@
         <div class="lead">{{ person.description|safe }}</div>
     {% endif %}
 
-    {% if person.show_vcard and person.vcard_enabled %}
+    {% if person.vcard_enabled %}
         <a href="{% url 'aldryn_people:download_vcard' person.slug %}" class="btn btn-default btn-sm">
             <span class="fa fa-fw fa-download" aria-hidden="true"></span>
             {% trans "Download vCard" %}
