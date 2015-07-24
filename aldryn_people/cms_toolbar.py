@@ -18,10 +18,9 @@ def get_obj_from_view(model, request):
     from an available 'pk' or 'slug', or return None.
     """
     language = get_language_from_request(request, check_path=True)
-    args = request.resolver_match.kwargs
     kwargs = request.resolver_match.kwargs
     qs = model.objects
-    if 'pk' in args:
+    if 'pk' in kwargs:
         return qs.filter(pk=args['pk']).first()
     elif 'slug' in kwargs:
         if (issubclass(model, TranslatableModel) and
