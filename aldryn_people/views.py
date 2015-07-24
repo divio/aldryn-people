@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 from django.http import Http404, HttpResponse
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 
 from menus.utils import set_language_changer
 from parler.views import TranslatableSlugMixin
@@ -62,10 +62,14 @@ class AllowPKsTooMixin(object):
         return super(AllowPKsTooMixin, self).get_object(queryset)
 
 
-class PersonView(LanguageChangerMixin, DetailView):
+class PersonDetailView(LanguageChangerMixin, DetailView):
     model = Person
 
 
-class GroupView(LanguageChangerMixin, AllowPKsTooMixin, TranslatableSlugMixin,
-                DetailView):
+class GroupDetailView(LanguageChangerMixin, AllowPKsTooMixin,
+                      TranslatableSlugMixin, DetailView):
+    model = Group
+
+
+class GroupListView(ListView):
     model = Group
