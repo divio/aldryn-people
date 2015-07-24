@@ -26,6 +26,7 @@ from cms.utils.i18n import get_current_language, get_languages
 from djangocms_text_ckeditor.fields import HTMLField
 from filer.fields.image import FilerImageField
 from parler.models import TranslatableModel, TranslatedFields
+from sortedm2m.fields import SortedManyToManyField
 
 from .utils import get_additional_styles
 
@@ -156,6 +157,10 @@ class Person(TranslatableModel):
     group = models.ForeignKey(
         Group, verbose_name=_('group'), blank=True, null=True,
         related_name='persons')
+    groups = SortedManyToManyField(
+        'aldryn_people.Group', default=None, blank=True, related_name='people',
+        help_text=_('Choose and order the groups for this person, the first '
+                    'will be the "primary group".'))
     visual = FilerImageField(
         null=True, blank=True, default=None, on_delete=models.SET_NULL)
     slug = models.CharField(
@@ -178,6 +183,10 @@ class Person(TranslatableModel):
             pkstr = six.u(pkstr)
         name = self.name.strip()
         return name if len(name) > 0 else pkstr
+
+    @property
+    def primary_group(self):
+        return self.groups.first()
 
     @property
     def comment(self):
