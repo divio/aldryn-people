@@ -12,9 +12,9 @@ from parler.models import TranslatableModel
 from .models import Group, Person
 
 
-def get_obj_from_view(model, request,
-                      pk_url_kwarg='pk',
-                      slug_url_kwarg='slug'):
+def get_obj_from_request(model, request,
+                         pk_url_kwarg='pk',
+                         slug_url_kwarg='slug'):
     """
     Given a model and the request, try to extract and return an object
     from an available 'pk' or 'slug', or return None.
@@ -45,13 +45,13 @@ class PeopleToolbar(CMSToolbar):
         if user:
             view_name = self.request.resolver_match.view_name
             if view_name == 'aldryn_people:group-detail':
-                group = get_obj_from_view(Group, self.request)
+                group = get_obj_from_request(Group, self.request)
                 person = None
             elif view_name in [
                     'aldryn_people:person-detail',
                     'aldryn_people:download_vcard'
                     ]:
-                person = get_obj_from_view(Person, self.request)
+                person = get_obj_from_request(Person, self.request)
                 if person and person.groups:
                     group = person.primary_group
             else:
