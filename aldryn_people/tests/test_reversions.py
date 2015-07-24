@@ -39,8 +39,8 @@ class RevisionTestCase(BasePeopleTest):
         with transaction.atomic():
             with reversion.create_revision():
                 # populate event with new values
-                for property, value in six.iteritems(kwargs):
-                    setattr(obj, property, value)
+                for prop, value in six.iteritems(kwargs):
+                    setattr(obj, prop, value)
                 obj.save()
 
     def revert_to(self, object_with_revision, revision_number):
@@ -198,23 +198,23 @@ class RevisionTestCase(BasePeopleTest):
         rev_1_values = self.make_new_values(
             self.data_raw['person']['en'], 1)
         rev_1_values['user'] = user1
-        rev_1_values['group'] = self.group1
+        rev_1_values['groups'] = [self.group1]
         self.person1.set_current_language('en')
         self.create_revision(self.person1, **rev_1_values)
         self.assertEqual(len(reversion.get_for_object(self.person1)), 1)
         self.assertEqual(self.person1.user, user1)
-        self.assertEqual(self.person1.group, self.group1)
+        self.assertIn(self.group1, self.person1.groups.all())
 
         # rev 2 user 2 group 2
         user2 = self.create_user('rev2_user', 'rev2_user')
         rev_2_values = self.make_new_values(
             self.data_raw['person']['en'], 2)
         rev_2_values['user'] = user2
-        rev_2_values['group'] = self.group2
+        rev_2_values['groups'] = [self.group2]
         self.create_revision(self.person1, **rev_2_values)
         self.assertEqual(len(reversion.get_for_object(self.person1)), 2)
         self.assertEqual(self.person1.user, user2)
-        self.assertEqual(self.person1.group, self.group2)
+        self.assertIn(self.group2, self.person1.groups.all())
 
         # revert to rev 1 with user 1
         self.revert_to(self.person1, 1)
@@ -223,7 +223,7 @@ class RevisionTestCase(BasePeopleTest):
         self.person1.set_current_language('en')
         self.assertEqual(self.person1.user, user1)
         self.assertNotEqual(self.person1.user, user2)
-        self.assertEqual(self.person1.group, self.group1)
+        self.assertIn(self.group1, self.person1.groups.all())
 
     def test_group_revisions_with_diverged_translations(self):
         rev_1_values_en = self.make_new_values(

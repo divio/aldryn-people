@@ -206,7 +206,7 @@ class Group(TranslatableModel):
                 i += 1
 
 
-@version_controlled_content(follow=['group', 'user'])
+@version_controlled_content(follow=['groups', 'user'])
 @python_2_unicode_compatible
 class Person(TranslatableModel):
     translations = TranslatedFields(
