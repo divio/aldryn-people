@@ -42,9 +42,32 @@ class LanguageChangerMixin(object):
         return super(LanguageChangerMixin, self).get(request, *args, **kwargs)
 
 
+class AllowPKsTooMixin(object):
+    def get_object(self, queryset=None):
+        """
+        Bypass TranslatableSlugMixin if we are using PKs. You would only use
+        this if you have a view that supports accessing the object by pk or
+        by its translatable slug.
+
+        NOTE: This should only be used on DetailViews and this mixin MUST be
+        placed to the left of TranslatableSlugMixin. In fact, for best results,
+        declare your view like this:
+
+            MyView(…, AllowPKsTooMixin, TranslatableSlugMixin, DetailView):
+        """
+        if self.pk_url_kwarg in self.kwargs:
+            return super(DetailView, self).get_object(queryset)
+
+        # OK, just let Parler have its way with it.
+        return super(AllowPKsTooMixin, self).get_object(queryset)
+
+
 class PersonView(LanguageChangerMixin, DetailView):
     model = Person
 
 
-class GroupView(LanguageChangerMixin, TranslatableSlugMixin, DetailView):
+class GroupView(LanguageChangerMixin, AllowPKsTooMixin, TranslatableSlugMixin,
+                DetailView):
     model = Group
+
+
