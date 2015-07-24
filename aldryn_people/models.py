@@ -304,8 +304,8 @@ class Person(TranslatableModel):
             slugs = []
             all_slugs = (
                 Person.objects.language(lang)
-                             .exclude(pk=self.pk)
-                             .values_list('translations__slug', flat=True)
+                              .exclude(pk=self.pk)
+                              .values_list('translations__slug', flat=True)
             )
             for slug in all_slugs:
                 if slug and slug.startswith((self.name, self.slug)):
