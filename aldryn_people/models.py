@@ -10,8 +10,6 @@ import warnings
 
 import reversion
 
-import six
-
 from reversion.revisions import RegistrationError
 from distutils.version import StrictVersion
 from django import get_version
@@ -101,7 +99,6 @@ else:
         reversion.register(user_model_object)
     except RegistrationError:
         pass
-
 
 
 @version_controlled_content
