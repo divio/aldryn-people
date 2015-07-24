@@ -69,5 +69,3 @@ class PersonView(LanguageChangerMixin, DetailView):
 class GroupView(LanguageChangerMixin, AllowPKsTooMixin, TranslatableSlugMixin,
                 DetailView):
     model = Group
-
-

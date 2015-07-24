@@ -56,7 +56,7 @@ class PeopleToolbar(CMSToolbar):
             elif view_name in [
                     'aldryn_people:person-detail',
                     'aldryn_people:download_vcard'
-                    ]:
+                ]:
                 person = get_obj_from_request(Person, self.request)
                 if person and person.groups:
                     group = person.primary_group
