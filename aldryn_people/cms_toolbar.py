@@ -14,7 +14,8 @@ from .models import Group, Person
 
 def get_obj_from_request(model, request,
                          pk_url_kwarg='pk',
-                         slug_url_kwarg='slug'):
+                         slug_url_kwarg='slug',
+                         slug_field='slug'):
     """
     Given a model and the request, try to extract and return an object
     from an available 'pk' or 'slug', or return None.
@@ -24,17 +25,18 @@ def get_obj_from_request(model, request,
     """
     language = get_language_from_request(request, check_path=True)
     kwargs = request.resolver_match.kwargs
-    qs = model.objects
+    mgr = model.objects
     if pk_url_kwarg in kwargs:
-        return qs.filter(pk=kwargs[pk_url_kwarg]).first()
+        return mgr.filter(pk=kwargs[pk_url_kwarg]).first()
     elif slug_url_kwarg in kwargs:
         # If the model is translatable, and the given slug is a translated
         # field, then find it the Parler way.
+        filter_kwargs = {slug_field: kwargs[slug_url_kwarg]}
         if (issubclass(model, TranslatableModel) and
                 slug_url_kwarg in model._parler_meta.get_translated_fields()):
-            return qs.translated(language, slug=kwargs[slug_url_kwarg]).first()
+            return mgr.translated(language, **filter_kwargs).first()
         # OK, do it the normal way.
-        return qs.filter(slug=kwargs[slug_url_kwarg]).first()
+        return mgr.filter(**filter_kwargs).first()
     else:
         return None
 
