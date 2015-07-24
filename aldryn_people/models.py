@@ -172,6 +172,7 @@ class Person(TranslatableModel):
     class Meta:
         verbose_name = _('Person')
         verbose_name_plural = _('People')
+        ordering = ['name', ]
 
     def __str__(self):
         pkstr = str(self.pk)
