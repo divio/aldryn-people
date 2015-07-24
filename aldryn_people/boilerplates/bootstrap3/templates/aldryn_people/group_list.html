@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load cms_tags i18n %}
+
+{% block content %}
+    <div class="aldryn aldryn-people aldryn-group-list">
+        <h1>{% trans "Groups" %}</h1>
+        {% for group in group_list %}
+            <h2>{% render_model group 'name' %}</h2>
+            {% for person in group.people.all|dictsort:"name" %}
+                {% include "aldryn_people/includes/person.html" with person=person %}
+            {% endfor %}
+        {% endfor %}
+    </div>
+{% endblock content %}

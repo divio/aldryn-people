@@ -1,5 +1,7 @@
 {% extends "base.html" %}
-{% load cms_tags i18n %}
+{% load i18n %}
+
+{% block title %}{{ person.name }} - {{ block.super }}{% endblock %}
 
 {% block content %}
     <div class="aldryn aldryn-people aldryn-people-detail">
