@@ -34,7 +34,7 @@ class PersonAdmin(AllTranslationsMixin, TranslatableAdmin):
         }),
         (None, {
             'fields': (
-                'group', 'description',
+                'groups', 'description',
             ),
         }),
     )
