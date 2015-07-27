@@ -2,7 +2,6 @@
 
 from __future__ import unicode_literals
 
-from django.core.urlresolvers import reverse
 from django.test import TransactionTestCase
 from django.utils.translation import override, force_text
 
@@ -63,7 +62,7 @@ class TestBasicPeopleModels(TransactionTestCase):
         person_1.save()
 
         name_2 = 'Melchior Hoffman'
-        slug_2 = 'melchior-hoffman_1'
+        slug_2 = 'melchior-hoffman-1'
         person_2 = Person.objects.create(name=name_2)
         person_2.save()
 

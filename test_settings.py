@@ -41,6 +41,12 @@ HELPER_SETTINGS = {
         'parler',
         'sortedm2m',
     ],
+    'DATABASES': {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': ':memory:'
+        }
+    },
     'TEMPLATE_CONTEXT_PROCESSORS': [
         'aldryn_boilerplates.context_processors.boilerplate',
     ],
