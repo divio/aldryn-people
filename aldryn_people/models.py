@@ -21,7 +21,11 @@ from django.utils.translation import ugettext_lazy as _, ugettext, override
 
 from aldryn_common.admin_fields.sortedm2m import SortedM2MModelField
 from cms.models.pluginmodel import CMSPlugin
-from cms.utils.i18n import get_current_language, get_languages
+from cms.utils.i18n import (
+    get_current_language,
+    get_default_language,
+    get_languages,
+)
 from djangocms_text_ckeditor.fields import HTMLField
 from filer.fields.image import FilerImageField
 from parler.models import TranslatableModel, TranslatedFields
@@ -281,7 +285,7 @@ class Person(TranslatableModel):
         return vcard.serialize()
 
     def save(self, **kwargs):
-        language = self.get_current_language()
+        language = self.get_current_language() or get_default_language()
         if not self.slug:
             self.slug = force_unicode(django_slugify(self.name))
         # If there is still no slug, we must give it something to start with
