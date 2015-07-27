@@ -103,6 +103,7 @@ HELPER_SETTINGS = {
             {'code': 'en', },
         ),
         'default': {
+            'fallback': 'en',
             'hide_untranslated': True,  # PLEASE DO NOT CHANGE THIS
         }
     },

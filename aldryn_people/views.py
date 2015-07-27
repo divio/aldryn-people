@@ -11,26 +11,6 @@ from parler.views import TranslatableSlugMixin
 from .models import Group, Person
 
 
-class DownloadVcardView(DetailView):
-    model = Person
-
-    def get(self, request, *args, **kwargs):
-        person = self.get_object()
-        if not person.vcard_enabled:
-            raise Http404
-
-        filename = "%s.vcf" % person.name
-        vcard = person.get_vcard(request)
-        try:
-            vcard = vcard.decode('utf-8').encode('ISO-8859-1')
-        except:
-            pass
-        response = HttpResponse(vcard, content_type="text/x-vCard")
-        response['Content-Disposition'] = 'attachment; filename="{0}"'.format(
-            filename)
-        return response
-
-
 class LanguageChangerMixin(object):
     """
     Convenience mixin that adds CMS Language Changer support.
@@ -62,7 +42,28 @@ class AllowPKsTooMixin(object):
         return super(AllowPKsTooMixin, self).get_object(queryset)
 
 
-class PersonDetailView(LanguageChangerMixin, DetailView):
+class DownloadVcardView(AllowPKsTooMixin, TranslatableSlugMixin, DetailView):
+    model = Person
+
+    def get(self, request, *args, **kwargs):
+        person = self.get_object()
+        if not person.vcard_enabled:
+            raise Http404
+
+        filename = "%s.vcf" % person.name
+        vcard = person.get_vcard(request)
+        try:
+            vcard = vcard.decode('utf-8').encode('ISO-8859-1')
+        except:
+            pass
+        response = HttpResponse(vcard, content_type="text/x-vCard")
+        response['Content-Disposition'] = 'attachment; filename="{0}"'.format(
+            filename)
+        return response
+
+
+class PersonDetailView(LanguageChangerMixin, AllowPKsTooMixin,
+                       TranslatableSlugMixin, DetailView):
     model = Person
 
 

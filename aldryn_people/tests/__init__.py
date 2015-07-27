@@ -34,12 +34,15 @@ class BasePeopleTest(BaseCMSTestCase, TestCase):
             'de': {'name': 'Gruppe2', 'description': 'Beschreibung2'},
         },
         'person1': {
-            'en': {'function': 'function1', 'description': 'description-en'},
-            'de': {'function': 'Funktion1', 'description': 'Beschreibung-de'},
+            'en': {'name': 'person1', 'slug': 'person1',
+                   'function': 'function1', 'description': 'description-en'},
+            'de': {'name': 'mensch1', 'slug': 'mensch1',
+                   'function': 'Funktion1', 'description': 'Beschreibung-de'},
         },
         'person2': {
             # This should *not* have a EN translation
-            'de': {'function': 'Funktion2', 'description': 'Beschreibung2'},
+            'de': {'name': 'mensch2', 'slug': 'mensch2',
+                   'function': 'Funktion2', 'description': 'Beschreibung2'},
         },
     }
 

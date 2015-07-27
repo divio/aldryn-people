@@ -54,9 +54,9 @@ class PeopleToolbar(CMSToolbar):
         user = getattr(self.request, 'user', None)
         if user:
             view_name = self.request.resolver_match.view_name
+            group = person = None
             if view_name == 'aldryn_people:group-detail':
                 group = get_obj_from_request(Group, self.request)
-                person = None
             elif view_name in [
                     'aldryn_people:person-detail',
                     'aldryn_people:download_vcard']:
