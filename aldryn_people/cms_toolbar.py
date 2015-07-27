@@ -47,7 +47,7 @@ def get_obj_from_request(model, request,
 class PeopleToolbar(CMSToolbar):
     # watch_models must be a list, not a tuple
     # see https://github.com/divio/django-cms/issues/4135
-    watch_models = [Person, ]
+    watch_models = [Person, Group, ]
     supported_apps = ('aldryn_people', )
 
     def populate(self):
