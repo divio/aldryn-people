@@ -24,7 +24,7 @@
                 {# IMPORTANT: and than the remaining #}
                 {% for group, person in people_groups.items %}
                     {% if not group.name %}
-                        <h2>{% trans "Uncategorized" %}</h2>
+                        <h2>{% trans "Ungrouped" %}</h2>
                         {% for person in person %}
                             {% include "aldryn_people/includes/person.html" with person=person group="true" %}
                         {% endfor %}

@@ -11,7 +11,7 @@ try:
 except ImportError:
     # For Django<=1.6
     from django.db.models.loading import get_model
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 
 from parler.admin import TranslatableAdmin
 from aldryn_translation_tools.admin import AllTranslationsMixin
@@ -61,13 +61,13 @@ class PersonAdmin(AllTranslationsMixin, TranslatableAdmin):
     )
 
     def get_queryset(self, request):
-        qs = super(PersonAdmin, self).queryset(request)
+        qs = super(PersonAdmin, self).get_queryset(request)
         qs = qs.annotate(group_count=Count('groups'))
         return qs
 
     def num_groups(self, obj):
         return obj.group_count
-    num_groups.short_description = '# Groups'
+    num_groups.short_description = _('# Groups')
     num_groups.admin_order_field = 'group_count'
 
 
@@ -91,13 +91,13 @@ class GroupAdmin(AllTranslationsMixin, TranslatableAdmin):
     )
 
     def get_queryset(self, request):
-        qs = super(GroupAdmin, self).queryset(request)
+        qs = super(GroupAdmin, self).get_queryset(request)
         qs = qs.annotate(people_count=Count('people'))
         return qs
 
     def num_people(self, obj):
         return obj.people_count
-    num_people.short_description = '# People'
+    num_people.short_description = _('# People')
     num_people.admin_order_field = 'people_count'
 
 

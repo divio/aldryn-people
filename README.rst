@@ -103,7 +103,8 @@ ALDRYN_PEOPLE_USER_THRESHOLD
 You can optionally also add a setting ``ALDRYN_PEOPLE_USER_THRESHOLD`` with an
 integer defining the number of (admin) users for which the user interface will
 use a "raw ID field" rather than a drop-down for associating a person with
-a user.  The default is 50 users.
+a user.  The default is 50 users. The change may not occur until the project is
+restarted.
 
 
 Download vCard
