@@ -11,7 +11,7 @@ try:
 except ImportError:
     # For Django<=1.6
     from django.db.models.loading import get_model
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from parler.admin import TranslatableAdmin
 from aldryn_translation_tools.admin import AllTranslationsMixin
