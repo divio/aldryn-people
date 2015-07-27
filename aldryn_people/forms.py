@@ -26,5 +26,5 @@ class PersonForm(TranslatableModelForm):
             'website',
         ]
 
-    def clean_slug(self):
-        return self.cleaned_data['slug'] or None
+    # def clean_slug(self):
+    #     return self.cleaned_data['slug'] or None
