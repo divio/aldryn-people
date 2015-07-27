@@ -11,6 +11,13 @@ class Form(forms.BaseForm):
         required=False
     )
 
+    user_threshold = forms.NumberField(
+        'Once there are this many users, change drop-down to ID input field',
+        required=False, min_value=0
+    )
+
     def to_settings(self, data, settings):
         settings['PEOPLE_PLUGIN_STYLES'] = data.get('people_plugin_styles', '')
+        settings['ALDRYN_PEOPLE_USER_THRESHOLD'] = int(data.get(
+            'user_threshold', 50))
         return settings

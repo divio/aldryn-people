@@ -2,8 +2,15 @@
 
 from __future__ import unicode_literals
 
+from django.conf import settings
 from django.contrib import admin
 from django.db.models import Count
+try:
+    # For Django>=1.7
+    from django.apps.apps import get_model
+except ImportError:
+    # For Django<=1.6
+    from django.db.models.loading import get_model
 from django.utils.translation import ugettext_lazy as _
 
 from parler.admin import TranslatableAdmin
@@ -17,7 +24,21 @@ class PersonAdmin(AllTranslationsMixin, TranslatableAdmin):
         '__str__', 'email', 'vcard_enabled', 'num_groups', ]
     list_filter = ['groups', 'vcard_enabled']
     search_fields = ('translations__name', 'email', 'translations__function')
-    raw_id_fields = ('user',)
+
+    def __init__(self, *args, **kwargs):
+        """
+        Determines if the User widget should be a drop-down or a raw ID field.
+        """
+        # This is a hack to use until get_raw_id_fields() lands in Django:
+        # https://code.djangoproject.com/ticket/17881.
+        user_threshold = getattr(
+            'settings', 'ALDRYN_PEOPLE_USER_THRESHOLD', 50)
+        super(PersonAdmin, self).__init__(*args, **kwargs)
+        user_model = getattr(
+            settings, 'AUTH_USER_MODEL', 'auth.User').split('.')
+        model = get_model(user_model[0], user_model[1])
+        if model.objects.count() > user_threshold:
+            self.raw_id_fields = ('user', )
 
     fieldsets = (
         (None, {
