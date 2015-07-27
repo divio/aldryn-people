@@ -207,11 +207,6 @@ class Person(TranslatableModel):
             return reverse('aldryn_people:person-detail', kwargs=kwargs)
 
     def get_vcard(self, request=None):
-        if self.primary_group:
-            group_name = self.primary_group.safe_translation_getter(
-                'name', default="Group: {0}".format(self.primary_group.pk))
-        else:
-            group_name = ''
         function = self.safe_translation_getter('function')
 
         vcard = vobject.vCard()
@@ -256,6 +251,8 @@ class Person(TranslatableModel):
             website.value = unicode(self.website)
 
         if self.primary_group:
+            group_name = self.primary_group.safe_translation_getter(
+                'name', default="Group: {0}".format(self.primary_group.pk))
             if group_name:
                 vcard.add('org').value = [group_name]
             if (self.primary_group.address or self.primary_group.city or
