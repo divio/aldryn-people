@@ -17,7 +17,7 @@ from django.utils.translation import ugettext_lazy as _, override
 from aldryn_common.admin_fields.sortedm2m import SortedM2MModelField
 from aldryn_translation_tools.models import TranslatedAutoSlugifyMixin
 from cms.models.pluginmodel import CMSPlugin
-from cms.utils.i18n import get_current_language
+from cms.utils.i18n import get_current_language, get_default_language
 from djangocms_text_ckeditor.fields import HTMLField
 from filer.fields.image import FilerImageField
 from parler.models import TranslatableModel, TranslatedFields
@@ -80,7 +80,7 @@ class Group(TranslatedAutoSlugifyMixin, TranslatableModel):
 
     def get_absolute_url(self, language=None):
         if not language:
-            language = get_current_language()
+            language = get_current_language() or get_default_language()
         slug = self.safe_translation_getter(
             'slug', None, language_code=language, any_language=False)
         if slug:
@@ -92,7 +92,7 @@ class Group(TranslatedAutoSlugifyMixin, TranslatableModel):
 
 
 @python_2_unicode_compatible
-class Person(TranslatableModel):
+class Person(TranslatedAutoSlugifyMixin, TranslatableModel):
     slug_source_field_name = 'name'
 
     translations = TranslatedFields(

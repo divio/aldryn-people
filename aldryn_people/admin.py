@@ -9,11 +9,9 @@ from parler.admin import TranslatableAdmin
 from aldryn_translation_tools.admin import AllTranslationsMixin
 
 from .models import Person, Group
-from .forms import PersonForm
 
 
 class PersonAdmin(AllTranslationsMixin, TranslatableAdmin):
-    form = PersonForm
     list_display = [
         '__str__', 'email', 'vcard_enabled', ]
     list_filter = ['groups', 'vcard_enabled']
