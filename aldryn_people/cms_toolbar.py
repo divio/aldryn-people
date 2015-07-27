@@ -63,6 +63,8 @@ class PeopleToolbar(CMSToolbar):
                 person = get_obj_from_request(Person, self.request)
                 if person and person.groups:
                     group = person.primary_group
+            elif view_name in ['aldryn_people:group-list', ]:
+                pass
             else:
                 # We don't appear to be on any aldryn_people views so this
                 # menu shouldn't even be here.
