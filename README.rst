@@ -48,7 +48,9 @@ Manual Installation
 
     INSTALLED_APPS = [
         …
+        'aldryn_boilerplates',
         'aldryn_people',
+        'aldryn_translation_tools',
         'easy_thumbnails'
         'filer',
         'parler',
