@@ -38,11 +38,18 @@ HELPER_SETTINGS = {
         'aldryn_people',
         'reversion',
         'aldryn_reversion',
+        'aldryn_translation_tools',
         'easy_thumbnails',
         'filer',
         'parler',
         'sortedm2m',
     ],
+    'DATABASES': {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': ':memory:'
+        }
+    },
     'TEMPLATE_CONTEXT_PROCESSORS': [
         'aldryn_boilerplates.context_processors.boilerplate',
     ],
@@ -105,6 +112,7 @@ HELPER_SETTINGS = {
             {'code': 'en', },
         ),
         'default': {
+            'fallback': 'en',
             'hide_untranslated': True,  # PLEASE DO NOT CHANGE THIS
         }
     },

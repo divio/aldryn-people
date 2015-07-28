@@ -11,7 +11,9 @@
 		{% if person.phone %}{% trans "Phone:" %} <span>{{ person.phone|phoneformat }}</span><br />{% endif %}
 		{% if person.mobile %}{% trans "Mobile:" %} <span>{{ person.mobile|phoneformat }}</span><br />{% endif %}
 		{% if person.email %}{% trans "E-Mail:" %} <a href="mailto:{{ person.email }}">{{ person.email }}</a>{% endif %}
-		{% if instance.show_vcard and person.vcard_enabled %}<br /><a href="{% url 'aldryn_people:download_vcard' person.slug %}" class="btn-download">{% trans "Download vCard" %}</a>{% endif %}
+		{% if not instance and person.vcard_enabled or instance.show_vcard and person.vcard_enabled %}
+            <br /><a href="{% url 'aldryn_people:download_vcard' person.slug %}" class="btn-download">{% trans "Download vCard" %}</a>
+        {% endif %}
 	</p>
 	{% if person.description %}<div class="people-desc">{{ person.description|safe }}</div>{% endif %}
 </div>

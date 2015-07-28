@@ -19,27 +19,20 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.importlib import import_module
+from django.utils.translation import ugettext_lazy as _, override
 
-try:
-    from django.utils.encoding import force_unicode
-except ImportError:
-    from django.utils.encoding import force_text as force_unicode
-from django.utils.text import slugify as default_slugify
-from django.utils.translation import ugettext_lazy as _, ugettext, override
-
-from aldryn_common.slugs import unique_slugify
 from aldryn_common.admin_fields.sortedm2m import SortedM2MModelField
+from aldryn_translation_tools.models import TranslatedAutoSlugifyMixin
 from cms.models.pluginmodel import CMSPlugin
-from cms.utils.i18n import get_current_language, get_languages
+from cms.utils.i18n import get_current_language, get_default_language
 from djangocms_text_ckeditor.fields import HTMLField
 from filer.fields.image import FilerImageField
 from parler.models import TranslatableModel, TranslatedFields
-from sortedm2m.fields import SortedManyToManyField
 from aldryn_reversion.core import version_controlled_content
+
 
 from .utils import get_additional_styles
 
-LANGUAGE_CODES = [lang['code'] for lang in get_languages()]
 
 
 strict_version = StrictVersion(get_version())
@@ -104,10 +97,14 @@ else:
 @version_controlled_content
 @python_2_unicode_compatible
 class Group(TranslatableModel):
+    slug_source_field_name = 'name'
     translations = TranslatedFields(
-        name=models.CharField(_('name'), max_length=255),
+        name=models.CharField(_('name'), max_length=255,
+                              help_text=_("Provide this group's name.")),
         description=HTMLField(_('description'), blank=True),
-        slug=models.SlugField(_('slug'), max_length=255, default=''),
+        slug=models.SlugField(_('slug'), max_length=255, default='',
+            blank=True,
+            help_text=_("Leave blank to auto-generate a unique slug.")),
     )
     address = models.TextField(
         verbose_name=_('address'), blank=True)
@@ -151,7 +148,7 @@ class Group(TranslatableModel):
 
     def get_absolute_url(self, language=None):
         if not language:
-            language = get_current_language()
+            language = get_current_language() or get_default_language()
         slug = self.safe_translation_getter(
             'slug', None, language_code=language, any_language=False)
         if slug:
@@ -161,59 +158,27 @@ class Group(TranslatableModel):
         with override(language):
             return reverse('aldryn_people:group-detail', kwargs=kwargs)
 
-    def slugify(self, source_text, i=None):
-        slug = default_slugify(source_text)
-        if i is not None:
-            slug += "_%d" % i
-        return slug
-
-    def save(self, **kwargs):
-        language = self.get_current_language()
-        if not self.slug:
-            self.slug = force_unicode(default_slugify(self.name))
-        # If there is still no slug, we must give it something to start with
-        if not self.slug:
-            self.slug = ugettext('unnamed-group')
-        if not Group.objects.language(language).filter(
-                translations__slug=self.slug).exclude(pk=self.pk).exists():
-            return super(Group, self).save(**kwargs)
-        for lang in LANGUAGE_CODES:
-            #
-            # We'd much rather just do something like:
-            # Group.objects.translated(lang, slug__startswith=self.slug)
-            # But sadly, this isn't supported by Parler/Django, see:
-            # http://django-parler.readthedocs.org/en/latest/api/\
-            #     parler.managers.html#the-translatablequeryset-class
-            #
-            slugs = []
-            all_slugs = (
-                Group.objects.language(lang)
-                             .exclude(pk=self.pk)
-                             .values_list('translations__slug', flat=True)
-            )
-            for slug in all_slugs:
-                if slug and slug.startswith((self.name, self.slug)):
-                    slugs.append(slug)
-            i = 1
-            while True:
-                slug = self.slugify(self.name or self.slug, i)
-                if slug not in slugs:
-                    self.slug = slug
-                    return super(Group, self).save(**kwargs)
-                i += 1
-
 
 @version_controlled_content(follow=['groups', 'user'])
 @python_2_unicode_compatible
-class Person(TranslatableModel):
+class Person(TranslatedAutoSlugifyMixin, TranslatableModel):
+    slug_source_field_name = 'name'
+
+
+
+
+
     translations = TranslatedFields(
+        name=models.CharField(_('name'), max_length=255, blank=False,
+            default='', help_text=_("Provide this person's name.")),
+        slug=models.SlugField(_('unique slug'), max_length=255, blank=True,
+            default='',
+            help_text=_("Leave blank to auto-generate a unique slug.")),
         function=models.CharField(
             _('function'), max_length=255, blank=True, default=''),
         description=HTMLField(
             _('Description'), blank=True, default='')
     )
-    name = models.CharField(
-        verbose_name=_('name'), max_length=255)
     phone = models.CharField(
         verbose_name=_('phone'), null=True, blank=True, max_length=100)
     mobile = models.CharField(
@@ -224,15 +189,12 @@ class Person(TranslatableModel):
         verbose_name=_("email"), blank=True, default='')
     website = models.URLField(
         verbose_name=_('website'), null=True, blank=True)
-    groups = SortedManyToManyField(
+    groups = SortedM2MModelField(
         'aldryn_people.Group', default=None, blank=True, related_name='people',
         help_text=_('Choose and order the groups for this person, the first '
                     'will be the "primary group".'))
     visual = FilerImageField(
         null=True, blank=True, default=None, on_delete=models.SET_NULL)
-    slug = models.CharField(
-        verbose_name=_('unique slug'), max_length=255, blank=True, null=True,
-        unique=True)
     vcard_enabled = models.BooleanField(
         verbose_name=_('enable vCard download'), default=True)
     user = models.ForeignKey(
@@ -263,23 +225,23 @@ class Person(TranslatableModel):
     def get_absolute_url(self, language=None):
         if not language:
             language = get_current_language()
-        if self.slug:
-            kwargs = {'slug': self.slug}
+        slug = self.safe_translation_getter(
+            'slug', None, language_code=language, any_language=False)
+        if slug:
+            kwargs = {'slug': slug}
         else:
             kwargs = {'pk': self.pk}
         with override(language):
             return reverse('aldryn_people:person-detail', kwargs=kwargs)
 
     def get_vcard(self, request=None):
-        if self.primary_group:
-            group_name = self.primary_group.safe_translation_getter('name')
-        else:
-            group_name = ''
         function = self.safe_translation_getter('function')
 
         vcard = vobject.vCard()
-        vcard.add('n').value = vobject.vcard.Name(given=self.name)
-        vcard.add('fn').value = self.name
+        safe_name = self.safe_translation_getter(
+            'name', default="Person: {0}".format(self.pk))
+        vcard.add('n').value = vobject.vcard.Name(given=safe_name)
+        vcard.add('fn').value = safe_name
 
         if self.visual:
             try:
@@ -317,6 +279,8 @@ class Person(TranslatableModel):
             website.value = unicode(self.website)
 
         if self.primary_group:
+            group_name = self.primary_group.safe_translation_getter(
+                'name', default="Group: {0}".format(self.primary_group.pk))
             if group_name:
                 vcard.add('org').value = [group_name]
             if (self.primary_group.address or self.primary_group.city or
@@ -343,11 +307,6 @@ class Person(TranslatableModel):
                 website.value = unicode(self.primary_group.website)
 
         return vcard.serialize()
-
-    def save(self, **kwargs):
-        if not self.slug:
-            unique_slugify(instance=self, value=self.name)
-        return super(Person, self).save(**kwargs)
 
 
 @python_2_unicode_compatible
