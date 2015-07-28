@@ -316,23 +316,15 @@ class BasePeoplePlugin(CMSPlugin):
     style = models.CharField(
         _('Style'), choices=STYLE_CHOICES,
         default=STYLE_CHOICES[0][0], max_length=50)
+
     people = SortedM2MModelField(
-        Person, blank=True, null=True)
-    group_by_group = models.BooleanField(
-        verbose_name=_('group by group'),
-        default=True,
-        help_text=_('when checked, people are grouped by their group')
+        Person, blank=True, null=True,
+        help_text=_('Select and arrange specific people, or, leave blank to '
+                    'select all.')
     )
-    show_links = models.BooleanField(
-        verbose_name=_('Show links to Detail Page'), default=False)
-    show_vcard = models.BooleanField(
-        verbose_name=_('Show links to download vCard'), default=False)
 
     class Meta:
         abstract = True
-
-    def __str__(self):
-        return unicode(self.pk)
 
     def copy_relations(self, oldinstance):
         self.people = oldinstance.people.all()
@@ -340,8 +332,26 @@ class BasePeoplePlugin(CMSPlugin):
     def get_selected_people(self):
         return self.people.select_related('group', 'visual')
 
+    def __str__(self):
+        return unicode(self.pk)
+
 
 class PeoplePlugin(BasePeoplePlugin):
+
+    group_by_group = models.BooleanField(
+        verbose_name=_('group by group'),
+        default=True,
+        help_text=_('Group people by their group.')
+    )
+    show_ungrouped = models.BooleanField(
+        verbose_name=_('show ungrouped'),
+        default=False,
+        help_text=_('When using "group by group", show ungrouped people too.')
+    )
+    show_links = models.BooleanField(
+        verbose_name=_('Show links to Detail Page'), default=False)
+    show_vcard = models.BooleanField(
+        verbose_name=_('Show links to download vCard'), default=False)
 
     class Meta:
         abstract = False
