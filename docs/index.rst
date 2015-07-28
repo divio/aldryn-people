@@ -17,5 +17,4 @@ Aldryn People is `open-source software <https://github.com/aldryn/aldryn-people>
    :maxdepth: 2
 
    introduction/index
-   reference/index
    user/index
