@@ -11,7 +11,7 @@ import warnings
 import reversion
 
 from reversion.revisions import RegistrationError
-from distutils.version import StrictVersion
+from distutils.version import LooseVersion
 from django import get_version
 from django.contrib.auth import get_user_model
 from django.conf import settings
@@ -33,11 +33,11 @@ from aldryn_reversion.core import version_controlled_content
 
 from .utils import get_additional_styles
 
+# NOTE: We use LooseVersion and not StrictVersion because sometimes Aldryn uses
+# patched build with version numbers of the form X.Y.Z.postN.
+loose_version = LooseVersion(get_version())
 
-
-strict_version = StrictVersion(get_version())
-
-if strict_version < StrictVersion('1.7.0'):
+if loose_version < LooseVersion('1.7.0'):
     # Prior to 1.7 it is pretty straight forward
     user_model = get_user_model()
     revision_manager = reversion.default_revision_manager
