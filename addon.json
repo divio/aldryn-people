@@ -2,6 +2,7 @@
     "package-name": "aldryn-people",
     "installed-apps": [
         "aldryn_boilerplates",
+        "aldryn_common",
         "aldryn_people",
         "aldryn_translation_tools",
         "easy_thumbnails",
