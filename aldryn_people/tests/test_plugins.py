@@ -8,7 +8,7 @@ from cms import api
 from cms.models import CMSPlugin
 from cms.test_utils.testcases import URL_CMS_PLUGIN_ADD
 
-from ..models import Person
+from ..models import Person, Group
 from ..cms_plugins import PeoplePlugin
 
 from . import BasePeopleTest
@@ -46,3 +46,38 @@ class TestPersonPlugins(BasePeopleTest):
         response = self.client.post(URL_CMS_PLUGIN_ADD, plugin_data)
         self.assertEqual(response.status_code, 200)
         self.assertTrue(CMSPlugin.objects.exists())
+
+    def test_show_ungrouped(self):
+        """
+        """
+        the_bradys = Group.objects.create(name="The Bradys")
+        alice = Person.objects.create(name="Alice")
+        bobby = Person.objects.create(name="Bobby")
+        cindy = Person.objects.create(name="Cindy")
+        # Alice is the housekeeper, not a real Brady.
+        bobby.groups.add(the_bradys)
+        cindy.groups.add(the_bradys)
+
+        # Add a plugin where ungrouped people are not shown
+        plugin = api.add_plugin(self.placeholder, PeoplePlugin, self.language)
+        plugin.people = Person.objects.all()
+        plugin.group_by_group = True
+        plugin.show_ungrouped = False
+        plugin.save()
+
+        self.page.publish(self.language)
+        url = self.page.get_absolute_url()
+        response = self.client.get(url)
+        self.assertNotContains(response, alice.name)
+
+        # Now, add a new plugin where ungrouped people are shown
+        plugin = api.add_plugin(self.placeholder, PeoplePlugin, self.language)
+        plugin.people = Person.objects.all()
+        plugin.group_by_group = True
+        plugin.show_ungrouped = True
+        plugin.save()
+
+        self.page.publish(self.language)
+        url = self.page.get_absolute_url()
+        response = self.client.get(url)
+        self.assertContains(response, alice.name)
