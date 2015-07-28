@@ -2,6 +2,7 @@
 
 from __future__ import unicode_literals
 
+from django.db import OperationalError
 from django.conf import settings
 from django.contrib import admin
 from django.db.models import Count
@@ -25,20 +26,25 @@ class PersonAdmin(AllTranslationsMixin, TranslatableAdmin):
     list_filter = ['groups', 'vcard_enabled']
     search_fields = ('translations__name', 'email', 'translations__function')
 
-    def __init__(self, *args, **kwargs):
+    def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
         """
         Determines if the User widget should be a drop-down or a raw ID field.
         """
         # This is a hack to use until get_raw_id_fields() lands in Django:
         # https://code.djangoproject.com/ticket/17881.
-        user_threshold = getattr(
-            'settings', 'ALDRYN_PEOPLE_USER_THRESHOLD', 50)
-        super(PersonAdmin, self).__init__(*args, **kwargs)
-        user_model = getattr(
-            settings, 'AUTH_USER_MODEL', 'auth.User').split('.')
-        model = get_model(user_model[0], user_model[1])
-        if model.objects.count() > user_threshold:
-            self.raw_id_fields = ('user', )
+        if db_field.name in ['user', ]:
+            threshold = getattr(
+                settings, 'ALDRYN_PEOPLE_USER_THRESHOLD', 50)
+            user_pkg, user_model = getattr(
+                settings, 'AUTH_USER_MODEL', 'auth.User').split('.')
+            model = get_model(user_pkg, user_model)
+
+            if model.objects.count() > threshold:
+                kwargs['widget'] = admin.widgets.ForeignKeyRawIdWidget(
+                    db_field.rel, self.admin_site, using=kwargs.get('using'))
+                return db_field.formfield(**kwargs)
+        return super(PersonAdmin, self).formfield_for_foreignkey(
+            db_field, request, **kwargs)
 
     fieldsets = (
         (None, {

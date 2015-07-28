@@ -21,7 +21,6 @@ from cms.utils.i18n import get_current_language, get_default_language
 from djangocms_text_ckeditor.fields import HTMLField
 from filer.fields.image import FilerImageField
 from parler.models import TranslatableModel, TranslatedFields
-from sortedm2m.fields import SortedManyToManyField
 
 from .utils import get_additional_styles
 
@@ -116,7 +115,7 @@ class Person(TranslatedAutoSlugifyMixin, TranslatableModel):
         verbose_name=_("email"), blank=True, default='')
     website = models.URLField(
         verbose_name=_('website'), null=True, blank=True)
-    groups = SortedManyToManyField(
+    groups = SortedM2MModelField(
         'aldryn_people.Group', default=None, blank=True, related_name='people',
         help_text=_('Choose and order the groups for this person, the first '
                     'will be the "primary group".'))
