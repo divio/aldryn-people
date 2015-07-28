@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
 from django.contrib.sites.models import Site
 from django.db import IntegrityError
 from django.test import RequestFactory, TestCase
@@ -112,6 +113,17 @@ class BasePeopleTest(BaseCMSTestCase, TestCase):
     def create_superuser(self):
         return User.objects.create_superuser(
             self.su_username, 'email@example.com', self.su_password)
+
+    def create_user(self, user_name, user_password, is_staff=False,
+                    is_superuser=False):
+        return User.objects.create(
+            username=user_name,
+            first_name='{0} first_name'.format(user_name),
+            last_name='{0} last_name'.format(user_name),
+            password=make_password(user_password),
+            is_staff=is_staff,
+            is_superuser=is_superuser
+        )
 
 
 class CMSRequestBasedTest(TestCase):
