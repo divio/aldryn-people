@@ -2,6 +2,7 @@
 
 from __future__ import unicode_literals
 
+from django.db import OperationalError
 from django.conf import settings
 from django.contrib import admin
 from django.db.models import Count
@@ -37,8 +38,12 @@ class PersonAdmin(AllTranslationsMixin, TranslatableAdmin):
         user_model = getattr(
             settings, 'AUTH_USER_MODEL', 'auth.User').split('.')
         model = get_model(user_model[0], user_model[1])
-        if model.objects.count() > user_threshold:
-            self.raw_id_fields = ('user', )
+        try:
+            if model.objects.count() > user_threshold:
+                self.raw_id_fields = ('user', )
+        except OperationalError:
+            # User table doesn't exist yet, try again later =)
+            pass
 
     fieldsets = (
         (None, {
