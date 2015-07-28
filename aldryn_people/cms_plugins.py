@@ -65,7 +65,7 @@ class PeoplePlugin(CMSPluginBase):
 
         if instance.group_by_group:
             context['people_groups'] = self.group_people(people)
-            if instance.show_ungrouped is True:
+            if instance.show_ungrouped:
                 groupless = people.filter(groups__isnull=True)
             else:
                 groupless = people.none()
