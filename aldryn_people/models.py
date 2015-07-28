@@ -164,10 +164,6 @@ class Group(TranslatableModel):
 class Person(TranslatedAutoSlugifyMixin, TranslatableModel):
     slug_source_field_name = 'name'
 
-
-
-
-
     translations = TranslatedFields(
         name=models.CharField(_('name'), max_length=255, blank=False,
             default='', help_text=_("Provide this person's name.")),

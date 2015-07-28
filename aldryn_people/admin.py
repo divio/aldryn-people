@@ -83,12 +83,10 @@ class PersonAdmin(VersionedPlaceholderAdminMixin,
     num_groups.short_description = _('# Groups')
     num_groups.admin_order_field = 'group_count'
 
+
 class GroupAdmin(VersionedPlaceholderAdminMixin,
                  AllTranslationsMixin,
                  TranslatableAdmin):
-
-
-
 
     list_display = ['__str__', 'city', 'num_people', ]
     search_filter = ['translations__name']
