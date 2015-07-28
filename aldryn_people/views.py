@@ -74,3 +74,10 @@ class GroupDetailView(LanguageChangerMixin, AllowPKsTooMixin,
 
 class GroupListView(ListView):
     model = Group
+
+    def get_context_data(self, **kwargs):
+        context = super(GroupListView, self).get_context_data(**kwargs)
+        context['ungrouped_people'] = Person.objects\
+                                            .filter(groups__isnull=True)\
+                                            .all()
+        return context

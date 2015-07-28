@@ -10,5 +10,11 @@
                 {% include "aldryn_people/includes/person.html" with person=person %}
             {% endfor %}
         {% endfor %}
+        {% if ungrouped_people.count %}
+            <h2>{% trans "Ungrouped" %}</h2>
+            {% for person in ungrouped_people %}
+                {% include "aldryn_people/includes/person.html" with person=person %}
+            {% endfor %}
+        {% endif %}
     </div>
 {% endblock content %}
