@@ -15,11 +15,19 @@ from django.utils.translation import ugettext_lazy as _
 
 from parler.admin import TranslatableAdmin
 from aldryn_translation_tools.admin import AllTranslationsMixin
+# We are using VersionedPlaceholderAdminMixin because atm (0.1.0)
+# it also contains important methods and changes to provide
+# translations support in revisions. Be aware that this might
+# be changed in further releases.
+from aldryn_reversion.admin import VersionedPlaceholderAdminMixin
 
 from .models import Person, Group
 
 
-class PersonAdmin(AllTranslationsMixin, TranslatableAdmin):
+class PersonAdmin(VersionedPlaceholderAdminMixin,
+                  AllTranslationsMixin,
+                  TranslatableAdmin):
+
     list_display = [
         '__str__', 'email', 'vcard_enabled', 'num_groups', ]
     list_filter = ['groups', 'vcard_enabled']
@@ -76,7 +84,9 @@ class PersonAdmin(AllTranslationsMixin, TranslatableAdmin):
     num_groups.admin_order_field = 'group_count'
 
 
-class GroupAdmin(AllTranslationsMixin, TranslatableAdmin):
+class GroupAdmin(VersionedPlaceholderAdminMixin,
+                 AllTranslationsMixin,
+                 TranslatableAdmin):
 
     list_display = ['__str__', 'city', 'num_people', ]
     search_filter = ['translations__name']
