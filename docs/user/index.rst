@@ -50,3 +50,11 @@ includes a plugin that can be inserted into any django CMS page - indeed, into a
 
 For example, if you have a news article discussing a Person on your site, you can drop a People
 plugin into that page to link to the Person's full profile.
+
+First, create another Person so that you have at least two in the system.
+
+Create a new django CMS page, and insert a People plugin. Choose which people are to be shown in
+the list, and re-order them by dragging the list of available people.
+
+Options are available to list people according to their groups, and to include vCards for each
+person.
