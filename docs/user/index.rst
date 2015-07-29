@@ -32,10 +32,11 @@ Group, giving it a name such as "Staff". Save the Group.
    https://github.com/aldryn/aldryn-people/issues/71
 ..
 
-   **PLEASE NOTE:** There is a known issue when creating the first group where
+   **Please note:** There is a known issue when creating the first group where
    the Add Group pop-up form will turn blank on submission and the Add/Edit
-   perform form will not be properly updated. It is recommended that for this
-   first group, create the group directly using the Toolbar menu item instead.
+   form will not be properly updated. It is recommended that for this first
+   group, create the group directly using the django CMS toolbar menu item
+   "Add new group ..." in the "People" menu instead.
 
 You'll see that the new Group now appears in the list of Groups, and that the Person has membership
 of it (it is ticked, meaning the Person belongs to it).
