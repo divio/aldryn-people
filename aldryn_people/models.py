@@ -330,7 +330,7 @@ class BasePeoplePlugin(CMSPlugin):
         self.people = oldinstance.people.all()
 
     def get_selected_people(self):
-        return self.people.select_related('groups', 'visual')
+        return self.people.select_related('visual')
 
     def __str__(self):
         return unicode(self.pk)
