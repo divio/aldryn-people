@@ -96,7 +96,7 @@ else:
 
 @version_controlled_content
 @python_2_unicode_compatible
-class Group(TranslatableModel):
+class Group(TranslatedAutoSlugifyMixin, TranslatableModel):
     slug_source_field_name = 'name'
     translations = TranslatedFields(
         name=models.CharField(_('name'), max_length=255,
