@@ -170,10 +170,10 @@ class Person(TranslatedAutoSlugifyMixin, TranslatableModel):
         slug=models.SlugField(_('unique slug'), max_length=255, blank=True,
             default='',
             help_text=_("Leave blank to auto-generate a unique slug.")),
-        function=models.CharField(
-            _('function'), max_length=255, blank=True, default=''),
-        description=HTMLField(
-            _('Description'), blank=True, default='')
+        function=models.CharField(_('role'),
+            max_length=255, blank=True, default=''),
+        description=HTMLField(_('description'),
+            blank=True, default='')
     )
     phone = models.CharField(
         verbose_name=_('phone'), null=True, blank=True, max_length=100)
