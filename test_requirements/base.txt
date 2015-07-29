@@ -6,7 +6,10 @@ djangocms-helper
 flake8
 python-coveralls>=2.4.2
 six
+
+# docs
 sphinx
+sphinx-rtd-theme
 
 # The following are for aldryn-search
 django-appconf>=0.6
