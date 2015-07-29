@@ -77,7 +77,6 @@ class GroupListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(GroupListView, self).get_context_data(**kwargs)
-        context['ungrouped_people'] = Person.objects\
-                                            .filter(groups__isnull=True)\
-                                            .all()
+        context['ungrouped_people'] = Person.objects.filter(
+            groups__isnull=True)
         return context
