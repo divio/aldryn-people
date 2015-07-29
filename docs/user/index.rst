@@ -28,6 +28,15 @@ Add the Person to a Group
 People can optionally belong to Groups. In the *Groups* section in the *Add Person* form, add a new
 Group, giving it a name such as "Staff". Save the Group.
 
+.. The following notice can be removed once this issue is resolved:
+   https://github.com/aldryn/aldryn-people/issues/71
+..
+
+   **PLEASE NOTE:** There is a known issue when creating the first group where
+   the Add Group pop-up form will turn blank on submission and the Add/Edit
+   perform form will not be properly updated. It is recommended that for this
+   first group, create the group directly using the Toolbar menu item instead.
+
 You'll see that the new Group now appears in the list of Groups, and that the Person has membership
 of it (it is ticked, meaning the Person belongs to it).
 

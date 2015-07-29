@@ -39,6 +39,5 @@ Requirements
 ************
 
 * django CMS 3.0.12 or later
-* Django 1.6.9 or 1.7.x
-* Python 2 (at present we are held back with a dependency that is incompatible with Python 3)
-
+* Django 1.6.9 or later (currently tested with 1.6.x, 1.7.x and 1.8.x)
+* Python 2.6 or 2.7 (at present we are held back with a dependency that is incompatible with Python 3)
