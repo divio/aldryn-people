@@ -42,6 +42,50 @@ listed in ``INSTALLED_APPS``, *after* ``'cms'``.
    If you are using Django 1.6, add ``south`` to  ``INSTALLED_APPS``.
 
 
+Django Parler
+=============
+
+This application uses (and will install) `Django Parler
+<https://github.com/edoburu/django-parler>`_, which requires some additions to
+your project's settings. It is best to consult Parler’s documentation, but to
+get started, consider adding the following to your project settings::
+
+    PARLER_LANGUAGES = {
+        1: (
+            {'code': 'en', },
+            {'code': 'de', },
+            {'code': 'fr', },
+        ),
+        'default': {
+            'fallbacks': ['en', 'fr', 'de', ],
+            'hide_untranslated': False,
+        }
+    }
+
+Modify according to your project's languages, of course. The choices you make
+for languages, ``fallback`` and ``hide_untranslated`` should be identical to the choices
+made in CMS_SETTINGS for best results.
+
+    **Notice:** At the time of this writing, `Django Parler`_ is at version 1.4
+    which supports a single fallback per language. In projects that involve
+    more than 2 languages this may present an issue where some views appear
+    empty when viewed in a language other than a person or groups’ native
+    language and the one, designated fallback language.
+
+    Fortunately, the current "master" branch of the project includes support
+    for multiple fallbacks, much like django CMS. If your project uses more
+    than 2 languages, consider installing the pre-release version of Parler
+    as follows: ::
+
+        pip install https://github.com/edoburu/django-parler/archive/master.zip
+
+    Then, change the setting ``'fallback': 'en',`` (for example) to
+    ``'fallbacks': ['en', 'fr', 'de', ]`` (also for example).
+
+.. Django Parler: https://github.com/edoburu/django-parler
+
+
+
 Aldryn Boilerplates
 ===================
 
@@ -101,6 +145,7 @@ version of South older than 1.0.2*, you will need to add the following to your s
        'aldryn_people': 'aldryn_people.south_migrations',
        …
    ]
+
 
 
 SortedM2M

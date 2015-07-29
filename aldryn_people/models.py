@@ -230,6 +230,18 @@ class Person(TranslatedAutoSlugifyMixin, TranslatableModel):
         with override(language):
             return reverse('aldryn_people:person-detail', kwargs=kwargs)
 
+    def get_vcard_url(self, language=None):
+        if not language:
+            language = get_current_language()
+        slug = self.safe_translation_getter(
+            'slug', None, language_code=language, any_language=False)
+        if slug:
+            kwargs = {'slug': slug}
+        else:
+            kwargs = {'pk': self.pk}
+        with override(language):
+            return reverse('aldryn_people:download_vcard', kwargs=kwargs)
+
     def get_vcard(self, request=None):
         function = self.safe_translation_getter('function')
 
