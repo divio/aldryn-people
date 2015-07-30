@@ -22,11 +22,12 @@ REQUIREMENTS = [
 
 # https://pypi.python.org/pypi?%3Aaction=list_classifiers
 CLASSIFIERS = [
-    'Development Status :: 4 - Beta',
+    'Development Status :: 5 - Production/Stable',
     'Environment :: Web Environment',
     'Framework :: Django',
     'Framework :: Django :: 1.6',
     'Framework :: Django :: 1.7',
+    'Framework :: Django :: 1.8',
     'Intended Audience :: Developers',
     'License :: OSI Approved :: BSD License',
     'Operating System :: OS Independent',
@@ -41,7 +42,10 @@ CLASSIFIERS = [
 setup(
     name='aldryn-people',
     version=__version__,
-    description='Renders a list of people',
+    description='Aldryn People publishes profile pages for people in your '
+                'organisation including team members, collaborators, '
+                'partners, clients, and so on, including photographs and '
+                'address information.',
     author='Divio AG',
     author_email='info@divio.ch',
     url='https://github.com/aldryn/aldryn-people',
