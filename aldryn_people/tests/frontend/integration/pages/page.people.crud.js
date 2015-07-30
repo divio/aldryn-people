@@ -36,6 +36,15 @@ var peoplePage = {
     saveButton: element(by.css('.submit-row [name="_save"]')),
     editPageLink: element(by.css('.col1 [href*="preview/"]')),
 
+    // adding new group
+    breadcrumbsLinks: element.all(by.css('.breadcrumbs a')),
+    groupsLinks: element.all(by.css('.model-group > th > a')),
+    editConfigsLink: element(by.css('.results th > a')),
+    languageTabs: element.all(by.css('.parler-language-tabs > .empty > a')),
+    nameInput: element(by.id('id_name')),
+    saveAndContinueButton: element(by.css('.submit-row [name="_continue"]')),
+    successNotification: element(by.css('.messagelist .success')),
+
     cmsLogin: function (credentials) {
         // object can contain username and password, if not set it will
         // fallback to 'admin'

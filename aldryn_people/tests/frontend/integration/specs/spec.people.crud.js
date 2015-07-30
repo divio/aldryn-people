@@ -113,4 +113,87 @@ describe('Aldryn People tests: ', function () {
         });
     });
 
+    it('creates a new group', function () {
+        // check if the focus is on sidebar ifarme
+        peoplePage.editPageLink.isPresent().then(function (present) {
+            if (present === false) {
+                // wait for modal iframe to appear
+                browser.wait(function () {
+                    return browser.isElementPresent(peoplePage.sideMenuIframe);
+                }, peoplePage.iframeWaitTime);
+
+                // switch to sidebar menu iframe
+                return browser.switchTo().frame(browser.findElement(By.css(
+                    '.cms_sideframe-frame iframe')));
+            }
+        }).then(function () {
+            browser.wait(function () {
+                return browser.isElementPresent(peoplePage.breadcrumbsLinks.first());
+            }, peoplePage.mainElementsWaitTime);
+
+            // click the Home link in breadcrumbs
+            peoplePage.breadcrumbsLinks.first().click();
+
+            browser.wait(function () {
+                return browser.isElementPresent(peoplePage.groupsLinks.first());
+            }, peoplePage.mainElementsWaitTime);
+
+            peoplePage.groupsLinks.first().click();
+
+            // wait for iframe side menu to reload
+            browser.wait(function () {
+                return browser.isElementPresent(peoplePage.addConfigsButton);
+            }, peoplePage.mainElementsWaitTime);
+
+            // check if the group already exists and return the status
+            return peoplePage.editConfigsLink.isPresent();
+        }).then(function (present) {
+            if (present === false) {
+                // group is absent - create new group
+                browser.wait(function () {
+                    return browser.isElementPresent(peoplePage.addConfigsButton);
+                }, peoplePage.mainElementsWaitTime);
+
+                peoplePage.addConfigsButton.click();
+
+                browser.wait(function () {
+                    return browser.isElementPresent(peoplePage.languageTabs.get(1));
+                }, peoplePage.mainElementsWaitTime);
+
+                // switch to English language tab
+                peoplePage.languageTabs.get(1).click().then(function () {
+                    browser.wait(function () {
+                        return browser.isElementPresent(peoplePage.nameInput);
+                    }, peoplePage.mainElementsWaitTime);
+
+                    return peoplePage.nameInput.sendKeys('Test group');
+                }).then(function () {
+                    browser.actions().mouseMove(
+                        peoplePage.saveAndContinueButton).perform();
+                    peoplePage.saveButton.click();
+
+                    // wait for page to get auto reloaded
+                    browser.sleep(1000);
+
+                    // wait for modal iframe to appear
+                    browser.wait(function () {
+                        return browser.isElementPresent(peoplePage.sideMenuIframe);
+                    }, peoplePage.iframeWaitTime);
+
+                    // switch to sidebar menu iframe again as the page was reloaded
+                    return browser.switchTo().frame(browser.findElement(By.css('.cms_sideframe-frame iframe')));
+                }).then(function () {
+                      // wait for group link to appear
+                    browser.wait(function () {
+                        return browser.isElementPresent(peoplePage.editConfigsLink);
+                    }, peoplePage.mainElementsWaitTime);
+
+                    // validate group link
+                    expect(peoplePage.editConfigsLink.isDisplayed())
+                        .toBeTruthy();
+                });
+            }
+        });
+    });
+
 });
