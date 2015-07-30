@@ -43,6 +43,20 @@ def get_obj_from_request(model, request,
         return None
 
 
+def get_admin_url(action, action_args=[], **url_args):
+    """
+    Convenience method for constructing admin-urls with GET parameters.
+    """
+    base_url = admin_reverse(action, args=action_args)
+    # Converts [{key: value}, …] => ["key=value", …]
+    url_arg_list = sorted(url_args.iteritems())
+    params = ["=".join([str(k), str(v)]) for (k, v) in url_arg_list]
+    if params:
+        return "?".join([base_url, "&".join(params)])
+    else:
+        return base_url
+
+
 @toolbar_pool.register
 class PeopleToolbar(CMSToolbar):
     # watch_models must be a list, not a tuple
@@ -51,6 +65,7 @@ class PeopleToolbar(CMSToolbar):
     supported_apps = ('aldryn_people', )
 
     def populate(self):
+        language = get_language_from_request(self.request, check_path=True)
         user = getattr(self.request, 'user', None)
         if user:
             view_name = self.request.resolver_match.view_name
@@ -80,46 +95,37 @@ class PeopleToolbar(CMSToolbar):
             person_perms = [change_person_perm, add_person_perm]
 
             if change_group_perm:
-                menu.add_sideframe_item(
-                    _('Group list'),
-                    url=admin_reverse('aldryn_people_group_changelist')
-                )
+                url = admin_reverse('aldryn_people_group_changelist')
+                menu.add_sideframe_item(_('Group list'), url=url)
 
             if add_group_perm:
-                menu.add_modal_item(
-                    _('Add new group'),
-                    url=admin_reverse('aldryn_people_group_add')
-                )
+                url_args = {}
+                if language:
+                    url_args.update({"language": language})
+                url = get_admin_url('aldryn_people_group_add', **url_args)
+                menu.add_modal_item(_('Add new group'), url=url)
 
             if change_group_perm and group:
-                menu.add_modal_item(
-                    _('Edit group'),
-                    admin_reverse('aldryn_people_group_change',
-                                  args=(group.pk, )),
-                    active=True,
-                )
+                url = get_admin_url('aldryn_people_group_change', [group.pk, ])
+                menu.add_modal_item(_('Edit group'), url=url, active=True)
 
             if any(group_perms) and any(person_perms):
                 menu.add_break()
 
             if change_person_perm:
-                menu.add_sideframe_item(
-                    _('Person list'),
-                    url=admin_reverse('aldryn_people_person_changelist')
-                )
+                url = admin_reverse('aldryn_people_person_changelist')
+                menu.add_sideframe_item(_('Person list'), url=url)
 
             if add_person_perm:
-                base_url = admin_reverse('aldryn_people_person_add')
+                url_args = {}
                 if group:
-                    url = "{0}?groups={1}".format(base_url, group.pk)
-                else:
-                    url = base_url
+                    url_args['groups'] = group.pk
+                if language:
+                    url_args['language'] = language
+                url = get_admin_url('aldryn_people_person_add', **url_args)
                 menu.add_modal_item(_('Add new person'), url=url)
 
             if change_person_perm and person:
-                menu.add_modal_item(
-                    _('Edit person'),
-                    admin_reverse('aldryn_people_person_change',
-                                  args=(person.pk,)),
-                    active=True,
-                )
+                url = admin_reverse(
+                    'aldryn_people_person_change', args=(person.pk, ))
+                menu.add_modal_item(_('Edit person'), url=url, active=True)
