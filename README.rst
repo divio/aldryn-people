@@ -2,7 +2,7 @@
 Aldryn People
 #############
 
-|PyPI Version| |Build Status| |Coverage Status| |codeclimate|
+|PyPI Version| |Build Status| |Coverage Status| |codeclimate| |requires_io|
 
 |Browser Matrix|
 
@@ -48,3 +48,6 @@ Requirements
    :alt: Code Climate
 .. |Browser Matrix| image:: https://saucelabs.com/browser-matrix/aldryn-jobs.svg
    :target: https://saucelabs.com/u/aldryn-jobs
+.. |requires_io| image:: https://requires.io/github/aldryn/aldryn-people/requirements.svg?branch=master
+   :target: https://requires.io/github/aldryn/aldryn-people/requirements/?branch=master
+   :alt: Requirements Status
