@@ -1,6 +1,22 @@
 CHANGELOG
 =========
 
+1.0.0 (2015-07-29)
+------------------
+
+* Adds revisioning
+* Names (and slugs) are now translatable
+* Groups are now sortable
+* Users are presented alphabetically
+* New option to show ungrouped people in people plugin
+* New groups list view
+* Adds CMS Toolbar "people" when on Aldryn People views
+* Numerous other UI/UX improvements
+* Adds documentation
+* Adds Django 1.8.x and django CMS 3.1.x support
+* Adds configuration for frontend testing
+* Adds static placeholders to group-list and group-detail templates
+
 0.5.3 (2015-07-08)
 ------------------
 
