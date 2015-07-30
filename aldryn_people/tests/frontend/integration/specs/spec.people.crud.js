@@ -183,7 +183,7 @@ describe('Aldryn People tests: ', function () {
                     // switch to sidebar menu iframe again as the page was reloaded
                     return browser.switchTo().frame(browser.findElement(By.css('.cms_sideframe-frame iframe')));
                 }).then(function () {
-                      // wait for group link to appear
+                    // wait for group link to appear
                     browser.wait(function () {
                         return browser.isElementPresent(peoplePage.editConfigsLink);
                     }, peoplePage.mainElementsWaitTime);
