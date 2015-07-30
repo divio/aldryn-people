@@ -96,7 +96,7 @@ else:
 
 @version_controlled_content
 @python_2_unicode_compatible
-class Group(TranslatableModel):
+class Group(TranslatedAutoSlugifyMixin, TranslatableModel):
     slug_source_field_name = 'name'
     translations = TranslatedFields(
         name=models.CharField(_('name'), max_length=255,
@@ -170,10 +170,10 @@ class Person(TranslatedAutoSlugifyMixin, TranslatableModel):
         slug=models.SlugField(_('unique slug'), max_length=255, blank=True,
             default='',
             help_text=_("Leave blank to auto-generate a unique slug.")),
-        function=models.CharField(
-            _('function'), max_length=255, blank=True, default=''),
-        description=HTMLField(
-            _('Description'), blank=True, default='')
+        function=models.CharField(_('role'),
+            max_length=255, blank=True, default=''),
+        description=HTMLField(_('description'),
+            blank=True, default='')
     )
     phone = models.CharField(
         verbose_name=_('phone'), null=True, blank=True, max_length=100)
@@ -229,6 +229,18 @@ class Person(TranslatedAutoSlugifyMixin, TranslatableModel):
             kwargs = {'pk': self.pk}
         with override(language):
             return reverse('aldryn_people:person-detail', kwargs=kwargs)
+
+    def get_vcard_url(self, language=None):
+        if not language:
+            language = get_current_language()
+        slug = self.safe_translation_getter(
+            'slug', None, language_code=language, any_language=False)
+        if slug:
+            kwargs = {'slug': slug}
+        else:
+            kwargs = {'pk': self.pk}
+        with override(language):
+            return reverse('aldryn_people:download_vcard', kwargs=kwargs)
 
     def get_vcard(self, request=None):
         function = self.safe_translation_getter('function')
@@ -330,7 +342,7 @@ class BasePeoplePlugin(CMSPlugin):
         self.people = oldinstance.people.all()
 
     def get_selected_people(self):
-        return self.people.select_related('group', 'visual')
+        return self.people.select_related('visual')
 
     def __str__(self):
         return unicode(self.pk)

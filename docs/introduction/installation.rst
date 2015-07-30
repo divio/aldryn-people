@@ -27,10 +27,14 @@ settings.py
 
 In your project's ``settings.py`` make sure you have all of::
 
+    'aldryn_common',
     'aldryn_boilerplates',
     'aldryn_people',
     'parler',
+    'aldryn_translation_tools',
     'sortedm2m',
+    'easy_thumbnails'
+    'filer',
 
 listed in ``INSTALLED_APPS``, *after* ``'cms'``.
 
@@ -38,11 +42,56 @@ listed in ``INSTALLED_APPS``, *after* ``'cms'``.
    If you are using Django 1.6, add ``south`` to  ``INSTALLED_APPS``.
 
 
+Django Parler
+=============
+
+This application uses (and will install) `Django Parler
+<https://github.com/edoburu/django-parler>`_, which requires some additions to
+your project's settings. It is best to consult Parler’s documentation, but to
+get started, consider adding the following to your project settings::
+
+    PARLER_LANGUAGES = {
+        1: (
+            {'code': 'en', },
+            {'code': 'de', },
+            {'code': 'fr', },
+        ),
+        'default': {
+            'fallbacks': ['en', 'fr', 'de', ],
+            'hide_untranslated': False,
+        }
+    }
+
+Modify according to your project's languages, of course. The choices you make
+for languages, ``fallback`` and ``hide_untranslated`` should be identical to the choices
+made in CMS_SETTINGS for best results.
+
+    **Notice:** At the time of this writing, `Django Parler`_ is at version 1.4
+    which supports a single fallback per language. In projects that involve
+    more than 2 languages this may present an issue where some views appear
+    empty when viewed in a language other than a person or groups’ native
+    language and the one, designated fallback language.
+
+    Fortunately, the current "master" branch of the project includes support
+    for multiple fallbacks, much like django CMS. If your project uses more
+    than 2 languages, consider installing the pre-release version of Parler
+    as follows: ::
+
+        pip install https://github.com/edoburu/django-parler/archive/master.zip
+
+    Then, change the setting ``'fallback': 'en',`` (for example) to
+    ``'fallbacks': ['en', 'fr', 'de', ]`` (also for example).
+
+.. Django Parler: https://github.com/edoburu/django-parler
+
+
+
 Aldryn Boilerplates
 ===================
 
-This application uses (and will install) `Aldryn Boilerplates <https://github.com/aldryn/aldryn-boilerplates>`_,
-which requires some basic configuration to get you started.
+This application uses (and will install) `Aldryn Boilerplates
+<https://github.com/aldryn/aldryn-boilerplates>`_, which requires some basic configuration to get
+you started.
 
 Edit your settings so that they conform to::
 
@@ -66,7 +115,7 @@ Edit your settings so that they conform to::
         'django.template.loaders.app_directories.Loader',
     ]
 
-Now set the name of the boilerplate you'll use in your project::
+Now set the name of the boilerplate you'll use in your project, for example::
 
     ALDRYN_BOILERPLATE_NAME = 'bootstrap3'
 
@@ -79,6 +128,43 @@ Now set the name of the boilerplate you'll use in your project::
 
    Aldryn People's templates and staticfiles will be found in named directories in the
    ``/boilerplates`` directory.
+
+
+**********************
+Software version notes
+**********************
+
+South and migrations
+====================
+
+Aldryn People supports both South and Django 1.7 migrations. However, *if your project uses a
+version of South older than 1.0.2*, you will need to add the following to your settings::
+
+   MIGRATION_MODULES = [
+       …
+       'aldryn_people': 'aldryn_people.south_migrations',
+       …
+   ]
+
+
+
+SortedM2M
+=========
+
+*When using this project with Django 1.7.4 or later*, please install ``django-sortedm2m`` version
+0.8.2 or later, or use the version from the `from the django-sortedm2m GitHub repository
+<https://github.com/gregmuellegger/django-sortedm2m>`_.
+
+
+Python 3
+========
+
+Due to a dependency on the OSS project vobject_, which was last updated in 2009
+and seems to strive to maintain Py2.4 compatibility, this project is currently
+*not* Python 3 compatible. Pull requests for a Py3-compatible version of ``vobject``
+would be graciously accepted.
+
+.. _vobject: http://vobject.skyhouseconsulting.com/
 
 
 ****************************
@@ -98,3 +184,5 @@ On the Aldryn platform, the Addon is available from the `Marketplace
 
 You can also `install Aldryn People into any existing Aldryn project
 <https://control.aldryn.com/control/?select_project_for_addon=aldryn-people>`_.
+
+You can configure some settings in the Aldryn control panel, either at installation time or later.
