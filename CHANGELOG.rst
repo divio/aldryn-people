@@ -14,6 +14,7 @@ CHANGELOG
 * Numerous other UI/UX improvements
 * Adds documentation
 * Adds Django 1.8.x and django CMS 3.1.x support
+* Adds configuration for frontend testing
 
 0.5.3 (2015-07-08)
 ------------------
