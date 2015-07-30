@@ -43,13 +43,14 @@ HELPER_SETTINGS = {
         'filer',
         'parler',
         'sortedm2m',
+        'djangocms_text_ckeditor',
     ],
-    'DATABASES': {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': ':memory:'
-        }
-    },
+    # 'DATABASES': {
+    #     'default': {
+    #         'ENGINE': 'django.db.backends.sqlite3',
+    #         'NAME': ':memory:'
+    #     }
+    # },
     'TEMPLATE_CONTEXT_PROCESSORS': [
         'aldryn_boilerplates.context_processors.boilerplate',
     ],
