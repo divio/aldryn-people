@@ -1,20 +1,10 @@
-|PyPI Version| |Build Status| |Coverage Status| |codeclimate| |Browser Matrix|
-
-.. |PyPI Version| image:: https://badge.fury.io/py/aldryn_people.svg
-    :target: http://badge.fury.io/py/aldryn_people
-.. |Build Status| image:: https://travis-ci.org/divio/django-cms.svg?branch=develop
-    :target: https://travis-ci.org/divio/django-cms
-.. |Coverage Status| image:: https://img.shields.io/coveralls/aldryn/aldryn-people.svg
-    :target: https://coveralls.io/r/aldryn/aldryn-people
-.. |codeclimate| image:: https://codeclimate.com/github/aldryn/aldryn-people/badges/gpa.svg
-   :target: https://codeclimate.com/github/aldryn/aldryn-people
-   :alt: Code Climate
-.. |Browser Matrix| image:: https://saucelabs.com/browser-matrix/aldryn-jobs.svg
-   :target: https://saucelabs.com/u/aldryn-jobs
-
 #############
 Aldryn People
 #############
+
+|PyPI Version| |Build Status| |Coverage Status| |codeclimate|
+
+|Browser Matrix|
 
 Aldryn People allows you to:
 
@@ -45,3 +35,16 @@ Requirements
 * django CMS 3.0.12 or later
 * Django 1.6.9 or later (currently tested with 1.6.x, 1.7.x and 1.8.x)
 * Python 2.6 or 2.7 (at present we are held back with a dependency that is incompatible with Python 3)
+
+
+.. |PyPI Version| image:: https://badge.fury.io/py/aldryn_people.svg
+    :target: http://badge.fury.io/py/aldryn_people
+.. |Build Status| image:: https://travis-ci.org/divio/django-cms.svg?branch=develop
+    :target: https://travis-ci.org/divio/django-cms
+.. |Coverage Status| image:: https://img.shields.io/coveralls/aldryn/aldryn-people.svg
+    :target: https://coveralls.io/r/aldryn/aldryn-people
+.. |codeclimate| image:: https://codeclimate.com/github/aldryn/aldryn-people/badges/gpa.svg
+   :target: https://codeclimate.com/github/aldryn/aldryn-people
+   :alt: Code Climate
+.. |Browser Matrix| image:: https://saucelabs.com/browser-matrix/aldryn-jobs.svg
+   :target: https://saucelabs.com/u/aldryn-jobs
