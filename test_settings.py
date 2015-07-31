@@ -74,6 +74,7 @@ HELPER_SETTINGS = {
         # important! place right before django.template.loaders.app_directories.Loader  # NOQA
         'aldryn_boilerplates.template_loaders.AppDirectoriesLoader',
         'django.template.loaders.app_directories.Loader',
+        'django.template.loaders.eggs.Loader',
     ],
     'ALDRYN_BOILERPLATE_NAME': 'bootstrap3',
     'LANGUAGES': (
@@ -90,7 +91,7 @@ HELPER_SETTINGS = {
             },
             {
                 'code': 'fr',
-                'name': 'Française',
+                'name': u'Française',
                 'fallbacks': ['en', ]  # FOR TESTING DO NOT ADD 'de' HERE
             },
             {
