@@ -328,4 +328,74 @@ describe('Aldryn People tests: ', function () {
         });
     });
 
+    it('deletes people entry', function () {
+        // wait for modal iframe to appear
+        browser.wait(function () {
+            return browser.isElementPresent(peoplePage.sideMenuIframe);
+        }, peoplePage.iframeWaitTime);
+
+        // switch to sidebar menu iframe
+        browser.switchTo()
+            .frame(browser.findElement(By.css('.cms_sideframe-frame iframe')));
+
+        // wait for edit people entry link to appear
+        browser.wait(function () {
+            return browser.isElementPresent(peoplePage.editPersonLinks.first());
+        }, peoplePage.mainElementsWaitTime);
+
+        // validate edit people entry links texts to delete proper people entry
+        peoplePage.editPersonLinks.first().getText().then(function (text) {
+            // wait till horizontal scrollbar will disappear and
+            // editPersonLinks will become clickable
+            browser.sleep(1500);
+
+            if (text === personName) {
+                return peoplePage.editPersonLinks.first().click();
+            } else {
+                return peoplePage.editPersonLinks.get(1).getText()
+                    .then(function (text) {
+                    if (text === personName) {
+                        return peoplePage.editPersonLinks.get(1).click();
+                    } else {
+                        return peoplePage.editPersonLinks.get(2).getText()
+                            .then(function (text) {
+                            if (text === personName) {
+                                return peoplePage.editPersonLinks.get(2).click();
+                            }
+                        });
+                    }
+                });
+            }
+        }).then(function () {
+            // wait for delete button to appear
+            browser.wait(function () {
+                return browser.isElementPresent(peoplePage.deleteButton);
+            }, peoplePage.mainElementsWaitTime);
+
+            browser.actions().mouseMove(peoplePage.saveAndContinueButton)
+                .perform();
+            return peoplePage.deleteButton.click();
+        }).then(function () {
+            // wait for confirmation button to appear
+            browser.wait(function () {
+                return browser.isElementPresent(peoplePage.sidebarConfirmationButton);
+            }, peoplePage.mainElementsWaitTime);
+
+            peoplePage.sidebarConfirmationButton.click();
+
+            browser.wait(function () {
+                return browser.isElementPresent(peoplePage.successNotification);
+            }, peoplePage.mainElementsWaitTime);
+
+            // validate success notification
+            expect(peoplePage.successNotification.isDisplayed()).toBeTruthy();
+
+            // switch to default page content
+            browser.switchTo().defaultContent();
+
+            // refresh the page to see changes
+            browser.refresh();
+        });
+    });
+
 });

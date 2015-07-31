@@ -61,6 +61,10 @@ var peoplePage = {
     peopleEntryLink: element(by.css('.aldryn-people-article > h2 > a')),
     personTitle: element(by.css('.aldryn-people-detail h2 > div')),
 
+    // deleting people entry
+    deleteButton: element(by.css('.deletelink-box a')),
+    sidebarConfirmationButton: element(by.css('#content [type="submit"]')),
+
     cmsLogin: function (credentials) {
         // object can contain username and password, if not set it will
         // fallback to 'admin'
