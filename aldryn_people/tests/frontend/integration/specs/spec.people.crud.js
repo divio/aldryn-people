@@ -19,7 +19,7 @@ describe('Aldryn People tests: ', function () {
         browser.get(peoplePage.site);
 
         // check if the page already exists
-        return peoplePage.testLink.isPresent().then(function (present) {
+        peoplePage.testLink.isPresent().then(function (present) {
             if (present === true) {
                 // go to the main page
                 browser.get(peoplePage.site + '?edit');
@@ -40,7 +40,7 @@ describe('Aldryn People tests: ', function () {
 
     it('creates a new test page', function () {
         // click the example.com link in the top menu
-        return peoplePage.userMenus.first().click().then(function () {
+        peoplePage.userMenus.first().click().then(function () {
             // wait for top menu dropdown options to appear
             browser.wait(function () {
                 return browser.isElementPresent(peoplePage.userMenuDropdown);
@@ -118,7 +118,7 @@ describe('Aldryn People tests: ', function () {
 
     it('creates a new group', function () {
         // check if the focus is on sidebar ifarme
-        return peoplePage.editPageLink.isPresent().then(function (present) {
+        peoplePage.editPageLink.isPresent().then(function (present) {
             if (present === false) {
                 // wait for modal iframe to appear
                 browser.wait(function () {
@@ -164,7 +164,7 @@ describe('Aldryn People tests: ', function () {
                 }, peoplePage.mainElementsWaitTime);
 
                 // switch to English language tab
-                return peoplePage.languageTabs.get(1).click().then(function () {
+                peoplePage.languageTabs.get(1).click().then(function () {
                     browser.wait(function () {
                         return browser.isElementPresent(peoplePage.nameInput);
                     }, peoplePage.mainElementsWaitTime);
@@ -218,7 +218,7 @@ describe('Aldryn People tests: ', function () {
         }, peoplePage.mainElementsWaitTime);
 
         // switch to English language tab
-        return peoplePage.languageTabs.get(1).click().then(function () {
+        peoplePage.languageTabs.get(1).click().then(function () {
             browser.wait(function () {
                 return browser.isElementPresent(peoplePage.nameInput);
             }, peoplePage.mainElementsWaitTime);
@@ -252,6 +252,79 @@ describe('Aldryn People tests: ', function () {
             // validate edit person link
             expect(peoplePage.editPersonLinks.first().isDisplayed())
                 .toBeTruthy();
+        });
+    });
+
+    it('adds a new people block on the page', function () {
+        // go to the main page
+        browser.get(peoplePage.site);
+
+        browser.wait(function () {
+            return browser.isElementPresent(peoplePage.testLink);
+        }, peoplePage.mainElementsWaitTime);
+
+        // add people to the page only if it was not added before
+        peoplePage.aldrynPeopleBlock.isPresent().then(function (present) {
+            if (present === false) {
+                // click the Page link in the top menu
+                return peoplePage.userMenus.get(1).click().then(function () {
+                    // wait for top menu dropdown options to appear
+                    browser.wait(function () {
+                        return browser.isElementPresent(peoplePage.userMenuDropdown);
+                    }, peoplePage.mainElementsWaitTime);
+
+                    peoplePage.advancedSettingsOption.click();
+
+                    // wait for modal iframe to appear
+                    browser.wait(function () {
+                        return browser.isElementPresent(peoplePage.modalIframe);
+                    }, peoplePage.iframeWaitTime);
+
+                    // switch to modal iframe
+                    browser.switchTo().frame(browser.findElement(By.css(
+                        '.cms_modal-frame iframe')));
+
+                    // wait for Application select to appear
+                    browser.wait(function () {
+                        return browser.isElementPresent(peoplePage.applicationSelect);
+                    }, peoplePage.mainElementsWaitTime);
+
+                    // set Application
+                    peoplePage.applicationSelect.click();
+                    peoplePage.applicationSelect.sendKeys('People')
+                        .then(function () {
+                        peoplePage.applicationSelect.click();
+                    });
+
+                    // switch to default page content
+                    browser.switchTo().defaultContent();
+
+                    browser.wait(function () {
+                        return browser.isElementPresent(peoplePage.saveModalButton);
+                    }, peoplePage.mainElementsWaitTime);
+
+                    browser.actions().mouseMove(peoplePage.saveModalButton)
+                        .perform();
+                    return peoplePage.saveModalButton.click();
+                });
+            }
+        }).then(function () {
+            // refresh the page to see changes
+            browser.refresh();
+
+            // wait for link to appear in aldryn people block
+            browser.wait(function () {
+                return browser.isElementPresent(peoplePage.peopleEntryLink);
+            }, peoplePage.mainElementsWaitTime);
+
+            peoplePage.peopleEntryLink.click();
+
+            browser.wait(function () {
+                return browser.isElementPresent(peoplePage.personTitle);
+            }, peoplePage.mainElementsWaitTime);
+
+            // validate person title
+            expect(peoplePage.personTitle.isDisplayed()).toBeTruthy();
         });
     });
 

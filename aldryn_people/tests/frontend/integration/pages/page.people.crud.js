@@ -51,6 +51,16 @@ var peoplePage = {
     editPersonLinks: element.all(by.css(
         '.results th > [href*="/aldryn_people/person/"]')),
 
+    // adding people block to the page
+    aldrynPeopleBlock: element(by.css('.aldryn-people')),
+    advancedSettingsOption: element(by.css(
+        '.cms_toolbar-item-navigation [href*="advanced-settings"]')),
+    modalIframe: element(by.css('.cms_modal-frame iframe')),
+    applicationSelect: element(by.id('application_urls')),
+    saveModalButton: element(by.css('.cms_modal-buttons .cms_btn-action')),
+    peopleEntryLink: element(by.css('.aldryn-people-article > h2 > a')),
+    personTitle: element(by.css('.aldryn-people-detail h2 > div')),
+
     cmsLogin: function (credentials) {
         // object can contain username and password, if not set it will
         // fallback to 'admin'
