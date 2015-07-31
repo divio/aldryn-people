@@ -38,12 +38,18 @@ var peoplePage = {
 
     // adding new group
     breadcrumbsLinks: element.all(by.css('.breadcrumbs a')),
-    groupsLinks: element.all(by.css('.model-group > th > a')),
+    groupsLink: element(by.css(
+        '.model-group > th > [href*="/aldryn_people/group/"]')),
     editConfigsLink: element(by.css('.results th > a')),
     languageTabs: element.all(by.css('.parler-language-tabs > .empty > a')),
     nameInput: element(by.id('id_name')),
     saveAndContinueButton: element(by.css('.submit-row [name="_continue"]')),
     successNotification: element(by.css('.messagelist .success')),
+
+    // adding new people entry
+    addPersonButton: element(by.css('.model-person .addlink')),
+    editPersonLinks: element.all(by.css(
+        '.results th > [href*="/aldryn_people/person/"]')),
 
     cmsLogin: function (credentials) {
         // object can contain username and password, if not set it will
