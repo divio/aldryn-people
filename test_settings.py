@@ -34,6 +34,7 @@ HELPER_SETTINGS = {
     'TIME_ZONE': 'Europe/Zurich',
     'HAYSTACK_CONNECTIONS': HAYSTACK_CONNECTIONS,
     'INSTALLED_APPS': [
+        'aldryn_apphook_reload',
         'aldryn_boilerplates',
         'aldryn_people',
         'reversion',
@@ -63,6 +64,21 @@ HELPER_SETTINGS = {
         'filer.thumbnail_processors.scale_and_crop_with_subject_location',
         'easy_thumbnails.processors.filters',
     ),
+    # This set of MW classes should work for Django 1.6 and 1.7.
+    'MIDDLEWARE_CLASSES': [
+        'aldryn_apphook_reload.middleware.ApphookReloadMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.locale.LocaleMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        'cms.middleware.user.CurrentUserMiddleware',
+        'cms.middleware.page.CurrentPageMiddleware',
+        'cms.middleware.toolbar.ToolbarMiddleware',
+        'cms.middleware.language.LanguageCookieMiddleware'
+    ],
     'STATICFILES_FINDERS': [
         'django.contrib.staticfiles.finders.FileSystemFinder',
         # important! place right before django.contrib.staticfiles.finders.AppDirectoriesFinder  # NOQA
@@ -118,7 +134,6 @@ HELPER_SETTINGS = {
             'hide_untranslated': True,  # PLEASE DO NOT CHANGE THIS
         }
     },
-
 }
 
 
