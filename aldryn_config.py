@@ -19,7 +19,8 @@ class Form(forms.BaseForm):
     def to_settings(self, data, settings):
         settings['PEOPLE_PLUGIN_STYLES'] = data.get('people_plugin_styles', '')
         try:
-            settings['ALDRYN_PEOPLE_USER_THRESHOLD'] = int(data.get('user_threshold'))
+            settings['ALDRYN_PEOPLE_USER_THRESHOLD'] = int(data.get(
+                'user_threshold'))
         except (ValueError, TypeError):
             pass
         return settings

@@ -2,6 +2,7 @@
 
 from __future__ import unicode_literals
 
+import django
 
 HAYSTACK_CONNECTIONS = {
     'default': {
@@ -34,7 +35,9 @@ HELPER_SETTINGS = {
     'TIME_ZONE': 'Europe/Zurich',
     'HAYSTACK_CONNECTIONS': HAYSTACK_CONNECTIONS,
     'INSTALLED_APPS': [
+        'aldryn_apphook_reload',
         'aldryn_boilerplates',
+        'aldryn_common',
         'aldryn_people',
         'reversion',
         'aldryn_reversion',
@@ -43,13 +46,14 @@ HELPER_SETTINGS = {
         'filer',
         'parler',
         'sortedm2m',
+        'djangocms_text_ckeditor',
     ],
-    'DATABASES': {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': ':memory:'
-        }
-    },
+    # 'DATABASES': {
+    #     'default': {
+    #         'ENGINE': 'django.db.backends.sqlite3',
+    #         'NAME': ':memory:'
+    #     }
+    # },
     'TEMPLATE_CONTEXT_PROCESSORS': [
         'aldryn_boilerplates.context_processors.boilerplate',
     ],
@@ -116,8 +120,48 @@ HELPER_SETTINGS = {
             'hide_untranslated': True,  # PLEASE DO NOT CHANGE THIS
         }
     },
-
 }
+
+# This set of MW classes should work for Django 1.6 and 1.7.
+MIDDLEWARE_CLASSES_16_17 = [
+    'aldryn_apphook_reload.middleware.ApphookReloadMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'cms.middleware.user.CurrentUserMiddleware',
+    'cms.middleware.page.CurrentPageMiddleware',
+    'cms.middleware.toolbar.ToolbarMiddleware',
+    'cms.middleware.language.LanguageCookieMiddleware'
+]
+
+# TODO: check the correct list of middlewares for 1.8
+MIDDLEWARE_CLASSES_18 = [
+    'aldryn_apphook_reload.middleware.ApphookReloadMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'cms.middleware.user.CurrentUserMiddleware',
+    'cms.middleware.page.CurrentPageMiddleware',
+    'cms.middleware.toolbar.ToolbarMiddleware',
+    'cms.middleware.language.LanguageCookieMiddleware',
+]
+
+# Use PEP 386-compliant version number
+django_version = django.get_version()
+
+if django_version.startswith('1.6.') or django_version.startswith('1.7.'):
+    HELPER_SETTINGS['MIDDLEWARE_CLASSES'] = MIDDLEWARE_CLASSES_16_17
+elif django_version.startswith('1.8.'):
+    HELPER_SETTINGS['MIDDLEWARE_CLASSES'] = MIDDLEWARE_CLASSES_18
 
 
 def run():
