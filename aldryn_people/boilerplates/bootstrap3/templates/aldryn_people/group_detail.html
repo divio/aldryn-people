@@ -5,9 +5,11 @@
 
 {% block content %}
     <div class="aldryn aldryn-people aldryn-group-detail">
-        <h1>{% render_model group 'name' %}</h1>
+        {% static_placeholder "people_detail_top" %}
+        <h2>{% render_model group "name" %}</h2>
         {% for person in group.people.all|dictsort:"name" %}
             {% include "aldryn_people/includes/person.html" with person=person %}
         {% endfor %}
+        {% static_placeholder "people_detail_bottom" %}
     </div>
 {% endblock content %}
