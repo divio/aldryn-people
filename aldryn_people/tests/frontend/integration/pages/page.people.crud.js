@@ -38,12 +38,32 @@ var peoplePage = {
 
     // adding new group
     breadcrumbsLinks: element.all(by.css('.breadcrumbs a')),
-    groupsLinks: element.all(by.css('.model-group > th > a')),
+    groupsLink: element(by.css(
+        '.model-group > th > [href*="/aldryn_people/group/"]')),
     editConfigsLink: element(by.css('.results th > a')),
     languageTabs: element.all(by.css('.parler-language-tabs > .empty > a')),
     nameInput: element(by.id('id_name')),
     saveAndContinueButton: element(by.css('.submit-row [name="_continue"]')),
     successNotification: element(by.css('.messagelist .success')),
+
+    // adding new people entry
+    addPersonButton: element(by.css('.model-person .addlink')),
+    editPersonLinks: element.all(by.css(
+        '.results th > [href*="/aldryn_people/person/"]')),
+
+    // adding people block to the page
+    aldrynPeopleBlock: element(by.css('.aldryn-people')),
+    advancedSettingsOption: element(by.css(
+        '.cms_toolbar-item-navigation [href*="advanced-settings"]')),
+    modalIframe: element(by.css('.cms_modal-frame iframe')),
+    applicationSelect: element(by.id('application_urls')),
+    saveModalButton: element(by.css('.cms_modal-buttons .cms_btn-action')),
+    peopleEntryLink: element(by.css('.aldryn-people-article > h2 > a')),
+    personTitle: element(by.css('.aldryn-people-detail h2 > div')),
+
+    // deleting people entry
+    deleteButton: element(by.css('.deletelink-box a')),
+    sidebarConfirmationButton: element(by.css('#content [type="submit"]')),
 
     cmsLogin: function (credentials) {
         // object can contain username and password, if not set it will
