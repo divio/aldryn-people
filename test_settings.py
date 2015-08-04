@@ -37,6 +37,7 @@ HELPER_SETTINGS = {
     'INSTALLED_APPS': [
         'aldryn_apphook_reload',
         'aldryn_boilerplates',
+        'aldryn_common',
         'aldryn_people',
         'reversion',
         'aldryn_reversion',
