@@ -68,7 +68,10 @@ class PeopleToolbar(CMSToolbar):
         language = get_language_from_request(self.request, check_path=True)
         user = getattr(self.request, 'user', None)
         if user:
-            view_name = self.request.resolver_match.view_name
+            try:
+                view_name = self.request.resolver_match.view_name
+            except AttributeError:
+                view_name = None
             group = person = None
             if view_name == 'aldryn_people:group-detail':
                 group = get_obj_from_request(Group, self.request)
