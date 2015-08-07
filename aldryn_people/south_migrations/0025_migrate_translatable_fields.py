@@ -23,6 +23,19 @@ def _get_translation(obj, MyModelTranslation):
             return translations.get()
 
 
+def safe_get_or_create(model, *args, **kwargs):
+    """
+    Blatantly stolen from: http://stackoverflow.com/a/22875526 to work around
+    Django 1.6 TransactionManagementError-related issues with SQLite.
+    """
+    try:
+        obj = model.objects.get(**kwargs)
+    except model.DoesNotExist:
+        obj = model(**kwargs)
+        obj.save()
+    return obj
+
+
 class Migration(DataMigration):
 
     def forwards(self, orm):
@@ -32,11 +45,12 @@ class Migration(DataMigration):
         """
         Person = orm['aldryn_people.Person']
         PersonTranslation = orm['aldryn_people.PersonTranslation']
-
+        language = settings.LANGUAGE_CODE
         for obj in Person.objects.all():
-            trans_obj, created = PersonTranslation.objects.get_or_create(
+            trans_obj = safe_get_or_create(
+                PersonTranslation,
                 master_id=obj.pk,
-                language_code=settings.LANGUAGE_CODE,
+                language_code=language,
             )
             trans_obj.name = obj.name
             trans_obj.slug = obj.slug

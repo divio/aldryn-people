@@ -5,6 +5,8 @@ CHANGELOG
 ------------------
 
 * Fixes bug with empty value in aldryn config field validation
+* Adds missing migration
+* Fix South migration in Django 1.6.x
 * Correct documentation issues
 
 1.0.0 (2015-07-29)
