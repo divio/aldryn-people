@@ -47,7 +47,7 @@ class TestPersonPlugins(BasePeopleTest):
         self.assertEqual(response.status_code, 200)
         self.assertTrue(CMSPlugin.objects.exists())
 
-    def test_show_ungrouped(self):
+    def test_hide_ungrouped(self):
         """
         """
         the_bradys = Group.objects.create(name="The Bradys")
@@ -68,7 +68,20 @@ class TestPersonPlugins(BasePeopleTest):
         self.page.publish(self.language)
         url = self.page.get_absolute_url()
         response = self.client.get(url)
+        self.assertContains(response, bobby.name)
+        self.assertContains(response, cindy.name)
         self.assertNotContains(response, alice.name)
+
+    def test_show_ungrouped(self):
+        """
+        """
+        the_bradys = Group.objects.create(name="The Bradys")
+        alice = Person.objects.create(name="Alice")
+        bobby = Person.objects.create(name="Bobby")
+        cindy = Person.objects.create(name="Cindy")
+        # Alice is the housekeeper, not a real Brady.
+        bobby.groups.add(the_bradys)
+        cindy.groups.add(the_bradys)
 
         # Now, add a new plugin where ungrouped people are shown
         plugin = api.add_plugin(self.placeholder, PeoplePlugin, self.language)
@@ -80,4 +93,6 @@ class TestPersonPlugins(BasePeopleTest):
         self.page.publish(self.language)
         url = self.page.get_absolute_url()
         response = self.client.get(url)
+        self.assertContains(response, bobby.name)
+        self.assertContains(response, cindy.name)
         self.assertContains(response, alice.name)

@@ -39,21 +39,15 @@ HELPER_SETTINGS = {
         'aldryn_boilerplates',
         'aldryn_common',
         'aldryn_people',
-        'reversion',
         'aldryn_reversion',
         'aldryn_translation_tools',
+        'djangocms_text_ckeditor',
         'easy_thumbnails',
         'filer',
         'parler',
+        'reversion',
         'sortedm2m',
-        'djangocms_text_ckeditor',
     ],
-    # 'DATABASES': {
-    #     'default': {
-    #         'ENGINE': 'django.db.backends.sqlite3',
-    #         'NAME': ':memory:'
-    #     }
-    # },
     'TEMPLATE_CONTEXT_PROCESSORS': [
         'aldryn_boilerplates.context_processors.boilerplate',
     ],
