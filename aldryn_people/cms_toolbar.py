@@ -65,10 +65,14 @@ class PeopleToolbar(CMSToolbar):
     supported_apps = ('aldryn_people', )
 
     def populate(self):
-        language = get_language_from_request(self.request, check_path=True)
         user = getattr(self.request, 'user', None)
-        if user:
+        try:
             view_name = self.request.resolver_match.view_name
+        except AttributeError:
+            view_name = None
+
+        if user and view_name:
+            language = get_language_from_request(self.request, check_path=True)
             group = person = None
             if view_name == 'aldryn_people:group-detail':
                 group = get_obj_from_request(Group, self.request)
