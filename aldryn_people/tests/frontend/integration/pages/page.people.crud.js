@@ -41,7 +41,8 @@ var peoplePage = {
     groupsLink: element(by.css(
         '.model-group > th > [href*="/aldryn_people/group/"]')),
     editConfigsLink: element(by.css('.results th > a')),
-    languageTabs: element.all(by.css('.parler-language-tabs > .empty > a')),
+    englishLanguageTab: element(by.css(
+        '.parler-language-tabs > .empty > a[href*="language=en"]')),
     nameInput: element(by.id('id_name')),
     saveAndContinueButton: element(by.css('.submit-row [name="_continue"]')),
     successNotification: element(by.css('.messagelist .success')),
@@ -57,6 +58,7 @@ var peoplePage = {
         '.cms_toolbar-item-navigation [href*="advanced-settings"]')),
     modalIframe: element(by.css('.cms_modal-frame iframe')),
     applicationSelect: element(by.id('application_urls')),
+    peopleOption: element(by.css('option[value="PeopleApp"]')),
     saveModalButton: element(by.css('.cms_modal-buttons .cms_btn-action')),
     peopleEntryLink: element(by.css('.aldryn-people-article > h2 > a')),
     personTitle: element(by.css('.aldryn-people-detail h2 > div')),

@@ -9,6 +9,7 @@
 // #############################################################################
 // INTEGRATION TEST
 var peoplePage = require('../pages/page.people.crud.js');
+var cmsProtractorHelper = require('cms-protractor-helper');
 
 describe('Aldryn People tests: ', function () {
     // create random people entry name
@@ -19,7 +20,7 @@ describe('Aldryn People tests: ', function () {
         browser.get(peoplePage.site);
 
         // check if the page already exists
-        peoplePage.testLink.isPresent().then(function (present) {
+        return peoplePage.testLink.isPresent().then(function (present) {
             if (present === true) {
                 // go to the main page
                 browser.get(peoplePage.site + '?edit');
@@ -40,7 +41,7 @@ describe('Aldryn People tests: ', function () {
 
     it('creates a new test page', function () {
         // click the example.com link in the top menu
-        peoplePage.userMenus.first().click().then(function () {
+        return peoplePage.userMenus.first().click().then(function () {
             // wait for top menu dropdown options to appear
             browser.wait(function () {
                 return browser.isElementPresent(peoplePage.userMenuDropdown);
@@ -83,7 +84,7 @@ describe('Aldryn People tests: ', function () {
                     return browser.isElementPresent(peoplePage.titleInput);
                 }, peoplePage.mainElementsWaitTime);
 
-                peoplePage.titleInput.sendKeys('Test').then(function () {
+                return peoplePage.titleInput.sendKeys('Test').then(function () {
                     peoplePage.saveButton.click();
 
                     return peoplePage.slugErrorNotification.isPresent();
@@ -118,7 +119,7 @@ describe('Aldryn People tests: ', function () {
 
     it('creates a new group', function () {
         // check if the focus is on sidebar ifarme
-        peoplePage.editPageLink.isPresent().then(function (present) {
+        return peoplePage.editPageLink.isPresent().then(function (present) {
             if (present === false) {
                 // wait for modal iframe to appear
                 browser.wait(function () {
@@ -160,11 +161,11 @@ describe('Aldryn People tests: ', function () {
                 peoplePage.addConfigsButton.click();
 
                 browser.wait(function () {
-                    return browser.isElementPresent(peoplePage.languageTabs.get(1));
+                    return browser.isElementPresent(peoplePage.englishLanguageTab);
                 }, peoplePage.mainElementsWaitTime);
 
                 // switch to English language tab
-                peoplePage.languageTabs.get(1).click().then(function () {
+                return peoplePage.englishLanguageTab.click().then(function () {
                     browser.wait(function () {
                         return browser.isElementPresent(peoplePage.nameInput);
                     }, peoplePage.mainElementsWaitTime);
@@ -214,11 +215,11 @@ describe('Aldryn People tests: ', function () {
         peoplePage.addPersonButton.click();
 
         browser.wait(function () {
-            return browser.isElementPresent(peoplePage.languageTabs.get(1));
+            return browser.isElementPresent(peoplePage.englishLanguageTab);
         }, peoplePage.mainElementsWaitTime);
 
         // switch to English language tab
-        peoplePage.languageTabs.get(1).click().then(function () {
+        return peoplePage.englishLanguageTab.click().then(function () {
             browser.wait(function () {
                 return browser.isElementPresent(peoplePage.nameInput);
             }, peoplePage.mainElementsWaitTime);
@@ -264,7 +265,7 @@ describe('Aldryn People tests: ', function () {
         }, peoplePage.mainElementsWaitTime);
 
         // add people to the page only if it was not added before
-        peoplePage.aldrynPeopleBlock.isPresent().then(function (present) {
+        return peoplePage.aldrynPeopleBlock.isPresent().then(function (present) {
             if (present === false) {
                 // click the Page link in the top menu
                 return peoplePage.userMenus.get(1).click().then(function () {
@@ -284,17 +285,9 @@ describe('Aldryn People tests: ', function () {
                     browser.switchTo().frame(browser.findElement(By.css(
                         '.cms_modal-frame iframe')));
 
-                    // wait for Application select to appear
-                    browser.wait(function () {
-                        return browser.isElementPresent(peoplePage.applicationSelect);
-                    }, peoplePage.mainElementsWaitTime);
-
                     // set Application
-                    peoplePage.applicationSelect.click();
-                    peoplePage.applicationSelect.sendKeys('People')
-                        .then(function () {
-                        peoplePage.applicationSelect.click();
-                    });
+                    cmsProtractorHelper.selectOption(peoplePage.applicationSelect,
+                        'People', peoplePage.peopleOption);
 
                     // switch to default page content
                     browser.switchTo().defaultContent();
@@ -344,7 +337,7 @@ describe('Aldryn People tests: ', function () {
         }, peoplePage.mainElementsWaitTime);
 
         // validate edit people entry links texts to delete proper people entry
-        peoplePage.editPersonLinks.first().getText().then(function (text) {
+        return peoplePage.editPersonLinks.first().getText().then(function (text) {
             // wait till horizontal scrollbar will disappear and
             // editPersonLinks will become clickable
             browser.sleep(1500);
