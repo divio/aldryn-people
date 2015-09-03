@@ -12,18 +12,18 @@ env:
     - secure: oJG/hKhutnzSFCSF8xUuMWmTxeuRp2eU9HBi/7JWVxd3AwDkKu3jtldQ0Vg/2iSofRzzG0wZpUKdgGa4ObOpOou5wWtq68OAVbJkHAtOB7U3HR4deVuQRZdR8GXWWS9G+H1B8PbFCVPzQrsnxHs/k0oBLUgAW8XfFfkhzzYGFKk=
   matrix:
     - TOXENV=flake8
-    - TOXENV=py27-dj18-cms31
-    - TOXENV=py27-dj17-cms31
-    - TOXENV=py27-dj17-cms30
-    - TOXENV=py27-dj16-cms31
-    - TOXENV=py27-dj16-cms30
-    - TOXENV=py26-dj16-cms31
-    - TOXENV=py26-dj16-cms30
+    - TOXENV=py27-dj18-cms31-fe
+    - TOXENV=py27-dj17-cms31-fe
+    - TOXENV=py27-dj17-cms30-fe
+    - TOXENV=py27-dj16-cms31-fe
+    - TOXENV=py27-dj16-cms30-fe
+    - TOXENV=py26-dj16-cms31-fe
+    - TOXENV=py26-dj16-cms30-fe
 
 matrix:
   allow_failures:
-    # allow failures with TOXENV=py27-dj18-cms31
-    - env: TOXENV=py27-dj18-cms31
+    # allow failures with TOXENV=py27-dj18-cms31-fe
+    - env: TOXENV=py27-dj18-cms31-fe
 
 cache:
   directories:

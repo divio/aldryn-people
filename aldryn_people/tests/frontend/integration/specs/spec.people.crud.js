@@ -285,7 +285,7 @@ describe('Aldryn People tests: ', function () {
                     browser.switchTo().frame(browser.findElement(By.css(
                         '.cms_modal-frame iframe')));
 
-                    // set Application
+                    // set People Application
                     cmsProtractorHelper.selectOption(peoplePage.applicationSelect,
                         'People', peoplePage.peopleOption);
 
