@@ -20,11 +20,6 @@ env:
     - TOXENV=py26-dj16-cms31-fe
     - TOXENV=py26-dj16-cms30-fe
 
-matrix:
-  allow_failures:
-    # allow failures with TOXENV=py27-dj18-cms31-fe
-    - env: TOXENV=py27-dj18-cms31-fe
-
 cache:
   directories:
     - $HOME/.wheelhouse
