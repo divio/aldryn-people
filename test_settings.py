@@ -36,9 +36,7 @@ HELPER_SETTINGS = {
     'HAYSTACK_CONNECTIONS': HAYSTACK_CONNECTIONS,
     'INSTALLED_APPS': [
         'aldryn_apphook_reload',
-        'aldryn_boilerplates',
         'aldryn_common',
-        'aldryn_people',
         'aldryn_reversion',
         'aldryn_translation_tools',
         'djangocms_text_ckeditor',
@@ -47,9 +45,6 @@ HELPER_SETTINGS = {
         'parler',
         'reversion',
         'sortedm2m',
-    ],
-    'TEMPLATE_CONTEXT_PROCESSORS': [
-        'aldryn_boilerplates.context_processors.boilerplate',
     ],
     'MIGRATION_MODULES': {
         'filer': 'filer.migrations_django',
@@ -60,18 +55,6 @@ HELPER_SETTINGS = {
         'filer.thumbnail_processors.scale_and_crop_with_subject_location',
         'easy_thumbnails.processors.filters',
     ),
-    'STATICFILES_FINDERS': [
-        'django.contrib.staticfiles.finders.FileSystemFinder',
-        # important! place right before django.contrib.staticfiles.finders.AppDirectoriesFinder  # NOQA
-        'aldryn_boilerplates.staticfile_finders.AppDirectoriesFinder',
-        'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    ],
-    'TEMPLATE_LOADERS': [
-        'django.template.loaders.filesystem.Loader',
-        # important! place right before django.template.loaders.app_directories.Loader  # NOQA
-        'aldryn_boilerplates.template_loaders.AppDirectoriesLoader',
-        'django.template.loaders.app_directories.Loader',
-    ],
     'ALDRYN_BOILERPLATE_NAME': 'bootstrap3',
     'LANGUAGES': (
         ('en', 'English'),
@@ -132,7 +115,6 @@ MIDDLEWARE_CLASSES_16_17 = [
     'cms.middleware.language.LanguageCookieMiddleware'
 ]
 
-# TODO: check the correct list of middlewares for 1.8
 MIDDLEWARE_CLASSES_18 = [
     'aldryn_apphook_reload.middleware.ApphookReloadMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -160,7 +142,7 @@ elif django_version.startswith('1.8.'):
 
 def run():
     from djangocms_helper import runner
-    runner.cms('aldryn_people')
+    runner.cms('aldryn_people', extra_args=['--boilerplate'])
 
 if __name__ == "__main__":
     run()
