@@ -4,7 +4,10 @@ from __future__ import unicode_literals
 
 import base64
 import six
-import urlparse
+try:
+    import urlparse
+except ImportError:
+    import urllib.parse as urlparse
 import vobject
 import warnings
 
