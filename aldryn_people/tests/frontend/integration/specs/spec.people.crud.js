@@ -13,7 +13,7 @@ var cmsProtractorHelper = require('cms-protractor-helper');
 
 describe('Aldryn People tests: ', function () {
     // create random people entry name
-    var personName = 'Test person ' + (Math.floor(Math.random() * 10001));
+    var personName = 'Test person ' + cmsProtractorHelper.randomDigits(4);
 
     it('logs in to the site with valid username and password', function () {
         // go to the main page
