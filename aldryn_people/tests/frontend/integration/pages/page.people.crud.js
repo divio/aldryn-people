@@ -4,15 +4,15 @@
  */
 
 'use strict';
-/* global element, by, browser, expect */
+/* global element, by, expect */
 
 // #############################################################################
 // INTEGRATION TEST PAGE OBJECT
 
+var cmsProtractorHelper = require('cms-protractor-helper');
+
 var peoplePage = {
     site: 'http://127.0.0.1:8000/en/',
-    mainElementsWaitTime: 12000,
-    iframeWaitTime: 15000,
 
     // log in
     editModeLink: element(by.css('.inner a[href="/?edit"]')),
@@ -76,24 +76,20 @@ var peoplePage = {
         peoplePage.usernameInput.clear();
 
         // fill in email field
-        peoplePage.usernameInput.sendKeys(
-            credentials.username).then(function () {
+        return peoplePage.usernameInput.sendKeys(credentials.username)
+            .then(function () {
             peoplePage.passwordInput.clear();
 
             // fill in password field
-            return peoplePage.passwordInput.sendKeys(
-                credentials.password);
+            return peoplePage.passwordInput.sendKeys(credentials.password);
         }).then(function () {
             peoplePage.loginButton.click();
 
             // wait for user menu to appear
-            browser.wait(browser.isElementPresent(
-                peoplePage.userMenus.first()),
-                peoplePage.mainElementsWaitTime);
+            cmsProtractorHelper.waitFor(peoplePage.userMenus.first());
 
             // validate user menu
-            expect(peoplePage.userMenus.first().isDisplayed())
-                .toBeTruthy();
+            expect(peoplePage.userMenus.first().isDisplayed()).toBeTruthy();
         });
     }
 
