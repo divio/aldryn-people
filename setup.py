@@ -14,7 +14,7 @@ REQUIREMENTS = [
     'djangocms-text-ckeditor',
     'easy-thumbnails',
     'phonenumbers',
-    'vobject',
+    'six',
 
     # DO NOT REMOVE THE FOLLOWING, IT IS REQUIRED FOR EXISTING MIGRATIONS
     'django-phonenumber-field>=0.7.2',

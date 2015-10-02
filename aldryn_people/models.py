@@ -3,12 +3,12 @@
 from __future__ import unicode_literals
 
 import base64
+from re import sub
 import six
 try:
     import urlparse
 except ImportError:
-    import urllib.parse as urlparse
-import vobject
+    from urllib import parse as urlparse
 import warnings
 
 import reversion
@@ -23,6 +23,7 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.importlib import import_module
 from django.utils.translation import ugettext_lazy as _, override
+from six import text_type
 
 from aldryn_common.admin_fields.sortedm2m import SortedM2MModelField
 from aldryn_translation_tools.models import TranslatedAutoSlugifyMixin
@@ -246,78 +247,77 @@ class Person(TranslatedAutoSlugifyMixin, TranslatableModel):
             return reverse('aldryn_people:download_vcard', kwargs=kwargs)
 
     def get_vcard(self, request=None):
+        vcard_lines = ['BEGIN:VCARD', 'VERSION:3.0']
         function = self.safe_translation_getter('function')
 
-        vcard = vobject.vCard()
         safe_name = self.safe_translation_getter(
             'name', default="Person: {0}".format(self.pk))
-        vcard.add('n').value = vobject.vcard.Name(given=safe_name)
-        vcard.add('fn').value = safe_name
+        vcard_lines.append('FN:{0}'.format(safe_name))
+        vcard_lines.append('N:;{0};;;'.format(safe_name))
 
         if self.visual:
+            ext = self.visual.extension.upper()
             try:
                 with open(self.visual.path, 'rb') as f:
-                    photo = vcard.add('photo')
-                    photo.type_param = self.visual.extension.upper()
-                    photo.value = base64.b64encode(f.read())
-                    photo.encoded = True
-                    photo.encoding_param = 'B'
+                    data = base64.b64encode(f.read())
+                    vcard_lines.append('PHOTO;TYPE={0};ENCODING=B:{1}'.format(
+                        ext, data))
             except IOError:
                 if request:
-                    photo = vcard.add('photo')
-                    photo.type_param = self.visual.extension.upper()
-                    photo.value = urlparse.urljoin(
-                        request.build_absolute_uri(), self.visual.url)
+                    url = urlparse.urljoin(request.build_absolute_uri(),
+                                           self.visual.url),
+                    vcard_lines.append('PHOTO;TYPE={0}:{1}'.format(ext, url))
 
         if self.email:
-            vcard.add('email').value = self.email
+            vcard_lines.append('EMAIL:{0}'.format(self.email))
+
         if function:
-            vcard.add('title').value = function
+            vcard_lines.append('TITLE:{0}'.format(function))
+
         if self.phone:
-            tel = vcard.add('tel')
-            tel.value = unicode(self.phone)
-            tel.type_param = 'WORK'
+            vcard_lines.append('TEL;TYPE=WORK:{0}'.format(self.phone))
         if self.mobile:
-            tel = vcard.add('tel')
-            tel.value = unicode(self.mobile)
-            tel.type_param = 'CELL'
+            vcard_lines.append('TEL;TYPE=CELL:{0}'.format(self.mobile))
+
         if self.fax:
-            fax = vcard.add('tel')
-            fax.value = unicode(self.fax)
-            fax.type_param = 'FAX'
+            vcard_lines.append('TEL;TYPE=FAX:{0}'.format(self.fax))
         if self.website:
-            website = vcard.add('url')
-            website.value = unicode(self.website)
+            vcard_lines.append('URL:{0}'.format(self.website))
 
         if self.primary_group:
             group_name = self.primary_group.safe_translation_getter(
                 'name', default="Group: {0}".format(self.primary_group.pk))
             if group_name:
-                vcard.add('org').value = [group_name]
+                vcard_lines.append('ORG:{0}'.format(group_name))
             if (self.primary_group.address or self.primary_group.city or
                     self.primary_group.postal_code):
-                vcard.add('adr')
-                vcard.adr.type_param = 'WORK'
-                vcard.adr.value = vobject.vcard.Address()
-                if self.primary_group.address:
-                    vcard.adr.value.street = self.primary_group.address
-                if self.primary_group.city:
-                    vcard.adr.value.city = self.primary_group.city
-                if self.primary_group.postal_code:
-                    vcard.adr.value.code = self.primary_group.postal_code
-            if self.primary_group.phone:
-                tel = vcard.add('tel')
-                tel.value = unicode(self.primary_group.phone)
-                tel.type_param = 'WORK'
-            if self.primary_group.fax:
-                fax = vcard.add('tel')
-                fax.value = unicode(self.primary_group.fax)
-                fax.type_param = 'FAX'
-            if self.primary_group.website:
-                website = vcard.add('url')
-                website.value = unicode(self.primary_group.website)
+                vcard_lines.append('ADR;TYPE=WORK:;;{0};{1};;{2};'.format(
+                    self.primary_group.address,
+                    self.primary_group.city,
+                    self.primary_group.postal_code,
+                ))
 
-        return vcard.serialize()
+            if self.primary_group.phone:
+                vcard_lines.append('TEL;TYPE=WORK:{0}'.format(
+                    self.primary_group.phone))
+            if self.primary_group.fax:
+                vcard_lines.append('TEL;TYPE=FAX:{0}'.format(
+                    self.primary_group.fax))
+            if self.primary_group.website:
+                vcard_lines.append('URL:{0}'.format(
+                    self.primary_group.website))
+
+        vcard_lines.append('END:VCARD')
+        vcard_lines.append('')  # add a blank line at the end
+        return '\r\n'.join(
+            self.__vcard_wrap_logical_line(x) for x in vcard_lines)
+
+    def __vcard_escape(self, value):
+        value = sub(r'[\;,"]', r'\\\0', value)
+        return value.replace('\r', r'\r').replace('\n', r'\n')
+
+    def __vcard_wrap_logical_line(self, line):
+        return '\r\n '.join(line[i:i + 75] for i in range(0, len(line), 75))
 
 
 @python_2_unicode_compatible
@@ -348,7 +348,7 @@ class BasePeoplePlugin(CMSPlugin):
         return self.people.select_related('visual')
 
     def __str__(self):
-        return unicode(self.pk)
+        return text_type(self.pk)
 
 
 class PeoplePlugin(BasePeoplePlugin):

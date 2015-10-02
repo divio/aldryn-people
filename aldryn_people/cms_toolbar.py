@@ -3,6 +3,7 @@
 from __future__ import unicode_literals
 
 from django.utils.translation import ugettext as _, get_language_from_request
+from six import iteritems
 
 from cms.toolbar_base import CMSToolbar
 from cms.toolbar_pool import toolbar_pool
@@ -49,7 +50,7 @@ def get_admin_url(action, action_args=[], **url_args):
     """
     base_url = admin_reverse(action, args=action_args)
     # Converts [{key: value}, …] => ["key=value", …]
-    url_arg_list = sorted(url_args.iteritems())
+    url_arg_list = sorted(iteritems(url_args))
     params = ["=".join([str(k), str(v)]) for (k, v) in url_arg_list]
     if params:
         return "?".join([base_url, "&".join(params)])

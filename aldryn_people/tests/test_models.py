@@ -154,14 +154,44 @@ class TestPersonModelTranslation(BasePeopleTest):
         person1.fax = '+1 (234) 567-8902'
         person1.website = 'www.website.com'
         person1.save()
-        vcard_en = 'BEGIN:VCARD\r\nVERSION:3.0\r\nADR;TYPE=WORK:;;123 Main Street;Anytown;;12345;\r\nEMAIL:person@org.org\r\nFN:person1\r\nN:;person1;;;\r\nORG:group1\r\nTEL;TYPE=WORK:+1 (234) 567-8900\r\nTEL;TYPE=CELL:+1 (234) 567-8901\r\nTEL;TYPE=FAX:+1 (234) 567-8902\r\nTEL;TYPE=WORK:+1 (234) 567-8903\r\nTEL;TYPE=FAX:+1 (234) 567-8904\r\nTITLE:function1\r\nURL:www.website.com\r\nURL:www.groupwebsite.com\r\nEND:VCARD\r\n'  # flake8: noqa
+        vcard_en = ('BEGIN:VCARD\r\n'
+                    'VERSION:3.0\r\n'
+                    'FN:person1\r\n'
+                    'N:;person1;;;\r\n'
+                    'EMAIL:person@org.org\r\n'
+                    'TITLE:function1\r\n'
+                    'TEL;TYPE=WORK:+1 (234) 567-8900\r\n'
+                    'TEL;TYPE=CELL:+1 (234) 567-8901\r\n'
+                    'TEL;TYPE=FAX:+1 (234) 567-8902\r\n'
+                    'URL:www.website.com\r\n'
+                    'ORG:group1\r\n'
+                    'ADR;TYPE=WORK:;;123 Main Street;Anytown;;12345;\r\n'
+                    'TEL;TYPE=WORK:+1 (234) 567-8903\r\n'
+                    'TEL;TYPE=FAX:+1 (234) 567-8904\r\n'
+                    'URL:www.groupwebsite.com\r\n'
+                    'END:VCARD\r\n')
         self.assertEqual(
             person1.get_vcard(),
             vcard_en
         )
         # Ensure this works for other langs too
         person1 = self.reload(self.person1, 'de')
-        vcard_de = 'BEGIN:VCARD\r\nVERSION:3.0\r\nADR;TYPE=WORK:;;123 Main Street;Anytown;;12345;\r\nEMAIL:person@org.org\r\nFN:mensch1\r\nN:;mensch1;;;\r\nORG:Gruppe1\r\nTEL;TYPE=WORK:+1 (234) 567-8900\r\nTEL;TYPE=CELL:+1 (234) 567-8901\r\nTEL;TYPE=FAX:+1 (234) 567-8902\r\nTEL;TYPE=WORK:+1 (234) 567-8903\r\nTEL;TYPE=FAX:+1 (234) 567-8904\r\nTITLE:Funktion1\r\nURL:www.website.com\r\nURL:www.groupwebsite.com\r\nEND:VCARD\r\n'  # flake8: noqa
+        vcard_de = ('BEGIN:VCARD\r\n'
+                    'VERSION:3.0\r\n'
+                    'FN:mensch1\r\n'
+                    'N:;mensch1;;;\r\n'
+                    'EMAIL:person@org.org\r\n'
+                    'TITLE:Funktion1\r\n'
+                    'TEL;TYPE=WORK:+1 (234) 567-8900\r\n'
+                    'TEL;TYPE=CELL:+1 (234) 567-8901\r\n'
+                    'TEL;TYPE=FAX:+1 (234) 567-8902\r\n'
+                    'URL:www.website.com\r\n'
+                    'ORG:Gruppe1\r\n'
+                    'ADR;TYPE=WORK:;;123 Main Street;Anytown;;12345;\r\n'
+                    'TEL;TYPE=WORK:+1 (234) 567-8903\r\n'
+                    'TEL;TYPE=FAX:+1 (234) 567-8904\r\n'
+                    'URL:www.groupwebsite.com\r\n'
+                    'END:VCARD\r\n')
         with override('de'):
             self.assertEqual(
                 person1.get_vcard(),
