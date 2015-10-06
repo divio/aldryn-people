@@ -4,11 +4,12 @@ from __future__ import unicode_literals
 
 import base64
 import six
+from aldryn_people.vcard import Vcard
+
 try:
     import urlparse
 except ImportError:
-    import urllib.parse as urlparse
-import vobject
+    from urllib import parse as urlparse
 import warnings
 
 import reversion
@@ -23,6 +24,7 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.importlib import import_module
 from django.utils.translation import ugettext_lazy as _, override
+from six import text_type
 
 from aldryn_common.admin_fields.sortedm2m import SortedM2MModelField
 from aldryn_translation_tools.models import TranslatedAutoSlugifyMixin
@@ -246,78 +248,66 @@ class Person(TranslatedAutoSlugifyMixin, TranslatableModel):
             return reverse('aldryn_people:download_vcard', kwargs=kwargs)
 
     def get_vcard(self, request=None):
+        vcard = Vcard()
         function = self.safe_translation_getter('function')
 
-        vcard = vobject.vCard()
         safe_name = self.safe_translation_getter(
             'name', default="Person: {0}".format(self.pk))
-        vcard.add('n').value = vobject.vcard.Name(given=safe_name)
-        vcard.add('fn').value = safe_name
+        vcard.add_line('FN', safe_name)
+        vcard.add_line('N', [None, safe_name, None, None, None])
 
         if self.visual:
+            ext = self.visual.extension.upper()
             try:
                 with open(self.visual.path, 'rb') as f:
-                    photo = vcard.add('photo')
-                    photo.type_param = self.visual.extension.upper()
-                    photo.value = base64.b64encode(f.read())
-                    photo.encoded = True
-                    photo.encoding_param = 'B'
+                    data = base64.b64encode(f.read())
+                    vcard.add_line('PHOTO', data, TYPE=ext, ENCODING='b')
             except IOError:
                 if request:
-                    photo = vcard.add('photo')
-                    photo.type_param = self.visual.extension.upper()
-                    photo.value = urlparse.urljoin(
-                        request.build_absolute_uri(), self.visual.url)
+                    url = urlparse.urljoin(request.build_absolute_uri(),
+                                           self.visual.url),
+                    vcard.add_line('PHOTO', url, TYPE=ext)
 
         if self.email:
-            vcard.add('email').value = self.email
+            vcard.add_line('EMAIL', self.email)
+
         if function:
-            vcard.add('title').value = function
+            vcard.add_line('TITLE', self.function)
+
         if self.phone:
-            tel = vcard.add('tel')
-            tel.value = unicode(self.phone)
-            tel.type_param = 'WORK'
+            vcard.add_line('TEL', self.phone, TYPE='WORK')
         if self.mobile:
-            tel = vcard.add('tel')
-            tel.value = unicode(self.mobile)
-            tel.type_param = 'CELL'
+            vcard.add_line('TEL', self.mobile, TYPE='CELL')
+
         if self.fax:
-            fax = vcard.add('tel')
-            fax.value = unicode(self.fax)
-            fax.type_param = 'FAX'
+            vcard.add_line('TEL', self.fax, TYPE='FAX')
         if self.website:
-            website = vcard.add('url')
-            website.value = unicode(self.website)
+            vcard.add_line('URL', self.website)
 
         if self.primary_group:
             group_name = self.primary_group.safe_translation_getter(
                 'name', default="Group: {0}".format(self.primary_group.pk))
             if group_name:
-                vcard.add('org').value = [group_name]
+                vcard.add_line('ORG', group_name)
             if (self.primary_group.address or self.primary_group.city or
                     self.primary_group.postal_code):
-                vcard.add('adr')
-                vcard.adr.type_param = 'WORK'
-                vcard.adr.value = vobject.vcard.Address()
-                if self.primary_group.address:
-                    vcard.adr.value.street = self.primary_group.address
-                if self.primary_group.city:
-                    vcard.adr.value.city = self.primary_group.city
-                if self.primary_group.postal_code:
-                    vcard.adr.value.code = self.primary_group.postal_code
-            if self.primary_group.phone:
-                tel = vcard.add('tel')
-                tel.value = unicode(self.primary_group.phone)
-                tel.type_param = 'WORK'
-            if self.primary_group.fax:
-                fax = vcard.add('tel')
-                fax.value = unicode(self.primary_group.fax)
-                fax.type_param = 'FAX'
-            if self.primary_group.website:
-                website = vcard.add('url')
-                website.value = unicode(self.primary_group.website)
+                vcard.add_line('ADR', (
+                    None, None,
+                    self.primary_group.address,
+                    self.primary_group.city,
+                    None,
+                    self.primary_group.postal_code,
+                    None,
+                ), TYPE='WORK')
 
-        return vcard.serialize()
+            if self.primary_group.phone:
+                vcard.add_line('TEL', self.primary_group.phone, TYPE='WORK')
+            if self.primary_group.fax:
+                vcard.add_line('TEL', self.primary_group.fax, TYPE='FAX')
+            if self.primary_group.website:
+                vcard.add_line('URL', self.primary_group.website)
+
+        return str(vcard)
 
 
 @python_2_unicode_compatible
@@ -348,7 +338,7 @@ class BasePeoplePlugin(CMSPlugin):
         return self.people.select_related('visual')
 
     def __str__(self):
-        return unicode(self.pk)
+        return text_type(self.pk)
 
 
 class PeoplePlugin(BasePeoplePlugin):
