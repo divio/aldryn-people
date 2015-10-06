@@ -3,8 +3,9 @@
 from __future__ import unicode_literals
 
 import base64
-from re import sub
 import six
+from aldryn_people.vcard import Vcard
+
 try:
     import urlparse
 except ImportError:
@@ -247,77 +248,66 @@ class Person(TranslatedAutoSlugifyMixin, TranslatableModel):
             return reverse('aldryn_people:download_vcard', kwargs=kwargs)
 
     def get_vcard(self, request=None):
-        vcard_lines = ['BEGIN:VCARD', 'VERSION:3.0']
+        vcard = Vcard()
         function = self.safe_translation_getter('function')
 
         safe_name = self.safe_translation_getter(
             'name', default="Person: {0}".format(self.pk))
-        vcard_lines.append('FN:{0}'.format(safe_name))
-        vcard_lines.append('N:;{0};;;'.format(safe_name))
+        vcard.add_line('FN', safe_name)
+        vcard.add_line('N', [None, safe_name, None, None, None])
 
         if self.visual:
             ext = self.visual.extension.upper()
             try:
                 with open(self.visual.path, 'rb') as f:
                     data = base64.b64encode(f.read())
-                    vcard_lines.append('PHOTO;TYPE={0};ENCODING=B:{1}'.format(
-                        ext, data))
+                    vcard.add_line('PHOTO', data, TYPE=ext, ENCODING='b')
             except IOError:
                 if request:
                     url = urlparse.urljoin(request.build_absolute_uri(),
                                            self.visual.url),
-                    vcard_lines.append('PHOTO;TYPE={0}:{1}'.format(ext, url))
+                    vcard.add_line('PHOTO', url, TYPE=ext)
 
         if self.email:
-            vcard_lines.append('EMAIL:{0}'.format(self.email))
+            vcard.add_line('EMAIL', self.email)
 
         if function:
-            vcard_lines.append('TITLE:{0}'.format(function))
+            vcard.add_line('TITLE', self.function)
 
         if self.phone:
-            vcard_lines.append('TEL;TYPE=WORK:{0}'.format(self.phone))
+            vcard.add_line('TEL', self.phone, TYPE='WORK')
         if self.mobile:
-            vcard_lines.append('TEL;TYPE=CELL:{0}'.format(self.mobile))
+            vcard.add_line('TEL', self.mobile, TYPE='CELL')
 
         if self.fax:
-            vcard_lines.append('TEL;TYPE=FAX:{0}'.format(self.fax))
+            vcard.add_line('TEL', self.fax, TYPE='FAX')
         if self.website:
-            vcard_lines.append('URL:{0}'.format(self.website))
+            vcard.add_line('URL', self.website)
 
         if self.primary_group:
             group_name = self.primary_group.safe_translation_getter(
                 'name', default="Group: {0}".format(self.primary_group.pk))
             if group_name:
-                vcard_lines.append('ORG:{0}'.format(group_name))
+                vcard.add_line('ORG', group_name)
             if (self.primary_group.address or self.primary_group.city or
                     self.primary_group.postal_code):
-                vcard_lines.append('ADR;TYPE=WORK:;;{0};{1};;{2};'.format(
+                vcard.add_line('ADR', (
+                    None, None,
                     self.primary_group.address,
                     self.primary_group.city,
+                    None,
                     self.primary_group.postal_code,
-                ))
+                    None,
+                ), TYPE='WORK')
 
             if self.primary_group.phone:
-                vcard_lines.append('TEL;TYPE=WORK:{0}'.format(
-                    self.primary_group.phone))
+                vcard.add_line('TEL', self.primary_group.phone, TYPE='WORK')
             if self.primary_group.fax:
-                vcard_lines.append('TEL;TYPE=FAX:{0}'.format(
-                    self.primary_group.fax))
+                vcard.add_line('TEL', self.primary_group.fax, TYPE='FAX')
             if self.primary_group.website:
-                vcard_lines.append('URL:{0}'.format(
-                    self.primary_group.website))
+                vcard.add_line('URL', self.primary_group.website)
 
-        vcard_lines.append('END:VCARD')
-        vcard_lines.append('')  # add a blank line at the end
-        return '\r\n'.join(
-            self.__vcard_wrap_logical_line(x) for x in vcard_lines)
-
-    def __vcard_escape(self, value):
-        value = sub(r'[\;,"]', r'\\\0', value)
-        return value.replace('\r', r'\r').replace('\n', r'\n')
-
-    def __vcard_wrap_logical_line(self, line):
-        return '\r\n '.join(line[i:i + 75] for i in range(0, len(line), 75))
+        return str(vcard)
 
 
 @python_2_unicode_compatible
