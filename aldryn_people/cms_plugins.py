@@ -45,9 +45,9 @@ class PeoplePlugin(CMSPluginBase):
     def group_people(self, people):
         groups = defaultdict(list)
 
-        for people in people:
-            for group in people.groups.all():
-                groups[group].append(people)
+        for person in people:
+            for group in person.groups.all():
+                groups[group].append(person)
 
         # Fixes a template resolution-related issue. See:
         # http://stackoverflow.com/questions/4764110/django-template-cant-loop-defaultdict  # noqa
