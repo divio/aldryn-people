@@ -23,7 +23,7 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.importlib import import_module
-from django.utils.translation import ugettext_lazy as _, override
+from django.utils.translation import ugettext_lazy as _, override, force_text
 from six import text_type
 
 from aldryn_common.admin_fields.sortedm2m import SortedM2MModelField
@@ -260,7 +260,7 @@ class Person(TranslatedAutoSlugifyMixin, TranslatableModel):
             ext = self.visual.extension.upper()
             try:
                 with open(self.visual.path, 'rb') as f:
-                    data = base64.b64encode(f.read())
+                    data = force_text(base64.b64encode(f.read()))
                     vcard.add_line('PHOTO', data, TYPE=ext, ENCODING='b')
             except IOError:
                 if request:
