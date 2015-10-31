@@ -1,6 +1,16 @@
 CHANGELOG
 =========
 
+1.1.0 (2015-10-31)
+------------------
+
+* Reimplements vCard downloads in a Py3 compatible way (Thanks, Adam Brenecki!)
+* Solves an issue where "Menus could not be loaded" messages were occurring in
+  certain situations.
+* Expands test-coverage to include Python 3.3, 3.4
+* Adds a CMS wizard to add a person (available when CMS 3.2.0 is released)
+* Bumps CMS requirements to work with CMS 3.2
+
 1.0.1 (2015-08-04)
 ------------------
 
