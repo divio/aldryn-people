@@ -8,7 +8,7 @@ REQUIREMENTS = [
     'aldryn-common>=0.1.3',
     'aldryn-reversion>=0.1.0',
     'aldryn-translation-tools>=0.1.0',
-    'django-cms>=3.0.12,<3.2',
+    'django-cms>=3.0.12,<3.3',
     'django-parler>=1.4',
     'django-filer>=0.9.9,<0.10',
     'djangocms-text-ckeditor',
