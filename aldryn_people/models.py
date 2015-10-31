@@ -27,7 +27,10 @@ from django.utils.translation import ugettext_lazy as _, override, force_text
 from six import text_type
 
 from aldryn_common.admin_fields.sortedm2m import SortedM2MModelField
-from aldryn_translation_tools.models import TranslatedAutoSlugifyMixin
+from aldryn_translation_tools.models import (
+    TranslatedAutoSlugifyMixin,
+    TranslationHelperMixin,
+)
 from cms.models.pluginmodel import CMSPlugin
 from cms.utils.i18n import get_current_language, get_default_language
 from djangocms_text_ckeditor.fields import HTMLField
@@ -101,7 +104,8 @@ else:
 
 @version_controlled_content
 @python_2_unicode_compatible
-class Group(TranslatedAutoSlugifyMixin, TranslatableModel):
+class Group(TranslationHelperMixin, TranslatedAutoSlugifyMixin,
+            TranslatableModel):
     slug_source_field_name = 'name'
     translations = TranslatedFields(
         name=models.CharField(_('name'), max_length=255,
@@ -154,8 +158,8 @@ class Group(TranslatedAutoSlugifyMixin, TranslatableModel):
     def get_absolute_url(self, language=None):
         if not language:
             language = get_current_language() or get_default_language()
-        slug = self.safe_translation_getter(
-            'slug', None, language_code=language, any_language=False)
+        slug, language = self.known_translation_getter(
+            'slug', None, language_code=language)
         if slug:
             kwargs = {'slug': slug}
         else:
@@ -166,7 +170,8 @@ class Group(TranslatedAutoSlugifyMixin, TranslatableModel):
 
 @version_controlled_content(follow=['groups', 'user'])
 @python_2_unicode_compatible
-class Person(TranslatedAutoSlugifyMixin, TranslatableModel):
+class Person(TranslationHelperMixin, TranslatedAutoSlugifyMixin,
+             TranslatableModel):
     slug_source_field_name = 'name'
 
     translations = TranslatedFields(
@@ -226,8 +231,8 @@ class Person(TranslatedAutoSlugifyMixin, TranslatableModel):
     def get_absolute_url(self, language=None):
         if not language:
             language = get_current_language()
-        slug = self.safe_translation_getter(
-            'slug', None, language_code=language, any_language=False)
+        slug, language = self.known_translation_getter(
+            'slug', None, language_code=language)
         if slug:
             kwargs = {'slug': slug}
         else:

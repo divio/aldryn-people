@@ -2,6 +2,7 @@
 
 from __future__ import unicode_literals
 
+from django.core.urlresolvers import NoReverseMatch
 from django.utils.translation import get_language_from_request, ugettext as _
 
 from cms.menu_bases import CMSAttachMenu
@@ -20,17 +21,23 @@ class PersonMenu(CMSAttachMenu):
     def get_nodes(self, request):
         nodes = []
         language = get_language_from_request(request, check_path=True)
-        persons = Person.objects.language(language)
+        persons = (Person.objects.language(language)
+                                 .active_translations(language))
 
         for person in persons:
-            node = NavigationNode(
-                person.safe_translation_getter(
-                    'name', default=_('person: {0}').format(person.pk),
-                    language_code=language),
-                person.get_absolute_url(language=language),
-                person.pk,
-            )
-            nodes.append(node)
+            try:
+                url = person.get_absolute_url(language=language)
+            except NoReverseMatch:
+                url = None
+            if url:
+                node = NavigationNode(
+                    person.safe_translation_getter(
+                        'name', default=_('person: {0}').format(person.pk),
+                        language_code=language),
+                    url,
+                    person.pk,
+                )
+                nodes.append(node)
         return nodes
 
 menu_pool.register_menu(PersonMenu)
@@ -45,17 +52,23 @@ class GroupMenu(CMSAttachMenu):
     def get_nodes(self, request):
         nodes = []
         language = get_language_from_request(request, check_path=True)
-        groups = Group.objects.language(language)
+        groups = (Group.objects.language(language)
+                               .active_translations(language))
 
         for group in groups:
-            node = NavigationNode(
-                group.safe_translation_getter(
-                    'name', default=_('group: {0}').format(group.pk),
-                    language_code=language),
-                group.get_absolute_url(language=language),
-                group.pk,
-            )
-            nodes.append(node)
+            try:
+                url = group.get_absolute_url(language=language)
+            except NoReverseMatch:
+                url = None
+            if url:
+                node = NavigationNode(
+                    group.safe_translation_getter(
+                        'name', default=_('group: {0}').format(group.pk),
+                        language_code=language),
+                    url,
+                    group.pk,
+                )
+                nodes.append(node)
         return nodes
 
 menu_pool.register_menu(GroupMenu)
