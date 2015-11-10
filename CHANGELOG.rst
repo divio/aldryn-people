@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+1.1.1 (2015-11-10)
+------------------
+
+* Prevents (benign) JS errors on console.
+
+
 1.1.0 (2015-10-31)
 ------------------
 
@@ -11,6 +17,7 @@ CHANGELOG
 * Adds a CMS wizard to add a person (available when CMS 3.2.0 is released)
 * Bumps CMS requirements to work with CMS 3.2
 
+
 1.0.1 (2015-08-04)
 ------------------
 
@@ -19,6 +26,7 @@ CHANGELOG
 * Fix South migration in Django 1.6.x
 * Correct documentation issues
 * Fixes an issue where the CMSToolbar may fail to load
+
 
 1.0.0 (2015-07-29)
 ------------------
@@ -36,11 +44,13 @@ CHANGELOG
 * Adds configuration for frontend testing
 * Adds static placeholders to group-list and group-detail templates
 
+
 0.5.3 (2015-07-08)
 ------------------
 
 * Added another missing django >= 1.7 migration
 * Fixed integrity error on automatic slug generation
+
 
 0.5.2 (2015-04-25)
 ------------------
@@ -48,6 +58,7 @@ CHANGELOG
 * Added missing django >= 1.7 migration
 * Dropped support for django 1.4 & 1.5
 * Updated requirements to require aldryn-common>=0.1.3
+
 
 0.5.1 (2015-04-16)
 ------------------
