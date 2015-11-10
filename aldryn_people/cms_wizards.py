@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 from django.utils.translation import ugettext_lazy as _
 from cms.wizards.wizard_pool import wizard_pool
 from cms.wizards.wizard_base import Wizard
+from cms.wizards.forms import BaseFormMixin
 
 from parler.forms import TranslatableModelForm
 
@@ -39,14 +40,14 @@ class PeopleGroupWizard(Wizard):
         return False
 
 
-class CreatePeoplePersonForm(TranslatableModelForm):
+class CreatePeoplePersonForm(BaseFormMixin, TranslatableModelForm):
     class Meta:
         model = Person
         fields = ['name', 'function', 'description', 'phone', 'mobile',
                   'email', 'website', 'groups', 'visual']
 
 
-class CreatePeopleGroupForm(TranslatableModelForm):
+class CreatePeopleGroupForm(BaseFormMixin, TranslatableModelForm):
     class Meta:
         model = Group
         fields = ['name', 'description', 'address', 'postal_code', 'city',
