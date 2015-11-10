@@ -2,7 +2,9 @@
 
 from __future__ import unicode_literals
 
+from django.core.urlresolvers import reverse, NoReverseMatch
 from django.utils.translation import ugettext_lazy as _
+
 from cms.wizards.wizard_pool import wizard_pool
 from cms.wizards.wizard_base import Wizard
 from cms.wizards.forms import BaseFormMixin
@@ -12,7 +14,30 @@ from parler.forms import TranslatableModelForm
 from .models import Group, Person
 
 
-class PeoplePersonWizard(Wizard):
+def has_published_apphook():
+    """
+    Returns a list of app_configs that are attached to a published page.
+    """
+    try:
+        reverse('aldryn_people:group-list')
+        return True
+    except NoReverseMatch:
+        pass
+    return False
+
+
+class BasePeopleWizard(Wizard):
+    """
+    Only return a success URL if we can actually use it.
+    """
+    def get_success_url(self, **kwargs):
+        if has_published_apphook():
+            return super(BasePeopleWizard, self).get_success_url(**kwargs)
+        else:
+            return None
+
+
+class PeoplePersonWizard(BasePeopleWizard):
 
     def user_has_add_permission(self, user, **kwargs):
         """
@@ -26,7 +51,7 @@ class PeoplePersonWizard(Wizard):
         return False
 
 
-class PeopleGroupWizard(Wizard):
+class PeopleGroupWizard(BasePeopleWizard):
 
     def user_has_add_permission(self, user, **kwargs):
         """
