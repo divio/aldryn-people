@@ -96,4 +96,10 @@ people_group_wizard = PeopleGroupWizard(
     description=_("Create a new group.")
 )
 
-wizard_pool.register(people_group_wizard)
+# Disabling the group wizard by default. To enable, create a file
+# cms_wizards.py in your project and add the following lines:
+
+# from cms.wizards.wizard_pool import wizard_pool
+# from aldryn_people.cms_wizards import people_group_wizard
+#
+#  wizard_pool.register(people_group_wizard)
