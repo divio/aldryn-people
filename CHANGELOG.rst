@@ -1,10 +1,18 @@
 CHANGELOG
 =========
 
-1.1.1 (2015-11-10)
+1.1.2 (2015-11-10)
 ------------------
 
 * Prevents (benign) JS errors on console.
+* Better handle cases where there is no apphook present/published
+* Disable the Group wizard (too infrequently used)
+
+
+1.1.1 (2015-11-03)
+------------------
+
+* Relax Filer requirement restriction to allow v1.0+
 
 
 1.1.0 (2015-10-31)
