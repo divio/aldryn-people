@@ -69,7 +69,7 @@ class CreatePeoplePersonForm(BaseFormMixin, TranslatableModelForm):
     class Meta:
         model = Person
         fields = ['name', 'function', 'description', 'phone', 'mobile',
-                  'email', 'website', 'groups', 'visual']
+                  'email', 'website', 'groups']
 
 
 class CreatePeopleGroupForm(BaseFormMixin, TranslatableModelForm):
