@@ -31,7 +31,7 @@ HAYSTACK_CONNECTIONS = {
 
 HELPER_SETTINGS = {
     # Use of this custom URLs provides a shortcut when testing apphooks
-    'ROOT_URLCONF': 'aldryn_people.tests.urls',
+    # 'ROOT_URLCONF': 'aldryn_people.tests.urls',
     'TIME_ZONE': 'Europe/Zurich',
     'HAYSTACK_CONNECTIONS': HAYSTACK_CONNECTIONS,
     'INSTALLED_APPS': [
@@ -86,17 +86,41 @@ HELPER_SETTINGS = {
         ],
     },
     # app-specific
+    # 'PARLER_LANGUAGES': {
+    #     1: (
+    #         {'code': 'de', },
+    #         {'code': 'fr', },
+    #         {'code': 'en', },
+    #     ),
+    #     'default': {
+    #         'fallback': 'en',
+    #         'hide_untranslated': True,  # PLEASE DO NOT CHANGE THIS
+    #     }
+    # },
     'PARLER_LANGUAGES': {
-        1: (
-            {'code': 'de', },
-            {'code': 'fr', },
-            {'code': 'en', },
-        ),
+        1: [
+            {
+                'code': u'en',
+                'fallbacks': ['de', 'fr'],
+                'hide_untranslated': False
+            },
+            {
+                'code': u'fr',
+                'fallbacks': [u'en'],
+                'hide_untranslated': False
+            },
+            {
+                'code': u'de',
+                'fallbacks': [u'en'],
+                'hide_untranslated': False
+            }
+        ],
         'default': {
-            'fallback': 'en',
-            'hide_untranslated': True,  # PLEASE DO NOT CHANGE THIS
-        }
+            'code': u'en',
+            'fallbacks': [u'en'],
+            'hide_untranslated': False}
     },
+    'PARLER_ENABLE_CACHING': False,
 }
 
 # This set of MW classes should work for Django 1.6 and 1.7.

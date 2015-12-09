@@ -11,10 +11,10 @@ from cms.test_utils.testcases import URL_CMS_PLUGIN_ADD
 from ..models import Person, Group
 from ..cms_plugins import PeoplePlugin
 
-from . import BasePeopleTest
+from . import DefaultApphookMixin, BasePeopleTest
 
 
-class TestPersonPlugins(BasePeopleTest):
+class TestPersonPlugins(DefaultApphookMixin, BasePeopleTest):
 
     def test_add_people_list_plugin_api(self):
         """

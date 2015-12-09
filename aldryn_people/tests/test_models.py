@@ -7,10 +7,22 @@ from django.utils.translation import override, force_text
 
 from ..models import Person, Group
 
-from . import BasePeopleTest
+from . import (
+    DefaultSetupMixin, DefaultApphookMixin, CleanUpMixin, BasePeopleTest,
+)
 
 
-class TestBasicPeopleModels(TransactionTestCase):
+class TestBasicPeopleModels(
+                            DefaultSetupMixin,
+                            DefaultApphookMixin,
+                            CleanUpMixin,
+                            TransactionTestCase):
+
+    def setUp(self):
+        super(TestBasicPeopleModels, self).setUp()
+        # get some time to reload urls
+        self.client.get(self.app_hook_page.get_absolute_url())
+
 
     def test_create_person(self):
         """We can create a person with a name."""
@@ -37,15 +49,16 @@ class TestBasicPeopleModels(TransactionTestCase):
         # This isn't a translation test, per se, but let's make sure that we
         # have a predictable language prefix, regardless of the tester's locale.
         with override('en'):
+            app_hook_url = self.app_hook_page.get_absolute_url()
             self.assertEqual(
                 person.get_absolute_url(),
-                '/en/people/{0}/'.format(slug)
+                '{0}{1}/'.format(app_hook_url, slug)
             )
             # Now test that it will work when there's no slug too.
             person.slug = ''
             self.assertEqual(
                 person.get_absolute_url(),
-                '/en/people/{0}/'.format(person.pk),
+                '{0}{1}/'.format(app_hook_url, person.pk),
             )
 
     def test_auto_slugify(self):

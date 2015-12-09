@@ -2,26 +2,108 @@
 
 from __future__ import unicode_literals
 
+import sys
+
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from django.contrib.sites.models import Site
+from django.core.urlresolvers import clear_url_caches
 from django.db import IntegrityError
 from django.test import RequestFactory, TestCase
 from django.utils.translation import override
 
 from cms import api
+from cms.apphook_pool import apphook_pool
+from cms.appresolver import clear_app_resolvers
+from cms.exceptions import AppAlreadyRegistered
 from cms.models import Title
 from cms.test_utils.testcases import BaseCMSTestCase
 from cms.utils import get_cms_setting
-from cms.utils.i18n import get_language_list
-
+from cms.utils.i18n import get_language_list, force_language
 from djangocms_helper.utils import create_user
 
 from ..models import Group, Person
 
 
-class BasePeopleTest(BaseCMSTestCase, TestCase):
+APP_MODULE = 'aldryn_people.cms_app'
+DEFAULT_PEOPLE_NAMESPACE = 'aldryn_people'
+
+
+class CleanUpMixin(object):
+
+    def tearDown(self):
+        self.reset_all()
+        super(CleanUpMixin, self).tearDown()
+
+    def reset_all(self):
+        """
+        Reset all that could leak from previous test to current/next test.
+        :return: None
+        """
+        self.delete_app_module()
+        self.reload_urls()
+        self.apphook_clear()
+
+    def delete_app_module(self):
+        """
+        Remove APP_MODULE from sys.modules. Taken from cms.
+        :return: None
+        """
+        if APP_MODULE in sys.modules:
+            del sys.modules[APP_MODULE]
+
+    def apphook_clear(self):
+        """
+        Clean up apphook_pool and sys.modules. Taken from cms with slight
+        adjustments and fixes.
+        :return: None
+        """
+        try:
+            apphooks = apphook_pool.get_apphooks()
+        except AppAlreadyRegistered:
+            # there is an issue with discover apps, or i'm using it wrong.
+            # setting discovered to True solves it. Maybe that is due to import
+            # from aldryn_events.cms_app which registers EventListAppHook
+            apphook_pool.discovered = True
+            apphooks = apphook_pool.get_apphooks()
+
+        for name, label in list(apphooks):
+            if apphook_pool.apps[name].__class__.__module__ in sys.modules:
+                del sys.modules[apphook_pool.apps[name].__class__.__module__]
+        apphook_pool.clear()
+
+    def reload_urls(self):
+        """
+        Clean up url related things (caches, app resolvers, modules).
+        Taken from cms.
+        :return: None
+        """
+        clear_app_resolvers()
+        clear_url_caches()
+        url_modules = [
+            'cms.urls',
+            'aldryn_events.urls',
+            settings.ROOT_URLCONF
+        ]
+
+        for module in url_modules:
+            if module in sys.modules:
+                del sys.modules[module]
+
+
+class DefaultApphookMixin(object):
+    """
+    Creates the default app hook page for aldryn-people. Relyes on
+    BasePeopleTest.setUp method and its utilities.
+    """
+
+    def setUp(self):
+        super(DefaultApphookMixin, self).setUp()
+        self.app_hook_page = self.create_apphook_page(multilang=True)
+
+
+class DefaultSetupMixin(object):
     su_username = 'user'
     su_password = 'pass'
 
@@ -46,6 +128,51 @@ class BasePeopleTest(BaseCMSTestCase, TestCase):
                    'function': 'Funktion2', 'description': 'Beschreibung2'},
         },
     }
+
+    def setUp(self):
+        self.template = get_cms_setting('TEMPLATES')[0][0]
+        self.language = settings.LANGUAGES[0][0]
+        self.page = api.create_page(
+            'page', self.template, self.language, published=True)
+        self.placeholder = self.page.placeholders.all()[0]
+        self.superuser = self.create_superuser()
+        super(DefaultSetupMixin, self).setUp()
+
+    def create_superuser(self):
+        return User.objects.create_superuser(
+            self.su_username, 'email@example.com', self.su_password)
+
+    def create_user(self, user_name, user_password, is_staff=False,
+                    is_superuser=False):
+        return User.objects.create(
+            username=user_name,
+            first_name='{0} first_name'.format(user_name),
+            last_name='{0} last_name'.format(user_name),
+            password=make_password(user_password),
+            is_staff=is_staff,
+            is_superuser=is_superuser
+        )
+
+    def create_apphook_page(self, multilang=False):
+        with force_language('en'):
+            page = api.create_page(
+                title='People en', template=self.template, language='en',
+                published=True,
+                parent=self.page,
+                apphook='PeopleApp',
+                apphook_namespace=DEFAULT_PEOPLE_NAMESPACE,
+            )
+        page.publish('en')
+        if multilang:
+            api.create_title('de', 'People de', page)
+            page.publish('de')
+        return page.reload()
+
+
+class BasePeopleTest(DefaultSetupMixin,
+                     CleanUpMixin,
+                     BaseCMSTestCase,
+                     TestCase):
 
     @staticmethod
     def reload(obj, language=None):
@@ -79,12 +206,7 @@ class BasePeopleTest(BaseCMSTestCase, TestCase):
         obj.save()
 
     def setUp(self):
-        self.template = get_cms_setting('TEMPLATES')[0][0]
-        self.language = settings.LANGUAGES[0][0]
-        self.page = api.create_page(
-            'page', self.template, self.language, published=True)
-        self.placeholder = self.page.placeholders.all()[0]
-        self.superuser = self.create_superuser()
+        super(BasePeopleTest, self).setUp()
         with override('en'):
             self.person1 = Person(**self.data['person1']['en'])
             self.group1 = Group(**self.data['group1']['en'])
@@ -101,32 +223,22 @@ class BasePeopleTest(BaseCMSTestCase, TestCase):
         with override('de'):
             self.person2 = Person(**self.data['person2']['de'])
             self.group2 = Group(**self.data['group2']['de'])
-        self.person2.name = 'person2'
-        self.person2.slug = 'person2-slug'
+        # self.person2.name = 'person2'
+        # self.person2.slug = 'person2-slug'
         self.person2.save()
         self.group2.save()
 
-    def tearDown(self):
-        Person.objects.all().delete()
-        Group.objects.all().delete()
-
-    def create_superuser(self):
-        return User.objects.create_superuser(
-            self.su_username, 'email@example.com', self.su_password)
-
-    def create_user(self, user_name, user_password, is_staff=False,
-                    is_superuser=False):
-        return User.objects.create(
-            username=user_name,
-            first_name='{0} first_name'.format(user_name),
-            last_name='{0} last_name'.format(user_name),
-            password=make_password(user_password),
-            is_staff=is_staff,
-            is_superuser=is_superuser
-        )
+    def set_defalut_person_objects_current_language(self, language):
+        """
+        Make sure parler active language is set to language.
+        :param language: language_code
+        :return: None
+        """
+        self.person1.set_current_language(language)
+        self.person2.set_current_language(language)
 
 
-class CMSRequestBasedTest(TestCase):
+class CMSRequestBasedTest(CleanUpMixin, TestCase):
     """Sets-up User(s) and CMS Pages for testing."""
     languages = get_language_list()
 
