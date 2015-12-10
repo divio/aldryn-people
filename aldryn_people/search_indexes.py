@@ -25,7 +25,7 @@ class PeopleIndex(get_index_base()):
 
     def get_index_queryset(self, language):
         return self.get_model().objects.active_translations(
-            language_code=language)
+            language_code=language).translated(language)
 
     def get_model(self):
         return Person

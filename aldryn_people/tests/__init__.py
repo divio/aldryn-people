@@ -134,6 +134,8 @@ class DefaultSetupMixin(object):
         self.language = settings.LANGUAGES[0][0]
         self.page = api.create_page(
             'page', self.template, self.language, published=True)
+        api.create_title('de', 'page de', self.page)
+        self.page.publish('de')
         self.placeholder = self.page.placeholders.all()[0]
         self.superuser = self.create_superuser()
         super(DefaultSetupMixin, self).setUp()

@@ -12,8 +12,7 @@ from . import (
 )
 
 
-class TestBasicPeopleModels(
-                            DefaultSetupMixin,
+class TestBasicPeopleModels(DefaultSetupMixin,
                             DefaultApphookMixin,
                             CleanUpMixin,
                             TransactionTestCase):
@@ -22,7 +21,6 @@ class TestBasicPeopleModels(
         super(TestBasicPeopleModels, self).setUp()
         # get some time to reload urls
         self.client.get(self.app_hook_page.get_absolute_url())
-
 
     def test_create_person(self):
         """We can create a person with a name."""
@@ -146,7 +144,12 @@ class TestPersonModelTranslation(BasePeopleTest):
     def test_get_vcard(self):
         person1 = self.reload(self.person1, 'en')
         # Test with no group
-        vcard_en = 'BEGIN:VCARD\r\nVERSION:3.0\r\nFN:person1\r\nN:;person1;;;\r\nTITLE:function1\r\nEND:VCARD\r\n'  # flake8: noqa
+        vcard_en = ('BEGIN:VCARD\r\n'
+                    'VERSION:3.0\r\n'
+                    'FN:person1\r\n'
+                    'N:;person1;;;\r\n'
+                    'TITLE:function1\r\n'
+                    'END:VCARD\r\n')
         self.assertEqual(
             person1.get_vcard(),
             vcard_en

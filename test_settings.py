@@ -30,8 +30,6 @@ HAYSTACK_CONNECTIONS = {
 }
 
 HELPER_SETTINGS = {
-    # Use of this custom URLs provides a shortcut when testing apphooks
-    # 'ROOT_URLCONF': 'aldryn_people.tests.urls',
     'TIME_ZONE': 'Europe/Zurich',
     'HAYSTACK_CONNECTIONS': HAYSTACK_CONNECTIONS,
     'INSTALLED_APPS': [
@@ -46,9 +44,6 @@ HELPER_SETTINGS = {
         'reversion',
         'sortedm2m',
     ],
-    'MIGRATION_MODULES': {
-        'filer': 'filer.migrations_django',
-    },
     'THUMBNAIL_PROCESSORS': (
         'easy_thumbnails.processors.colorspace',
         'easy_thumbnails.processors.autocrop',
@@ -86,17 +81,6 @@ HELPER_SETTINGS = {
         ],
     },
     # app-specific
-    # 'PARLER_LANGUAGES': {
-    #     1: (
-    #         {'code': 'de', },
-    #         {'code': 'fr', },
-    #         {'code': 'en', },
-    #     ),
-    #     'default': {
-    #         'fallback': 'en',
-    #         'hide_untranslated': True,  # PLEASE DO NOT CHANGE THIS
-    #     }
-    # },
     'PARLER_LANGUAGES': {
         1: [
             {
