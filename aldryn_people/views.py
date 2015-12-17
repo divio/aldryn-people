@@ -95,7 +95,7 @@ class GroupListView(ListView):
     def dispatch(self, request, *args, **kwargs):
         self.request_language = get_language(request)
         self.request = request
-        self.site_id = getattr(get_current_site(self.request), 'id')
+        self.site_id = getattr(get_current_site(self.request), 'id', None)
         self.valid_languages = get_valid_languages(
             DEFAULT_APP_NAMESPACE, self.request_language, self.site_id)
         return super(GroupListView, self).dispatch(request, *args, **kwargs)

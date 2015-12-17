@@ -52,7 +52,6 @@ class TestMainListView(BasePeopleTest, CMSRequestBasedTest):
             person1_url = self.person1.get_absolute_url()
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        # test events.
         self.assertContains(response, self.person1.name)
         self.assertContains(response, person1_url)
         # should not contain person 2 since page for 'de' language is
