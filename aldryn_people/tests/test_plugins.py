@@ -105,7 +105,7 @@ class TestPeopleListPluginNoApphook(BasePeopleTest):
         with force_language('en'):
             name = 'Donald'
             Person.objects.create(name=name)
-            plugin = api.add_plugin(
+            api.add_plugin(
                 self.placeholder, PeoplePlugin, 'en')
             self.page.publish('en')
             url = self.page.get_absolute_url()
@@ -119,7 +119,7 @@ class TestPeopleListPluginNoApphook(BasePeopleTest):
         with force_language('en'):
             name = 'Donald'
             Person.objects.create(name=name)
-            plugin = api.add_plugin(
+            api.add_plugin(
                 self.placeholder, PeoplePlugin, 'en')
             self.page.publish('en')
             url = self.page.get_absolute_url()
