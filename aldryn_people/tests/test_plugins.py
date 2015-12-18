@@ -6,6 +6,7 @@ from django.utils.translation import force_text
 
 from cms import api
 from cms.models import CMSPlugin
+from cms.utils.i18n import force_language
 from cms.test_utils.testcases import URL_CMS_PLUGIN_ADD
 
 from ..models import Person, Group
@@ -96,3 +97,36 @@ class TestPersonPlugins(DefaultApphookMixin, BasePeopleTest):
         self.assertContains(response, bobby.name)
         self.assertContains(response, cindy.name)
         self.assertContains(response, alice.name)
+
+
+class TestPeopleListPluginNoApphook(BasePeopleTest):
+
+    def test_plugin_with_no_apphook_doesnot_breaks_page(self):
+        with force_language('en'):
+            name = 'Donald'
+            Person.objects.create(name=name)
+            plugin = api.add_plugin(
+                self.placeholder, PeoplePlugin, 'en')
+            self.page.publish('en')
+            url = self.page.get_absolute_url()
+            response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, name)
+        from ..cms_plugins import NAMESPACE_ERROR
+        self.assertNotContains(response, NAMESPACE_ERROR[:20])
+
+    def test_plugin_with_no_apphook_shows_error_message(self):
+        with force_language('en'):
+            name = 'Donald'
+            Person.objects.create(name=name)
+            plugin = api.add_plugin(
+                self.placeholder, PeoplePlugin, 'en')
+            self.page.publish('en')
+            url = self.page.get_absolute_url()
+            self.client.login(username=self.su_username,
+                              password=self.su_password)
+            response = self.client.get(url, user=self.superuser)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, name)
+        from ..cms_plugins import NAMESPACE_ERROR
+        self.assertContains(response, NAMESPACE_ERROR[:20])

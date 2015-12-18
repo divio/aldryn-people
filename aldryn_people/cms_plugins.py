@@ -13,6 +13,12 @@ from aldryn_people import models, DEFAULT_APP_NAMESPACE
 from .utils import get_valid_languages
 
 
+NAMESPACE_ERROR = _(
+    "Seems that there is no valid application hook for aldryn-people."
+    "Links can't be rendered without an app hook."
+)
+
+
 class PeoplePlugin(CMSPluginBase):
 
     TEMPLATE_NAME = 'aldryn_people/plugins/%s/people_list.html'
@@ -62,6 +68,8 @@ class PeoplePlugin(CMSPluginBase):
         valid_languages = get_valid_languages(
             DEFAULT_APP_NAMESPACE, instance.language, context['request'])
         people = people.translated(*valid_languages)
+        if not valid_languages:
+            context['namespace_error'] = NAMESPACE_ERROR
         self.render_template = self.TEMPLATE_NAME % instance.style
 
         context['instance'] = instance
