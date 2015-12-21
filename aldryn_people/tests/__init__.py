@@ -225,8 +225,6 @@ class BasePeopleTest(DefaultSetupMixin,
         with override('de'):
             self.person2 = Person(**self.data['person2']['de'])
             self.group2 = Group(**self.data['group2']['de'])
-        # self.person2.name = 'person2'
-        # self.person2.slug = 'person2-slug'
         self.person2.save()
         self.group2.save()
 
