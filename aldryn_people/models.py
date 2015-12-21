@@ -19,7 +19,7 @@ from distutils.version import LooseVersion
 from django import get_version
 from django.contrib.auth import get_user_model
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, NoReverseMatch
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.importlib import import_module
@@ -238,7 +238,13 @@ class Person(TranslationHelperMixin, TranslatedAutoSlugifyMixin,
         else:
             kwargs = {'pk': self.pk}
         with override(language):
-            return reverse('aldryn_people:person-detail', kwargs=kwargs)
+            # do not fail with 500 error so that if detail view can't be
+            # resolved we still can use plugins.
+            try:
+                url = reverse('aldryn_people:person-detail', kwargs=kwargs)
+            except NoReverseMatch:
+                url = ''
+        return url
 
     def get_vcard_url(self, language=None):
         if not language:

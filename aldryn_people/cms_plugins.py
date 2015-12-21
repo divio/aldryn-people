@@ -9,7 +9,14 @@ from django.utils.translation import ugettext_lazy as _
 from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
 
-from aldryn_people import models
+from aldryn_people import models, DEFAULT_APP_NAMESPACE
+from .utils import get_valid_languages
+
+
+NAMESPACE_ERROR = _(
+    "Seems that there is no valid application hook for aldryn-people."
+    "Links can't be rendered without an app hook."
+)
 
 
 class PeoplePlugin(CMSPluginBase):
@@ -58,6 +65,11 @@ class PeoplePlugin(CMSPluginBase):
         people = instance.get_selected_people()
         if not people:
             people = models.Person.objects.all()
+        valid_languages = get_valid_languages(
+            DEFAULT_APP_NAMESPACE, instance.language, context['request'])
+        people = people.translated(*valid_languages)
+        if not valid_languages:
+            context['namespace_error'] = NAMESPACE_ERROR
         self.render_template = self.TEMPLATE_NAME % instance.style
 
         context['instance'] = instance
