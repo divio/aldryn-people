@@ -22,7 +22,16 @@ from django.conf import settings
 from django.core.urlresolvers import reverse, NoReverseMatch
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
-from django.utils.importlib import import_module
+try:
+    # Python>=2.7
+    from importlib import import_module
+except ImportError:
+    # Django<=1.6, Python==2.6
+    import warnings
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", DeprecationWarning)
+        from django.db.models.loading import get_model
+
 from django.utils.translation import ugettext_lazy as _, override, force_text
 from six import text_type
 
