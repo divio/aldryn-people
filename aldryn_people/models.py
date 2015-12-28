@@ -216,7 +216,7 @@ class Person(TranslationHelperMixin, TranslatedAutoSlugifyMixin,
 
         if six.PY2:
             pkstr = six.u(pkstr)
-        name = self.name.strip()
+        name = self.safe_translation_getter('name', default='', any_language=True).strip()
         return name if len(name) > 0 else pkstr
 
     @property
