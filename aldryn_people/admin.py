@@ -6,11 +6,15 @@ from django.conf import settings
 from django.contrib import admin
 from django.db.models import Count
 try:
-    # For Django>=1.7
+    # Django>=1.7
     from django.apps.apps import get_model
 except ImportError:
-    # For Django<=1.6
-    from django.db.models.loading import get_model
+    # Django<=1.6
+    import warnings
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", DeprecationWarning)
+        from django.db.models.loading import get_model
+
 from django.utils.translation import ugettext_lazy as _
 
 from parler.admin import TranslatableAdmin
