@@ -342,7 +342,7 @@ class BasePeoplePlugin(CMSPlugin):
         default=STYLE_CHOICES[0][0], max_length=50)
 
     people = SortedM2MModelField(
-        Person, blank=True, null=True,
+        Person, blank=True,
         help_text=_('Select and arrange specific people, or, leave blank to '
                     'select all.')
     )
