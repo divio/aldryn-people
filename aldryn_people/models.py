@@ -211,9 +211,9 @@ class Person(TranslationHelperMixin, TranslatedAutoSlugifyMixin,
         null=True, blank=True, default=None, on_delete=models.SET_NULL)
     vcard_enabled = models.BooleanField(
         verbose_name=_('enable vCard download'), default=True)
-    user = models.ForeignKey(
+    user = models.OneToOneField(
         getattr(settings, 'AUTH_USER_MODEL', 'auth.User'),
-        null=True, blank=True, unique=True, related_name='persons')
+        null=True, blank=True, related_name='persons')
 
     class Meta:
         verbose_name = _('Person')
