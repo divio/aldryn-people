@@ -3,13 +3,15 @@
 from __future__ import unicode_literals
 
 from django.core.urlresolvers import reverse, NoReverseMatch
-from django.utils.translation import ugettext_lazy as _
+from django.db import transaction
+from django.utils.translation import ugettext_lazy as _, ugettext
 
 from cms.wizards.wizard_pool import wizard_pool
 from cms.wizards.wizard_base import Wizard
 from cms.wizards.forms import BaseFormMixin
 
 from parler.forms import TranslatableModelForm
+from reversion import create_revision, set_user, set_comment
 
 from .models import Group, Person
 
@@ -71,12 +73,44 @@ class CreatePeoplePersonForm(BaseFormMixin, TranslatableModelForm):
         fields = ['name', 'function', 'description', 'phone', 'mobile',
                   'email', 'website', 'groups']
 
+    def save(self, commit=True):
+        """
+        Ensure we create a revision for reversion.
+        """
+        person = super(CreatePeoplePersonForm, self).save(commit=False)
+
+        # Ensure we make an initial revision
+        with transaction.atomic():
+            with create_revision():
+                person.save()
+                if self.user:
+                    set_user(self.user)
+                set_comment(ugettext("Initial version."))
+
+        return person
+
 
 class CreatePeopleGroupForm(BaseFormMixin, TranslatableModelForm):
     class Meta:
         model = Group
         fields = ['name', 'description', 'address', 'postal_code', 'city',
                   'phone', 'email', 'website']
+
+    def save(self, commit=True):
+        """
+        Ensure we create a revision for reversion.
+        """
+        group = super(CreatePeopleGroupForm, self).save(commit=False)
+
+        # Ensure we make an initial revision
+        with transaction.atomic():
+            with create_revision():
+                group.save()
+                if self.user:
+                    set_user(self.user)
+                set_comment(ugettext("Initial version."))
+
+        return group
 
 
 people_person_wizard = PeoplePersonWizard(
