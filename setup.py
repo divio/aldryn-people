@@ -6,7 +6,7 @@ REQUIREMENTS = [
     'Django>=1.6,<1.9',
     'aldryn-boilerplates',
     'aldryn-common>=0.1.3',
-    'aldryn-reversion>=0.1.0',
+    'aldryn-reversion>=1.0.4',
     'aldryn-translation-tools>=0.1.0',
     'django-cms>=3.0.12,<3.3',
     'django-parler>=1.4',
