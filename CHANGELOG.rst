@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+1.1.4 (2016-01-09)
+------------------
+
+* Adds support for reversion for wizards
+* Cleanup and update test configuration
+* Adds missing migrations
+
+
 1.1.3 (2015-11-10)
 ------------------
 
