@@ -4,39 +4,40 @@
  */
 
 'use strict';
-/* global element, by, expect */
+/* global browser, by, element, expect */
 
 // #############################################################################
 // INTEGRATION TEST PAGE OBJECT
 
-var cmsProtractorHelper = require('cms-protractor-helper');
-
-var peoplePage = {
+var page = {
     site: 'http://127.0.0.1:8000/en/',
 
     // log in
     editModeLink: element(by.css('.inner a[href="/?edit"]')),
-    usernameInput: element(by.id('id_cms-username')),
-    passwordInput: element(by.id('id_cms-password')),
-    loginButton: element(by.css('.cms_form-login input[type="submit"]')),
-    userMenus: element.all(by.css('.cms_toolbar-item-navigation > li > a')),
-    testLink: element(by.css('.selected a')),
+    usernameInput: element(by.id('id_username')),
+    passwordInput: element(by.id('id_password')),
+    loginButton: element(by.css('input[type="submit"]')),
+    userMenus: element.all(by.css('.cms-toolbar-item-navigation > li > a')),
 
     // adding new page
+    modalCloseButton: element(by.css('.cms-modal-close')),
     userMenuDropdown: element(by.css(
-        '.cms_toolbar-item-navigation-hover')),
+        '.cms-toolbar-item-navigation-hover')),
     administrationOptions: element.all(by.css(
-        '.cms_toolbar-item-navigation a[href="/en/admin/"]')),
-    sideMenuIframe: element(by.css('.cms_sideframe-frame iframe')),
+        '.cms-toolbar-item-navigation a[href="/en/admin/"]')),
+    sideMenuIframe: element(by.css('.cms-sideframe-frame iframe')),
     pagesLink: element(by.css('.model-page > th > a')),
     addConfigsButton: element(by.css('.object-tools .addlink')),
     addPageLink: element(by.css('.sitemap-noentry .addlink')),
     titleInput: element(by.id('id_title')),
     slugErrorNotification: element(by.css('.errors.slug')),
     saveButton: element(by.css('.submit-row [name="_save"]')),
-    editPageLink: element(by.css('.col1 [href*="preview/"]')),
+    editPageLink: element(by.css('.col-preview [href*="preview/"]')),
+    testLink: element(by.cssContainingText('a', 'Test')),
+    sideFrameClose: element(by.css('.cms-sideframe-close')),
 
     // adding new group
+    breadcrumbs: element(by.css('.breadcrumbs')),
     breadcrumbsLinks: element.all(by.css('.breadcrumbs a')),
     groupsLink: element(by.css(
         '.model-group > th > [href*="/aldryn_people/group/"]')),
@@ -49,17 +50,19 @@ var peoplePage = {
 
     // adding new people entry
     addPersonButton: element(by.css('.model-person .addlink')),
+    editPersonButton: element(by.css('.model-person .changelink')),
+    editPersonLinksTable: element(by.css('.results')),
     editPersonLinks: element.all(by.css(
         '.results th > [href*="/aldryn_people/person/"]')),
 
     // adding people block to the page
     aldrynPeopleBlock: element(by.css('.aldryn-people')),
     advancedSettingsOption: element(by.css(
-        '.cms_toolbar-item-navigation [href*="advanced-settings"]')),
-    modalIframe: element(by.css('.cms_modal-frame iframe')),
+        '.cms-toolbar-item-navigation [href*="advanced-settings"]')),
+    modalIframe: element(by.css('.cms-modal-frame iframe')),
     applicationSelect: element(by.id('application_urls')),
     peopleOption: element(by.css('option[value="PeopleApp"]')),
-    saveModalButton: element(by.css('.cms_modal-buttons .cms_btn-action')),
+    saveModalButton: element(by.css('.cms-modal-buttons .cms-btn-action')),
     peopleEntryLink: element(by.css('.aldryn-people-article > h2 > a')),
     personTitle: element(by.css('.aldryn-people-detail h2 > div')),
 
@@ -73,26 +76,34 @@ var peoplePage = {
         credentials = credentials ||
             { username: 'admin', password: 'admin' };
 
-        peoplePage.usernameInput.clear();
+        page.usernameInput.clear();
 
         // fill in email field
-        return peoplePage.usernameInput.sendKeys(credentials.username)
-            .then(function () {
-            peoplePage.passwordInput.clear();
+        page.usernameInput.sendKeys(
+            credentials.username).then(function () {
+            page.passwordInput.clear();
 
             // fill in password field
-            return peoplePage.passwordInput.sendKeys(credentials.password);
+            return page.passwordInput.sendKeys(
+                credentials.password);
         }).then(function () {
-            peoplePage.loginButton.click();
+            return page.loginButton.click();
+        }).then(function () {
+            // this is required for django1.6, because it doesn't redirect
+            // correctly from admin
+            browser.get(page.site);
 
             // wait for user menu to appear
-            cmsProtractorHelper.waitFor(peoplePage.userMenus.first());
+            browser.wait(browser.isElementPresent(
+                page.userMenus.first()),
+                page.mainElementsWaitTime);
 
             // validate user menu
-            expect(peoplePage.userMenus.first().isDisplayed()).toBeTruthy();
+            expect(page.userMenus.first().isDisplayed())
+                .toBeTruthy();
         });
     }
 
 };
 
-module.exports = peoplePage;
+module.exports = page;
