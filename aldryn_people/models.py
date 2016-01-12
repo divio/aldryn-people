@@ -105,7 +105,7 @@ else:
     # and try to register, if we have a registration error - that means that
     # it has been registered already
     try:
-        reversion.register(user_model_object)
+        reversion.revisions.register(user_model_object)
     except RegistrationError:
         pass
 

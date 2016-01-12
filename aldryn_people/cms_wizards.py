@@ -11,7 +11,7 @@ from cms.wizards.wizard_base import Wizard
 from cms.wizards.forms import BaseFormMixin
 
 from parler.forms import TranslatableModelForm
-from reversion import create_revision, set_user, set_comment
+from reversion.revisions import default_revision_manager
 
 from .models import Group, Person
 
@@ -81,11 +81,11 @@ class CreatePeoplePersonForm(BaseFormMixin, TranslatableModelForm):
 
         # Ensure we make an initial revision
         with transaction.atomic():
-            with create_revision():
+            with default_revision_manager.create_revision():
                 person.save()
                 if self.user:
-                    set_user(self.user)
-                set_comment(ugettext("Initial version."))
+                    default_revision_manager.set_user(self.user)
+                default_revision_manager.set_comment(ugettext("Initial version."))
 
         return person
 
@@ -104,11 +104,11 @@ class CreatePeopleGroupForm(BaseFormMixin, TranslatableModelForm):
 
         # Ensure we make an initial revision
         with transaction.atomic():
-            with create_revision():
+            with default_revision_manager.create_revision():
                 group.save()
                 if self.user:
-                    set_user(self.user)
-                set_comment(ugettext("Initial version."))
+                    default_revision_manager.set_user(self.user)
+                default_revision_manager.set_comment(ugettext("Initial version."))
 
         return group
 

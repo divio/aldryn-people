@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.1.5 (2016-01-12)
+------------------
+
+* Improves compatibility with recent versions of django-reversion
+
 1.1.4 (2016-01-09)
 ------------------
 
