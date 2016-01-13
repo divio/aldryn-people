@@ -12,9 +12,7 @@ except ImportError:
     from urllib import parse as urlparse
 import warnings
 
-import reversion
-
-from reversion.revisions import RegistrationError
+from reversion.revisions import RegistrationError, default_revision_manager
 from distutils.version import LooseVersion
 from django import get_version
 from django.contrib.auth import get_user_model
@@ -56,9 +54,8 @@ loose_version = LooseVersion(get_version())
 if loose_version < LooseVersion('1.7.0'):
     # Prior to 1.7 it is pretty straight forward
     user_model = get_user_model()
-    revision_manager = reversion.default_revision_manager
-    if user_model not in revision_manager.get_registered_models():
-        reversion.register(user_model)
+    if user_model not in default_revision_manager.get_registered_models():
+        default_revision_manager.register(user_model)
 else:
     # otherwise it is a pain, but thanks to solution of getting model from
     # https://github.com/django-oscar/django-oscar/commit/c479a1
@@ -105,7 +102,7 @@ else:
     # and try to register, if we have a registration error - that means that
     # it has been registered already
     try:
-        reversion.revisions.register(user_model_object)
+        default_revision_manager.register(user_model_object)
     except RegistrationError:
         pass
 
