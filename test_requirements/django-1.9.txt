@@ -1,0 +1,5 @@
+django>=1.8,<1.10
+# should have support for Django >=1.9
+aldryn-boilerplates>0.7.3
+django-reversion>=1.8.7,<1.11
+-r base.txt

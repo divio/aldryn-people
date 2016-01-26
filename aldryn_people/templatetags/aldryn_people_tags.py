@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
-from django.template.base import Library
+try:
+    # Django
+    from django.template.base import Library
+except ImportError:
+    # Django >=1.9
+    from django.template import Library
 
 from phonenumbers import parse, format_number, PhoneNumberFormat
 from phonenumbers.phonenumberutil import NumberParseException

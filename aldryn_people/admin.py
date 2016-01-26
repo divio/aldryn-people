@@ -6,8 +6,9 @@ from django.conf import settings
 from django.contrib import admin
 from django.db.models import Count
 try:
-    # Django>=1.7
-    from django.apps.apps import get_model
+    # For Django>=1.7
+    from django.apps import apps
+    get_model = apps.get_model
 except ImportError:
     # Django<=1.6
     import warnings
