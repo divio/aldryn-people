@@ -38,7 +38,6 @@ HELPER_SETTINGS = {
     'TIME_ZONE': 'Europe/Zurich',
     'HAYSTACK_CONNECTIONS': HAYSTACK_CONNECTIONS,
     'INSTALLED_APPS': [
-        'aldryn_apphook_reload',
         'aldryn_common',
         'aldryn_reversion',
         'aldryn_translation_tools',
@@ -145,12 +144,9 @@ MIDDLEWARE_CLASSES_18 = [
     'cms.middleware.language.LanguageCookieMiddleware',
 ]
 
-# Use PEP 386-compliant version number
-django_version = django.get_version()
-
-if django_version.startswith('1.6.') or django_version.startswith('1.7.'):
+if django.VERSION <= (1, 7):
     HELPER_SETTINGS['MIDDLEWARE_CLASSES'] = MIDDLEWARE_CLASSES_16_17
-elif django_version.startswith('1.8.'):
+else:
     HELPER_SETTINGS['MIDDLEWARE_CLASSES'] = MIDDLEWARE_CLASSES_18
 
 # If using CMS 3.2+, use the CMS middleware for ApphookReloading, otherwise,
@@ -160,6 +156,8 @@ if cms_version < LooseVersion('3.2.0'):
         'cms.middleware.utils.ApphookReloadMiddleware')
     HELPER_SETTINGS['MIDDLEWARE_CLASSES'].insert(
         0, 'aldryn_apphook_reload.middleware.ApphookReloadMiddleware')
+    HELPER_SETTINGS['INSTALLED_APPS'].insert(
+        0, 'aldryn_apphook_reload')
 
 
 def run():
