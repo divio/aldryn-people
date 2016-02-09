@@ -2,7 +2,12 @@
 
 from __future__ import unicode_literals
 
-from reversion.revisions import create_revision, default_revision_manager
+from reversion.revisions import default_revision_manager
+try:
+    from reversion import create_revision
+except ImportError:
+    # django-reversion >=1.9
+    from reversion.revisions import create_revision
 import six
 
 from django.db import transaction
