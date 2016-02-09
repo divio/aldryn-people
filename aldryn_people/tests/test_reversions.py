@@ -75,14 +75,16 @@ class RevisionTestCase(BasePeopleTest):
         with transaction.atomic():
             with create_revision():
                 person = Person.objects.create(**values)
-        self.assertEqual(len(default_revision_manager.get_for_object(person)), 1)
+        self.assertEqual(
+            len(default_revision_manager.get_for_object(person)), 1)
 
     def test_group_revision_is_created(self):
         values = self.make_new_values(self.data_raw['group']['en'], 1)
         with transaction.atomic():
             with create_revision():
                 group = Group.objects.create(**values)
-        self.assertEqual(len(default_revision_manager.get_for_object(group)), 1)
+        self.assertEqual(
+            len(default_revision_manager.get_for_object(group)), 1)
 
     def test_people_revision_is_reverted(self):
         rev_1_values = self.make_new_values(
@@ -90,7 +92,8 @@ class RevisionTestCase(BasePeopleTest):
         # rev 1
         self.person1.set_current_language('en')
         self.create_revision(self.person1, **rev_1_values)
-        self.assertEqual(len(default_revision_manager.get_for_object(self.person1)), 1)
+        self.assertEqual(
+            len(default_revision_manager.get_for_object(self.person1)), 1)
         # check that values are actually changed
         self.assertEqual(self.person1.function, rev_1_values['function'])
         self.assertEqual(self.person1.description, rev_1_values['description'])
@@ -99,7 +102,8 @@ class RevisionTestCase(BasePeopleTest):
         rev_2_values = self.make_new_values(
             self.data_raw['person']['en'], 2)
         self.create_revision(self.person1, **rev_2_values)
-        self.assertEqual(len(default_revision_manager.get_for_object(self.person1)), 2)
+        self.assertEqual(
+            len(default_revision_manager.get_for_object(self.person1)), 2)
         # check that values are actually changed
         self.assertEqual(self.person1.function, rev_2_values['function'])
         self.assertEqual(self.person1.description, rev_2_values['description'])
@@ -119,7 +123,8 @@ class RevisionTestCase(BasePeopleTest):
         # rev 1
         self.group1.set_current_language('en')
         self.create_revision(self.group1, **rev_1_values)
-        self.assertEqual(len(default_revision_manager.get_for_object(self.group1)), 1)
+        self.assertEqual(
+            len(default_revision_manager.get_for_object(self.group1)), 1)
         # check that values are actually changed
         self.assertEqual(self.group1.name, rev_1_values['name'])
         self.assertEqual(self.group1.description, rev_1_values['description'])
@@ -128,7 +133,8 @@ class RevisionTestCase(BasePeopleTest):
         rev_2_values = self.make_new_values(
             self.data_raw['group']['en'], 2)
         self.create_revision(self.group1, **rev_2_values)
-        self.assertEqual(len(default_revision_manager.get_for_object(self.group1)), 2)
+        self.assertEqual(
+            len(default_revision_manager.get_for_object(self.group1)), 2)
         # check that values are actually changed
         self.assertEqual(self.group1.name, rev_2_values['name'])
         self.assertEqual(self.group1.description, rev_2_values['description'])
@@ -148,7 +154,8 @@ class RevisionTestCase(BasePeopleTest):
         # rev 1: en 1 de 0
         self.person1.set_current_language('en')
         self.create_revision(self.person1, **rev_1_values_en)
-        self.assertEqual(len(default_revision_manager.get_for_object(self.person1)), 1)
+        self.assertEqual(
+            len(default_revision_manager.get_for_object(self.person1)), 1)
         # check that values are actually changed
         self.assertEqual(self.person1.function, rev_1_values_en['function'])
         self.assertEqual(
@@ -160,7 +167,8 @@ class RevisionTestCase(BasePeopleTest):
 
         self.person1.set_current_language('de')
         self.create_revision(self.person1, **rev_2_values_de)
-        self.assertEqual(len(default_revision_manager.get_for_object(self.person1)), 2)
+        self.assertEqual(
+            len(default_revision_manager.get_for_object(self.person1)), 2)
         # check that values are actually changed
         self.person1 = Person.objects.get(pk=self.person1.pk)
         self.person1.set_current_language('de')
@@ -173,7 +181,8 @@ class RevisionTestCase(BasePeopleTest):
             self.data_raw['person']['de'], 1)
         self.person1.set_current_language('de')
         self.create_revision(self.person1, **rev_3_values_de)
-        self.assertEqual(len(default_revision_manager.get_for_object(self.person1)), 3)
+        self.assertEqual(
+            len(default_revision_manager.get_for_object(self.person1)), 3)
         # check that values are actually changed
         self.person1 = Person.objects.get(pk=self.person1.pk)
         self.person1.set_current_language('de')
@@ -223,7 +232,8 @@ class RevisionTestCase(BasePeopleTest):
         rev_1_values['groups'] = [self.group1]
         self.person1.set_current_language('en')
         self.create_revision(self.person1, **rev_1_values)
-        self.assertEqual(len(default_revision_manager.get_for_object(self.person1)), 1)
+        self.assertEqual(
+            len(default_revision_manager.get_for_object(self.person1)), 1)
         self.assertEqual(self.person1.user, user1)
         self.assertIn(self.group1, self.person1.groups.all())
 
@@ -234,7 +244,8 @@ class RevisionTestCase(BasePeopleTest):
         rev_2_values['user'] = user2
         rev_2_values['groups'] = [self.group2]
         self.create_revision(self.person1, **rev_2_values)
-        self.assertEqual(len(default_revision_manager.get_for_object(self.person1)), 2)
+        self.assertEqual(
+            len(default_revision_manager.get_for_object(self.person1)), 2)
         self.assertEqual(self.person1.user, user2)
         self.assertIn(self.group2, self.person1.groups.all())
 
@@ -253,7 +264,8 @@ class RevisionTestCase(BasePeopleTest):
         # rev 1: en 1 de 0
         self.group1.set_current_language('en')
         self.create_revision(self.group1, **rev_1_values_en)
-        self.assertEqual(len(default_revision_manager.get_for_object(self.group1)), 1)
+        self.assertEqual(
+            len(default_revision_manager.get_for_object(self.group1)), 1)
         # check that values are actually changed
         self.assertEqual(self.group1.name, rev_1_values_en['name'])
         self.assertEqual(
@@ -265,7 +277,8 @@ class RevisionTestCase(BasePeopleTest):
 
         self.group1.set_current_language('de')
         self.create_revision(self.group1, **rev_2_values_de)
-        self.assertEqual(len(default_revision_manager.get_for_object(self.group1)), 2)
+        self.assertEqual(
+            len(default_revision_manager.get_for_object(self.group1)), 2)
         # check that values are actually changed
         self.group1 = Group.objects.get(pk=self.group1.pk)
         self.group1.set_current_language('de')
@@ -278,7 +291,8 @@ class RevisionTestCase(BasePeopleTest):
             self.data_raw['group']['de'], 1)
         self.group1.set_current_language('de')
         self.create_revision(self.group1, **rev_3_values_de)
-        self.assertEqual(len(default_revision_manager.get_for_object(self.group1)), 3)
+        self.assertEqual(
+            len(default_revision_manager.get_for_object(self.group1)), 3)
         # check that values are actually changed
         self.group1 = Group.objects.get(pk=self.group1.pk)
         self.group1.set_current_language('de')
