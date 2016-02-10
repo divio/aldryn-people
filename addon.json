@@ -4,6 +4,7 @@
         "aldryn_boilerplates",
         "aldryn_common",
         "aldryn_people",
+        "aldryn_reversion",
         "aldryn_translation_tools",
         "easy_thumbnails",
         "filer",
