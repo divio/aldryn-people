@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+1.2.0 (UNRELEASED)
+-------------------
+
+* Add stripped default django templates to `/aldryn_people/templates`
+
+
 1.1.5 (2016-01-12)
 ------------------
 
