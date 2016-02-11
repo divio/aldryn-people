@@ -1,6 +1,6 @@
-{% load cms_tags i18n thumbnail aldryn_people_tags %}
+{% load i18n thumbnail cms_tags aldryn_people_tags %}
 
-<article class="aldryn-people-article">
+<article>
     {% if not group %}<h2>{% else %}<h3>{% endif %}
         {% if not detail_view %}
             {% if person.get_absolute_url %}
@@ -15,18 +15,18 @@
     {% if not group %}</h2>{% else %}</h3>{% endif %}
 
     {% if person.visual %}
-        <p class="visual">
+        <p>
             {% if instance.show_links and person.get_absolute_url %}
                 <a href="{{ person.get_absolute_url }}">
             {% endif %}
-                <img src="{% thumbnail person.visual 200x100 crop subject_location=person.visual.subject_location %}" alt="{{ person.name }}">
+            <img src="{% thumbnail person.visual 200x100 crop subject_location=person.visual.subject_location %}" alt="{{ person.name }}">
             {% if instance.show_links and person.get_absolute_url %}
                 </a>
             {% endif %}
         </p>
     {% endif %}
 
-    <p class="meta">
+    <p>
         {% if person.phone %}
             <strong>{% trans "Phone:" %}</strong>
             {{ person.phone|phoneformat }}<br>
@@ -41,22 +41,19 @@
         {% endif %}
         {% if person.email %}
             <strong>{% trans "Email:" %}</strong>
-            <span class="fa fa-fw fa-envelope" aria-hidden="true"></span>
             <a href="mailto:{{ person.email }}">{{ person.email }}</a><br>
         {% endif %}
         {% if person.website %}
             <strong>{% trans "Website:" %}</strong>
-            <span class="fa fa-fw fa-globe" aria-hidden="true"></span>
             <a href="{{ person.website }}" target="_blank">{{ person.website }}</a><br>
         {% endif %}
     </p>
     {% if person.description %}
-        <div class="lead">{{ person.description|safe }}</div>
+        {{ person.description|safe }}
     {% endif %}
 
     {% if not instance and person.vcard_enabled or instance.show_vcard and person.vcard_enabled %}
-        <a href="{{ person.get_vcard_url }}" class="btn btn-default btn-sm">
-            <span class="fa fa-fw fa-download" aria-hidden="true"></span>
+        <a href="{{ person.get_vcard_url }}">
             {% trans "Download vCard" %}
         </a>
     {% endif %}
