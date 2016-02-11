@@ -1,9 +1,10 @@
 CHANGELOG
 =========
 
-1.2.0 (UNRELEASED)
+1.1.6 (2016-02-11)
 -------------------
 
+* Add Django 1.9 compatibility
 * Add stripped default django templates to `/aldryn_people/templates`
 
 
