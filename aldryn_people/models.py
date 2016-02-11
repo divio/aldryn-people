@@ -12,7 +12,10 @@ except ImportError:
     from urllib import parse as urlparse
 import warnings
 
-from reversion.revisions import RegistrationError, default_revision_manager
+from reversion.revisions import (
+    default_revision_manager, RegistrationError
+)
+
 from distutils.version import LooseVersion
 from django import get_version
 from django.contrib.auth import get_user_model

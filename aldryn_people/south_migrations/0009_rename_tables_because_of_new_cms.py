@@ -11,7 +11,7 @@ class Migration(SchemaMigration):
         'cmsplugin_peopleplugin': 'aldryn_people_peopleplugin',
     }
 
-    REVERSE_TABLES_MAPPING = dict((v, k) for k, v in TABLES_MAPPING.iteritems())
+    REVERSE_TABLES_MAPPING = dict((v, k) for k, v in TABLES_MAPPING.items())
 
     @staticmethod
     def rename_tables_by_map(mapper):
