@@ -1,9 +1,6 @@
 {% load i18n %}
 
 <div class="aldryn aldryn-people">
-    {% if namespace_error and request.user.is_superuser or request.user.is_staff %}
-        <span class="people-error">{{ namespace_error }}</span>
-    {% endif %}
     {% if not people_groups %}
         {# if grouping is disabled, list only people #}
         <div class="aldryn-people-list">

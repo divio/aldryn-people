@@ -1,30 +1,27 @@
 {% load cms_tags i18n thumbnail aldryn_people_tags %}
+{% load url from future %}
 
 <article class="aldryn-people-article">
+    {% if person.visual %}
+        <p class="visual">
+            {% if instance.show_links %}
+                <a href="{{ person.get_absolute_url }}">
+            {% endif %}
+                <img src="{% thumbnail person.visual 400x300 crop subject_location=person.visual.subject_location %}" alt="{{ person.name }}">
+            {% if instance.show_links %}
+                </a>
+            {% endif %}
+        </p>
+    {% endif %}
+
     {% if not group %}<h2>{% else %}<h3>{% endif %}
         {% if not detail_view %}
-            {% if person.get_absolute_url %}
-                <a href="{{ person.get_absolute_url }}">{{ person.name }}</a>
-            {% else %}
-                {{ person.name }}
-            {% endif %}
+            <a href="{{ person.get_absolute_url }}">{{ person.name }}</a>
         {% else %}
             {% render_model person 'name' %}
         {% endif %}
         <small>{{ person.function }}</small>
     {% if not group %}</h2>{% else %}</h3>{% endif %}
-
-    {% if person.visual %}
-        <p class="visual">
-            {% if instance.show_links and person.get_absolute_url %}
-                <a href="{{ person.get_absolute_url }}">
-            {% endif %}
-                <img src="{% thumbnail person.visual 200x100 crop subject_location=person.visual.subject_location %}" alt="{{ person.name }}">
-            {% if instance.show_links and person.get_absolute_url %}
-                </a>
-            {% endif %}
-        </p>
-    {% endif %}
 
     <p class="meta">
         {% if person.phone %}
@@ -50,6 +47,7 @@
             <a href="{{ person.website }}" target="_blank">{{ person.website }}</a><br>
         {% endif %}
     </p>
+
     {% if person.description %}
         <div class="lead">{{ person.description|safe }}</div>
     {% endif %}
