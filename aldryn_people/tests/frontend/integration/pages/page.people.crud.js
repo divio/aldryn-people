@@ -63,8 +63,8 @@ var page = {
     applicationSelect: element(by.id('application_urls')),
     peopleOption: element(by.css('option[value="PeopleApp"]')),
     saveModalButton: element(by.css('.cms-modal-buttons .cms-btn-action')),
-    peopleEntryLink: element(by.css('.aldryn-people-article > h2 > a')),
-    personTitle: element(by.css('.aldryn-people-detail h2 > div')),
+    peopleEntryLink: element(by.css('article > h2 > a')),
+    personTitle: element(by.css('article h2 > div')),
 
     // deleting people entry
     deleteButton: element(by.css('.deletelink-box a')),

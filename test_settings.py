@@ -55,7 +55,6 @@ HELPER_SETTINGS = {
         'easy_thumbnails.processors.filters',
     ),
     'CMS_PERMISSION': True,
-    'ALDRYN_BOILERPLATE_NAME': 'bootstrap3',
     'LANGUAGES': (
         ('en', 'English'),
         ('de', 'German'),
@@ -149,7 +148,7 @@ if cms_version < LooseVersion('3.2.0'):
 
 def run():
     from djangocms_helper import runner
-    runner.cms('aldryn_people', extra_args=['--boilerplate'])
+    runner.cms('aldryn_people', extra_args=[])
 
 if __name__ == "__main__":
     run()
