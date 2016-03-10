@@ -2,7 +2,7 @@ CHANGELOG
 =========
 
 
-1.2.0 (UNRELEASED)
+1.2.0 (2016-03-10)
 -------------------
 
 * Remove unused render_placeholder configs
