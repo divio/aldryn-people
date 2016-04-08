@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.2.1 (2016-xx-xx)
+-------------------
+
+* Changes name and slug fields in admin to full width
+
 
 1.2.0 (2016-03-10)
 -------------------
