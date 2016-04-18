@@ -12,7 +12,9 @@ from cms.wizards.forms import BaseFormMixin
 
 from parler.forms import TranslatableModelForm
 from reversion.revisions import revision_context_manager
-
+from aldryn_reversion.utils import (
+    build_obj_repr, get_translation_info_message,
+)
 from .models import Group, Person
 
 
@@ -83,10 +85,14 @@ class CreatePeoplePersonForm(BaseFormMixin, TranslatableModelForm):
         with transaction.atomic():
             with revision_context_manager.create_revision():
                 person.save()
+                self.save_m2m()
                 if self.user:
                     revision_context_manager.set_user(self.user)
                 revision_context_manager.set_comment(
-                    ugettext("Initial version."))
+                    ugettext("Initial version of {0}. {1}".format(
+                        build_obj_repr(person),
+                        get_translation_info_message(person)
+                    )))
 
         return person
 
@@ -110,7 +116,10 @@ class CreatePeopleGroupForm(BaseFormMixin, TranslatableModelForm):
                 if self.user:
                     revision_context_manager.set_user(self.user)
                 revision_context_manager.set_comment(
-                    ugettext("Initial version."))
+                    ugettext("Initial version of {0}. {1}".format(
+                        build_obj_repr(group),
+                        get_translation_info_message(group)
+                    )))
 
         return group
 
