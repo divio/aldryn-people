@@ -2,7 +2,7 @@
 
 <article>
     {% if not group %}<h2>{% else %}<h3>{% endif %}
-        {% if not detail_view %}
+        {% if not instance and not detail_view or instance.show_links %}
             {% if person.get_absolute_url %}
                 <a href="{{ person.get_absolute_url }}">{{ person.name }}</a>
             {% else %}
