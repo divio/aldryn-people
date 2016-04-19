@@ -130,3 +130,30 @@ class TestPeopleListPluginNoApphook(BasePeopleTest):
         self.assertContains(response, name)
         from ..cms_plugins import NAMESPACE_ERROR
         self.assertContains(response, NAMESPACE_ERROR[:20])
+
+
+class TestPeopleListPluginShowLinksOptionTestCase(BasePeopleTest):
+
+    def test_plugin_show_links_are_shown_if_enabled_and_apphook_page(self):
+        with force_language('en'):
+            app_page = self.create_apphook_page()
+            list_plugin = api.add_plugin(
+                placeholder=self.placeholder,
+                plugin_type=PeoplePlugin,
+                language='en',
+            )
+            list_plugin.show_links = True
+            list_plugin.save()
+            self.page.publish('en')
+            url = self.page.get_absolute_url()
+            person_url = self.person1.get_absolute_url()
+            # ensure that url is not the link to the home page and not app page
+            self.assertGreater(len(person_url), 4+len(app_page.get_absolute_url()))
+        response = self.client.get(url)
+        self.assertContains(response, person_url)
+        # ensure that url is not shown if not enabled for plugin.
+        list_plugin.show_links = False
+        list_plugin.save()
+        self.page.publish('en')
+        response = self.client.get(url)
+        self.assertNotContains(response, person_url)
