@@ -2,6 +2,7 @@
 
 from __future__ import unicode_literals
 
+from django.core.urlresolvers import reverse
 from django.utils.translation import force_text
 
 from cms import api
@@ -9,6 +10,7 @@ from cms.models import CMSPlugin
 from cms.utils.i18n import force_language
 from cms.test_utils.testcases import URL_CMS_PLUGIN_ADD
 
+from aldryn_people import DEFAULT_APP_NAMESPACE
 from ..models import Person, Group
 from ..cms_plugins import PeoplePlugin
 
@@ -101,38 +103,52 @@ class TestPersonPlugins(DefaultApphookMixin, BasePeopleTest):
 
 class TestPeopleListPluginNoApphook(BasePeopleTest):
 
-    def test_plugin_with_no_apphook_doesnot_breaks_page(self):
+    def setUp(self):
+        super(TestPeopleListPluginNoApphook, self).setUp()
+        # we are testing only en
+        self.person1.set_current_language('en')
+        self.namespace = DEFAULT_APP_NAMESPACE
+
+    def create_plugin(self, plugin_params=None):
+        if plugin_params is None:
+            plugin_params = {}
         with force_language('en'):
-            name = 'Donald'
-            Person.objects.create(name=name)
-            api.add_plugin(
-                self.placeholder, PeoplePlugin, 'en')
+            plugin = api.add_plugin(
+                self.placeholder, PeoplePlugin, 'en', **plugin_params)
             self.page.publish('en')
-            url = self.page.get_absolute_url()
-            response = self.client.get(url)
+        return plugin
+
+    def test_plugin_with_no_apphook_doesnot_breaks_page(self):
+        self.create_plugin()
+        url = self.page.get_absolute_url()
+        response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, name)
+        self.assertContains(response, self.person1.name)
         from ..cms_plugins import NAMESPACE_ERROR
         self.assertNotContains(response, NAMESPACE_ERROR[:20])
 
     def test_plugin_with_no_apphook_shows_error_message(self):
-        with force_language('en'):
-            name = 'Donald'
-            Person.objects.create(name=name)
-            api.add_plugin(
-                self.placeholder, PeoplePlugin, 'en')
-            self.page.publish('en')
-            url = self.page.get_absolute_url()
-            self.client.login(username=self.su_username,
-                              password=self.su_password)
-            response = self.client.get(url, user=self.superuser)
+        self.create_plugin()
+        url = self.page.get_absolute_url()
+        self.client.login(username=self.su_username,
+                          password=self.su_password)
+        response = self.client.get(url, user=self.superuser)
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, name)
+        self.assertContains(response, self.person1.name)
         from ..cms_plugins import NAMESPACE_ERROR
         self.assertContains(response, NAMESPACE_ERROR[:20])
 
+    def test_plugin_with_vcard_enabled_no_apphook(self):
+        self.create_plugin(plugin_params={'show_vcard': True})
+        url = self.page.get_absolute_url()
+        response = self.client.get(url)
+        self.assertContains(response, self.person1.name)
 
-class TestPeopleListPluginShowLinksOptionTestCase(BasePeopleTest):
+    def test_plugin_with_vcard_disabled_no_apphook(self):
+        self.create_plugin(plugin_params={'show_vcard': False})
+        url = self.page.get_absolute_url()
+        response = self.client.get(url)
+        self.assertContains(response, self.person1.name)
 
     def test_plugin_show_links_are_shown_if_enabled_and_apphook_page(self):
         with force_language('en'):
@@ -158,3 +174,25 @@ class TestPeopleListPluginShowLinksOptionTestCase(BasePeopleTest):
         self.page.publish('en')
         response = self.client.get(url)
         self.assertNotContains(response, person_url)
+
+    def test_plugin_with_vcard_enabled_with_apphook(self):
+        vcard_kwargs = {
+            'slug': self.person1.slug
+        }
+        with force_language('en'):
+            self.create_apphook_page()
+            person_vcard_url = reverse(
+                '{0}:download_vcard'.format(self.namespace),
+                kwargs=vcard_kwargs)
+        plugin = self.create_plugin(plugin_params={'show_vcard': True})
+        url = self.page.get_absolute_url()
+        response = self.client.get(url)
+        self.assertContains(response, self.person1.name)
+        self.assertContains(response, person_vcard_url)
+        # test that vcard download link is not shown if disabled
+        plugin.show_vcard = False
+        plugin.save()
+        self.page.publish('en')
+        response = self.client.get(url)
+        self.assertContains(response, self.person1.name)
+        self.assertNotContains(response, person_vcard_url)

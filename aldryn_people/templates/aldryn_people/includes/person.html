@@ -52,7 +52,7 @@
         {{ person.description|safe }}
     {% endif %}
 
-    {% if not instance and person.vcard_enabled or instance.show_vcard and person.vcard_enabled %}
+    {% if not instance and person.vcard_enabled or instance.show_vcard and person.vcard_enabled and person.get_vcard_url %}
         <a href="{{ person.get_vcard_url }}">
             {% trans "Download vCard" %}
         </a>
