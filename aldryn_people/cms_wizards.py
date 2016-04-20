@@ -88,12 +88,13 @@ class CreatePeoplePersonForm(BaseFormMixin, TranslatableModelForm):
                 self.save_m2m()
                 if self.user:
                     revision_context_manager.set_user(self.user)
+                object_repr = build_obj_repr(person)
+                translation_info = get_translation_info_message(person)
                 revision_context_manager.set_comment(
-                    ugettext("Initial version of {0}. {1}".format(
-                        build_obj_repr(person),
-                        get_translation_info_message(person)
-                    )))
-
+                    ugettext(
+                        "Initial version of {object_repr}. {trans_info}".format(
+                            object_repr=object_repr,
+                            trans_info=translation_info)))
         return person
 
 
@@ -115,11 +116,13 @@ class CreatePeopleGroupForm(BaseFormMixin, TranslatableModelForm):
                 group.save()
                 if self.user:
                     revision_context_manager.set_user(self.user)
+                object_repr = build_obj_repr(group)
+                translation_info = get_translation_info_message(group)
                 revision_context_manager.set_comment(
-                    ugettext("Initial version of {0}. {1}".format(
-                        build_obj_repr(group),
-                        get_translation_info_message(group)
-                    )))
+                    ugettext(
+                        "Initial version of {object_repr}. {trans_info}".format(
+                            object_repr=object_repr,
+                            trans_info=translation_info)))
 
         return group
 

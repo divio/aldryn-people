@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-17 16:48+0200\n"
+"POT-Creation-Date: 2016-04-20 15:46+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,15 +18,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: admin.py:68 admin.py:105
+#: admin.py:69 admin.py:107
 msgid "Contact (untranslated)"
 msgstr ""
 
-#: admin.py:88
+#: admin.py:89
 msgid "# Groups"
 msgstr ""
 
-#: admin.py:120
+#: admin.py:122
 msgid "# People"
 msgstr ""
 
@@ -145,23 +145,24 @@ msgstr ""
 msgid "Edit person"
 msgstr ""
 
-#: cms_wizards.py:89 cms_wizards.py:113
-msgid "Initial version."
+#: cms_wizards.py:95 cms_wizards.py:123
+#, python-brace-format
+msgid "Initial version of {object_repr}. {trans_info}"
 msgstr ""
 
-#: cms_wizards.py:119
+#: cms_wizards.py:131
 msgid "New person"
 msgstr ""
 
-#: cms_wizards.py:122
+#: cms_wizards.py:134
 msgid "Create a new person."
 msgstr ""
 
-#: cms_wizards.py:129
+#: cms_wizards.py:141
 msgid "New group"
 msgstr ""
 
-#: cms_wizards.py:132
+#: cms_wizards.py:144
 msgid "Create a new group."
 msgstr ""
 
