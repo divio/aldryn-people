@@ -148,7 +148,8 @@ class TestPeopleListPluginShowLinksOptionTestCase(BasePeopleTest):
             url = self.page.get_absolute_url()
             person_url = self.person1.get_absolute_url()
             # ensure that url is not the link to the home page and not app page
-            self.assertGreater(len(person_url), 4+len(app_page.get_absolute_url()))
+            app_page_len = len(app_page.get_absolute_url())
+            self.assertGreater(len(person_url), app_page_len)
         response = self.client.get(url)
         self.assertContains(response, person_url)
         # ensure that url is not shown if not enabled for plugin.
