@@ -55,6 +55,8 @@ HELPER_SETTINGS = {
         'easy_thumbnails.processors.filters',
     ),
     'CMS_PERMISSION': True,
+    # At present, testing requires bootstrap to be disabled.
+    # 'ALDRYN_BOILERPLATE_NAME': 'bootstrap3',
     'LANGUAGES': (
         ('en', 'English'),
         ('de', 'German'),
@@ -109,31 +111,47 @@ HELPER_SETTINGS = {
             'hide_untranslated': False}
     },
     'PARLER_ENABLE_CACHING': False,
-    'MIDDLEWARE_CLASSES': [
-        'cms.middleware.utils.ApphookReloadMiddleware',
-        'django.contrib.sessions.middleware.SessionMiddleware',
-        'django.middleware.common.CommonMiddleware',
-        'django.middleware.csrf.CsrfViewMiddleware',
-        'django.contrib.auth.middleware.AuthenticationMiddleware',
-        'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-        'django.contrib.messages.middleware.MessageMiddleware',
-        'django.middleware.clickjacking.XFrameOptionsMiddleware',
-        'django.middleware.security.SecurityMiddleware',
-        'cms.middleware.user.CurrentUserMiddleware',
-        'cms.middleware.page.CurrentPageMiddleware',
-        'cms.middleware.toolbar.ToolbarMiddleware',
-        'cms.middleware.language.LanguageCookieMiddleware',
-    ],
 }
 
-MIDDLEWARE_CLASSES_DAJANGO_18PLUS_ONLY = [
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-    'django.middleware.security.SecurityMiddleware',
+# This set of MW classes should work for Django 1.6 and 1.7.
+MIDDLEWARE_CLASSES_16_17 = [
+    'cms.middleware.utils.ApphookReloadMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'cms.middleware.user.CurrentUserMiddleware',
+    'cms.middleware.page.CurrentPageMiddleware',
+    'cms.middleware.toolbar.ToolbarMiddleware',
+    'cms.middleware.language.LanguageCookieMiddleware'
 ]
 
-if django.VERSION < (1, 8):
-    for middleware in MIDDLEWARE_CLASSES_DAJANGO_18PLUS_ONLY:
-        HELPER_SETTINGS['MIDDLEWARE_CLASSES'].remove(middleware)
+MIDDLEWARE_CLASSES_18 = [
+    'cms.middleware.utils.ApphookReloadMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'cms.middleware.user.CurrentUserMiddleware',
+    'cms.middleware.page.CurrentPageMiddleware',
+    'cms.middleware.toolbar.ToolbarMiddleware',
+    'cms.middleware.language.LanguageCookieMiddleware',
+]
+
+# Use PEP 386-compliant version number
+django_version = django.get_version()
+
+if django_version.startswith('1.6.') or django_version.startswith('1.7.'):
+    HELPER_SETTINGS['MIDDLEWARE_CLASSES'] = MIDDLEWARE_CLASSES_16_17
+elif django_version.startswith('1.8.'):
+    HELPER_SETTINGS['MIDDLEWARE_CLASSES'] = MIDDLEWARE_CLASSES_18
 
 # If using CMS 3.2+, use the CMS middleware for ApphookReloading, otherwise,
 # use aldryn_apphook_reload's.
@@ -148,7 +166,7 @@ if cms_version < LooseVersion('3.2.0'):
 
 def run():
     from djangocms_helper import runner
-    runner.cms('aldryn_people', extra_args=[])
+    runner.cms('aldryn_people')  # , extra_args=['--boilerplate']
 
 if __name__ == "__main__":
     run()

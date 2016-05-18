@@ -1,16 +1,11 @@
 # -*- coding: utf-8 -*-
-try:
-    # Django
-    from django.template.base import Library
-except ImportError:
-    # Django >=1.9
-    from django.template import Library
+from django import template
 
 from phonenumbers import parse, format_number, PhoneNumberFormat
 from phonenumbers.phonenumberutil import NumberParseException
 
 
-register = Library()
+register = template.Library()
 
 
 @register.filter(is_safe=True)

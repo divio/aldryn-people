@@ -1,14 +1,19 @@
 CHANGELOG
 =========
 
-1.2.1 (2016-xx-xx)
--------------------
+1.2.1 (2016-05-17)
+------------------
 
 * Changes name and slug fields in admin to full width
+* Add support for Django Reversion v1.10+
+* Add support and test coverage for Python 3.5
+* Add support and test coverage for Django v1.9
+* Add support and test coverage for django CMS v3.3
+* Updates testing tools and matrices
 
 
 1.2.0 (2016-03-10)
--------------------
+------------------
 
 * Remove unused render_placeholder configs
 * Add static_placeholders where necessary
@@ -16,7 +21,7 @@ CHANGELOG
 
 
 1.1.6 (2016-02-11)
--------------------
+------------------
 
 * Add Django 1.9 compatibility
 * Add stripped default django templates to `/aldryn_people/templates`

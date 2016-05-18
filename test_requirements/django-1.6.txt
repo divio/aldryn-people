@@ -1,6 +1,12 @@
+# Special fork of django-formtools that doesn't force Django 1.7
+--extra-index-url https://devpi.divio.ch/aldryn/extras/+simple/
+
+django-formtools==1.0.0.1
+django-treebeard>=3.0,<4.0
 django>=1.6,<1.7
 South>=1.0.2
-django-reversion<1.8.3
+# This is the last version to support Django 1.6
+django-reversion==1.8.5
 # mptt 0.8 release drops Django 1.6, 1.7
 django-mptt<0.8
 
