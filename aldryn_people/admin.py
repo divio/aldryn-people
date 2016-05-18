@@ -103,7 +103,8 @@ class GroupAdmin(VersionedPlaceholderAdminMixin,
     fieldsets = (
         (None, {
             'fields': (
-                ('name', 'slug', ),
+                'name',
+                'slug',
                 'description',
             ),
         }),
