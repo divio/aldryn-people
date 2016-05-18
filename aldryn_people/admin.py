@@ -65,7 +65,8 @@ class PersonAdmin(VersionedPlaceholderAdminMixin,
     fieldsets = (
         (None, {
             'fields': (
-                ('name', 'slug', ),
+                'name',
+                'slug',
                 'function', 'description',
             ),
         }),

@@ -1,8 +1,8 @@
 CHANGELOG
 =========
 
-1.2.1 (2016-0517)
------------------
+1.2.1 (2016-05-17)
+------------------
 
 * Changes name and slug fields in admin to full width
 * Add support for Django Reversion v1.10+
