@@ -5,20 +5,6 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.contrib import admin
 from django.db.models import Count
-try:
-    # Django>=1.9
-    from django.apps import AppConfig
-    get_model = AppConfig.get_model
-except ImportError:
-    try:
-        # Django>=1.7
-        from django.apps.apps import get_model
-    except ImportError:
-        # Django<=1.6
-        import warnings
-        with warnings.catch_warnings():
-            warnings.simplefilter("ignore", DeprecationWarning)
-            from django.db.models.loading import get_model
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -51,10 +37,7 @@ class PersonAdmin(VersionedPlaceholderAdminMixin,
         if db_field.name in ['user', ]:
             threshold = getattr(
                 settings, 'ALDRYN_PEOPLE_USER_THRESHOLD', 50)
-            user_pkg, user_model = getattr(
-                settings, 'AUTH_USER_MODEL', 'auth.User').split('.')
-            model = get_model(user_pkg, user_model)
-
+            model = Person._meta.get_field('user').model
             if model.objects.count() > threshold:
                 kwargs['widget'] = admin.widgets.ForeignKeyRawIdWidget(
                     db_field.rel, self.admin_site, using=kwargs.get('using'))
