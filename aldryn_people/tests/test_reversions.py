@@ -2,12 +2,13 @@
 
 from __future__ import unicode_literals
 
-from reversion.revisions import default_revision_manager
 try:
-    from reversion import create_revision
+    from reversion import revision_context_manager
+    from reversion import default_revision_manager
 except ImportError:
-    # django-reversion >=1.9
-    from reversion.revisions import create_revision
+    from reversion.revisions import revision_context_manager
+    from reversion.revisions import default_revision_manager
+
 import six
 
 from django.db import transaction
@@ -54,7 +55,7 @@ class RevisionTestCase(BasePeopleTest):
 
     def create_revision(self, obj, **kwargs):
         with transaction.atomic():
-            with create_revision():
+            with revision_context_manager.create_revision():
                 # populate event with new values
                 for prop, value in six.iteritems(kwargs):
                     setattr(obj, prop, value)
@@ -73,7 +74,7 @@ class RevisionTestCase(BasePeopleTest):
     def test_person_revision_is_created(self):
         values = self.make_new_values(self.data_raw['person']['en'], 1)
         with transaction.atomic():
-            with create_revision():
+            with revision_context_manager.create_revision():
                 person = Person.objects.create(**values)
         self.assertEqual(
             len(default_revision_manager.get_for_object(person)), 1)
@@ -81,7 +82,7 @@ class RevisionTestCase(BasePeopleTest):
     def test_group_revision_is_created(self):
         values = self.make_new_values(self.data_raw['group']['en'], 1)
         with transaction.atomic():
-            with create_revision():
+            with revision_context_manager.create_revision():
                 group = Group.objects.create(**values)
         self.assertEqual(
             len(default_revision_manager.get_for_object(group)), 1)

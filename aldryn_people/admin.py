@@ -6,15 +6,19 @@ from django.conf import settings
 from django.contrib import admin
 from django.db.models import Count
 try:
-    # For Django>=1.7
-    from django.apps import apps
-    get_model = apps.get_model
+    # Django>=1.9
+    from django.apps import AppConfig
+    get_model = AppConfig.get_model
 except ImportError:
-    # Django<=1.6
-    import warnings
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore", DeprecationWarning)
-        from django.db.models.loading import get_model
+    try:
+        # Django>=1.7
+        from django.apps.apps import get_model
+    except ImportError:
+        # Django<=1.6
+        import warnings
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", DeprecationWarning)
+            from django.db.models.loading import get_model
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -61,8 +65,7 @@ class PersonAdmin(VersionedPlaceholderAdminMixin,
     fieldsets = (
         (None, {
             'fields': (
-                'name',
-                'slug',
+                ('name', 'slug', ),
                 'function', 'description',
             ),
         }),
@@ -99,8 +102,7 @@ class GroupAdmin(VersionedPlaceholderAdminMixin,
     fieldsets = (
         (None, {
             'fields': (
-                'name',
-                'slug',
+                ('name', 'slug', ),
                 'description',
             ),
         }),
