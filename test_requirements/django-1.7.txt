@@ -1,4 +1,7 @@
 django>=1.7.5,<1.8
+# This is the last version to support Django 1.7
+django-reversion==1.10.0
 # mptt 0.8 release drops Django 1.6, 1.7
 django-mptt<0.8
+
 -r base.txt
