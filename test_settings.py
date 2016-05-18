@@ -150,7 +150,7 @@ django_version = django.get_version()
 
 if django_version.startswith('1.6.') or django_version.startswith('1.7.'):
     HELPER_SETTINGS['MIDDLEWARE_CLASSES'] = MIDDLEWARE_CLASSES_16_17
-elif django_version.startswith('1.8.'):
+else:
     HELPER_SETTINGS['MIDDLEWARE_CLASSES'] = MIDDLEWARE_CLASSES_18
 
 # If using CMS 3.2+, use the CMS middleware for ApphookReloading, otherwise,
