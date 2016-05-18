@@ -55,6 +55,7 @@ HELPER_SETTINGS = {
         'easy_thumbnails.processors.filters',
     ),
     'CMS_PERMISSION': True,
+    # At present, testing requires bootstrap to be disabled.
     # 'ALDRYN_BOILERPLATE_NAME': 'bootstrap3',
     'LANGUAGES': (
         ('en', 'English'),
