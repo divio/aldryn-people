@@ -1,4 +1,4 @@
 django>=1.9,<1.10
-django-reversion>=1.10.2,<1.11
+django-reversion>=1.10.2
 
 -r base.txt

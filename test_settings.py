@@ -150,7 +150,7 @@ django_version = django.get_version()
 
 if django_version.startswith('1.6.') or django_version.startswith('1.7.'):
     HELPER_SETTINGS['MIDDLEWARE_CLASSES'] = MIDDLEWARE_CLASSES_16_17
-elif django_version.startswith('1.8.'):
+else:
     HELPER_SETTINGS['MIDDLEWARE_CLASSES'] = MIDDLEWARE_CLASSES_18
 
 # If using CMS 3.2+, use the CMS middleware for ApphookReloading, otherwise,
@@ -166,7 +166,7 @@ if cms_version < LooseVersion('3.2.0'):
 
 def run():
     from djangocms_helper import runner
-    runner.cms('aldryn_people')  # , extra_args=['--boilerplate']
+    runner.cms('aldryn_people', extra_args=[])  # , extra_args=['--boilerplate']
 
 if __name__ == "__main__":
     run()
