@@ -25,7 +25,6 @@ env:
     - TOXENV=py27-dj19-cms32
     - TOXENV=py35-dj18-cms33
     - TOXENV=py35-dj18-cms32
-    - TOXENV=py35-dj18-cms31
     - TOXENV=py34-dj18-cms33
     - TOXENV=py34-dj18-cms31
     - TOXENV=py27-dj18-cms33
