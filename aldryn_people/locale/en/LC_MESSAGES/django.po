@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-20 15:46+0300\n"
+"POT-Creation-Date: 2016-05-19 15:45-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,15 +17,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin.py:69 admin.py:107
+#: admin.py:56 admin.py:94
 msgid "Contact (untranslated)"
 msgstr ""
 
-#: admin.py:89
+#: admin.py:76
 msgid "# Groups"
 msgstr ""
 
-#: admin.py:122
+#: admin.py:109
 msgid "# People"
 msgstr ""
 
