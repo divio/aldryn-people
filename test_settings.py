@@ -166,7 +166,7 @@ if cms_version < LooseVersion('3.2.0'):
 
 def run():
     from djangocms_helper import runner
-    runner.cms('aldryn_people')  # , extra_args=['--boilerplate']
+    runner.cms('aldryn_people', extra_args=[])  # , extra_args=['--boilerplate']
 
 if __name__ == "__main__":
     run()
