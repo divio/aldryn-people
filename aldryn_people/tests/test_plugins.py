@@ -6,9 +6,9 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import force_text
 
 from cms import api
-from cms.models import CMSPlugin
+# from cms.models import CMSPlugin
 from cms.utils.i18n import force_language
-from cms.test_utils.testcases import URL_CMS_PLUGIN_ADD
+# from cms.test_utils.testcases import URL_CMS_PLUGIN_ADD
 
 from aldryn_people import DEFAULT_APP_NAMESPACE
 from ..models import Person, Group
@@ -40,7 +40,8 @@ class TestPersonPlugins(DefaultApphookMixin, BasePeopleTest):
     #     """
     #     We log into the PeoplePlugin
     #     """
-    #     self.client.login(username=self.su_username, password=self.su_password)
+    #     self.client.login(
+    #         username=self.su_username, password=self.su_password)
     #
     #     plugin_data = {
     #         'plugin_type': 'PeoplePlugin',
