@@ -1,0 +1,310 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Aldryn People\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-03-17 16:48+0200\n"
+"PO-Revision-Date: 2016-06-20 06:39+0000\n"
+"Last-Translator: Angelo Dini <finalangeljp@hotmail.com>\n"
+"Language-Team: Spanish (http://www.transifex.com/divio/aldryn-people/language/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: admin.py:68 admin.py:105
+msgid "Contact (untranslated)"
+msgstr ""
+
+#: admin.py:88
+msgid "# Groups"
+msgstr ""
+
+#: admin.py:120
+msgid "# People"
+msgstr ""
+
+#: boilerplates/bootstrap3/templates/aldryn_people/group_list.html:13
+#: boilerplates/bootstrap3/templates/aldryn_people/plugins/standard/people_list.html:26
+#: boilerplates/legacy/templates/aldryn_people/group_list.html:17
+#: boilerplates/legacy/templates/aldryn_people/plugins/standard/people_list.html:24
+#: templates/aldryn_people/group_list.html:12
+#: templates/aldryn_people/plugins/standard/people_list.html:25
+msgid "Ungrouped"
+msgstr ""
+
+#: boilerplates/bootstrap3/templates/aldryn_people/includes/group.html:13
+#: boilerplates/bootstrap3/templates/aldryn_people/includes/person.html:27
+#: boilerplates/legacy/templates/aldryn_people/includes/people_item.html:11
+#: boilerplates/legacy/templates/aldryn_people/plugins/feature/people_list.html:13
+#: boilerplates/legacy/templates/aldryn_people/plugins/people_list.html:13
+#: boilerplates/legacy/templates/aldryn_people/plugins/standard/people_list.html:15
+#: templates/aldryn_people/includes/group.html:9
+#: templates/aldryn_people/includes/person.html:31
+msgid "Phone:"
+msgstr ""
+
+#: boilerplates/bootstrap3/templates/aldryn_people/includes/group.html:17
+#: boilerplates/bootstrap3/templates/aldryn_people/includes/person.html:35
+#: templates/aldryn_people/includes/group.html:13
+#: templates/aldryn_people/includes/person.html:39
+msgid "Fax:"
+msgstr ""
+
+#: boilerplates/bootstrap3/templates/aldryn_people/includes/group.html:21
+#: boilerplates/bootstrap3/templates/aldryn_people/includes/person.html:39
+#: templates/aldryn_people/includes/group.html:17
+#: templates/aldryn_people/includes/person.html:43
+msgid "Email:"
+msgstr ""
+
+#: boilerplates/bootstrap3/templates/aldryn_people/includes/group.html:26
+#: boilerplates/bootstrap3/templates/aldryn_people/includes/person.html:44
+#: templates/aldryn_people/includes/group.html:21
+#: templates/aldryn_people/includes/person.html:47
+msgid "Website:"
+msgstr ""
+
+#: boilerplates/bootstrap3/templates/aldryn_people/includes/group.html:34
+#: boilerplates/legacy/templates/aldryn_people/plugins/feature/people_list.html:14
+#: boilerplates/legacy/templates/aldryn_people/plugins/people_list.html:14
+#: boilerplates/legacy/templates/aldryn_people/plugins/standard/people_list.html:16
+#: templates/aldryn_people/includes/group.html:27
+msgid "Address:"
+msgstr ""
+
+#: boilerplates/bootstrap3/templates/aldryn_people/includes/person.html:31
+#: boilerplates/legacy/templates/aldryn_people/includes/people_item.html:12
+#: templates/aldryn_people/includes/person.html:35
+msgid "Mobile:"
+msgstr ""
+
+#: boilerplates/bootstrap3/templates/aldryn_people/includes/person.html:57
+#: boilerplates/legacy/templates/aldryn_people/includes/people_item.html:15
+#: templates/aldryn_people/includes/person.html:57
+msgid "Download vCard"
+msgstr ""
+
+#: boilerplates/legacy/templates/aldryn_people/group_list.html:7 models.py:160
+msgid "Groups"
+msgstr ""
+
+#: boilerplates/legacy/templates/aldryn_people/includes/people_item.html:13
+msgid "E-Mail:"
+msgstr ""
+
+#: cms_app.py:14 cms_plugins.py:36 models.py:220
+msgid "People"
+msgstr ""
+
+#: cms_plugins.py:17
+msgid ""
+"Seems that there is no valid application hook for aldryn-people.Links can't "
+"be rendered without an app hook."
+msgstr ""
+
+#: cms_plugins.py:27
+msgid "People list"
+msgstr ""
+
+#: cms_plugins.py:37
+msgid "Select and arrange specific people, or leave blank to use all."
+msgstr ""
+
+#: cms_plugins.py:43
+msgid "Options"
+msgstr ""
+
+#: cms_toolbar.py:104
+msgid "Group list"
+msgstr ""
+
+#: cms_toolbar.py:111
+msgid "Add new group"
+msgstr ""
+
+#: cms_toolbar.py:115
+msgid "Edit group"
+msgstr ""
+
+#: cms_toolbar.py:122
+msgid "Person list"
+msgstr ""
+
+#: cms_toolbar.py:131
+msgid "Add new person"
+msgstr ""
+
+#: cms_toolbar.py:136
+msgid "Edit person"
+msgstr ""
+
+#: cms_wizards.py:89 cms_wizards.py:113
+msgid "Initial version."
+msgstr ""
+
+#: cms_wizards.py:119
+msgid "New person"
+msgstr ""
+
+#: cms_wizards.py:122
+msgid "Create a new person."
+msgstr ""
+
+#: cms_wizards.py:129
+msgid "New group"
+msgstr ""
+
+#: cms_wizards.py:132
+msgid "Create a new group."
+msgstr ""
+
+#: menu.py:19
+msgid "Aldryn People: Person Menu"
+msgstr ""
+
+#: menu.py:35
+#, python-brace-format
+msgid "person: {0}"
+msgstr ""
+
+#: menu.py:50
+msgid "Aldryn People: Group Menu"
+msgstr ""
+
+#: menu.py:66
+#, python-brace-format
+msgid "group: {0}"
+msgstr ""
+
+#: models.py:119 models.py:186
+msgid "name"
+msgstr ""
+
+#: models.py:120
+msgid "Provide this group's name."
+msgstr ""
+
+#: models.py:121 models.py:193
+msgid "description"
+msgstr ""
+
+#: models.py:122
+msgid "slug"
+msgstr ""
+
+#: models.py:124 models.py:190
+msgid "Leave blank to auto-generate a unique slug."
+msgstr ""
+
+#: models.py:127
+msgid "address"
+msgstr ""
+
+#: models.py:129
+msgid "postal code"
+msgstr ""
+
+#: models.py:131
+msgid "city"
+msgstr ""
+
+#: models.py:133 models.py:197
+msgid "phone"
+msgstr ""
+
+#: models.py:135 models.py:201
+msgid "fax"
+msgstr ""
+
+#: models.py:137 models.py:203
+msgid "email"
+msgstr ""
+
+#: models.py:139 models.py:205
+msgid "website"
+msgstr ""
+
+#: models.py:159
+msgid "Group"
+msgstr ""
+
+#: models.py:164
+#, python-brace-format
+msgid "Group: {0}"
+msgstr ""
+
+#: models.py:187
+msgid "Provide this person's name."
+msgstr ""
+
+#: models.py:188
+msgid "unique slug"
+msgstr ""
+
+#: models.py:191
+msgid "role"
+msgstr ""
+
+#: models.py:199
+msgid "mobile"
+msgstr ""
+
+#: models.py:208
+msgid ""
+"Choose and order the groups for this person, the first will be the \"primary"
+" group\"."
+msgstr ""
+
+#: models.py:213
+msgid "enable vCard download"
+msgstr ""
+
+#: models.py:219
+msgid "Person"
+msgstr ""
+
+#: models.py:340
+msgid "Standard"
+msgstr ""
+
+#: models.py:341
+msgid "Feature"
+msgstr ""
+
+#: models.py:345
+msgid "Style"
+msgstr ""
+
+#: models.py:350
+msgid "Select and arrange specific people, or, leave blank to select all."
+msgstr ""
+
+#: models.py:370
+msgid "group by group"
+msgstr ""
+
+#: models.py:372
+msgid "Group people by their group."
+msgstr ""
+
+#: models.py:375
+msgid "show ungrouped"
+msgstr ""
+
+#: models.py:377
+msgid "When using \"group by group\", show ungrouped people too."
+msgstr ""
+
+#: models.py:380
+msgid "Show links to Detail Page"
+msgstr ""
+
+#: models.py:382
+msgid "Show links to download vCard"
+msgstr ""
