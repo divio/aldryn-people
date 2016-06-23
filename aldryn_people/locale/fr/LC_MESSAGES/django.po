@@ -1,34 +1,35 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# 
+# Translators:
+# Frigory33 <chironsylvain@orange.fr>, 2016
+# Marc Antoine THEVENET <mat@idimweb.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Aldryn People\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-20 15:46+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2016-06-20 14:32+0200\n"
+"PO-Revision-Date: 2016-06-20 12:32+0000\n"
+"Last-Translator: Angelo Dini <finalangeljp@hotmail.com>\n"
+"Language-Team: French (http://www.transifex.com/divio/aldryn-people/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: admin.py:69 admin.py:107
+#: admin.py:56 admin.py:94
 msgid "Contact (untranslated)"
-msgstr ""
+msgstr "Contact (non traduit)"
 
-#: admin.py:89
+#: admin.py:76
 msgid "# Groups"
-msgstr ""
+msgstr "# Groupes"
 
-#: admin.py:122
+#: admin.py:109
 msgid "# People"
-msgstr ""
+msgstr "# Personnes"
 
 #: boilerplates/bootstrap3/templates/aldryn_people/group_list.html:13
 #: boilerplates/bootstrap3/templates/aldryn_people/plugins/standard/people_list.html:26
@@ -37,7 +38,7 @@ msgstr ""
 #: templates/aldryn_people/group_list.html:12
 #: templates/aldryn_people/plugins/standard/people_list.html:25
 msgid "Ungrouped"
-msgstr ""
+msgstr "Dégroupé"
 
 #: boilerplates/bootstrap3/templates/aldryn_people/includes/group.html:13
 #: boilerplates/bootstrap3/templates/aldryn_people/includes/person.html:27
@@ -48,28 +49,28 @@ msgstr ""
 #: templates/aldryn_people/includes/group.html:9
 #: templates/aldryn_people/includes/person.html:31
 msgid "Phone:"
-msgstr ""
+msgstr "Téléphone :"
 
 #: boilerplates/bootstrap3/templates/aldryn_people/includes/group.html:17
 #: boilerplates/bootstrap3/templates/aldryn_people/includes/person.html:35
 #: templates/aldryn_people/includes/group.html:13
 #: templates/aldryn_people/includes/person.html:39
 msgid "Fax:"
-msgstr ""
+msgstr "Fax :"
 
 #: boilerplates/bootstrap3/templates/aldryn_people/includes/group.html:21
 #: boilerplates/bootstrap3/templates/aldryn_people/includes/person.html:39
 #: templates/aldryn_people/includes/group.html:17
 #: templates/aldryn_people/includes/person.html:43
 msgid "Email:"
-msgstr ""
+msgstr "Courriel :"
 
 #: boilerplates/bootstrap3/templates/aldryn_people/includes/group.html:26
 #: boilerplates/bootstrap3/templates/aldryn_people/includes/person.html:44
 #: templates/aldryn_people/includes/group.html:21
 #: templates/aldryn_people/includes/person.html:47
 msgid "Website:"
-msgstr ""
+msgstr "Site Web :"
 
 #: boilerplates/bootstrap3/templates/aldryn_people/includes/group.html:34
 #: boilerplates/legacy/templates/aldryn_people/plugins/feature/people_list.html:14
@@ -77,73 +78,73 @@ msgstr ""
 #: boilerplates/legacy/templates/aldryn_people/plugins/standard/people_list.html:16
 #: templates/aldryn_people/includes/group.html:27
 msgid "Address:"
-msgstr ""
+msgstr "Adresse :"
 
 #: boilerplates/bootstrap3/templates/aldryn_people/includes/person.html:31
 #: boilerplates/legacy/templates/aldryn_people/includes/people_item.html:12
 #: templates/aldryn_people/includes/person.html:35
 msgid "Mobile:"
-msgstr ""
+msgstr "Mobile :"
 
 #: boilerplates/bootstrap3/templates/aldryn_people/includes/person.html:57
 #: boilerplates/legacy/templates/aldryn_people/includes/people_item.html:15
 #: templates/aldryn_people/includes/person.html:57
 msgid "Download vCard"
-msgstr ""
+msgstr "Télécharger la carte de visite"
 
 #: boilerplates/legacy/templates/aldryn_people/group_list.html:7 models.py:160
 msgid "Groups"
-msgstr ""
+msgstr "Groupes"
 
 #: boilerplates/legacy/templates/aldryn_people/includes/people_item.html:13
 msgid "E-Mail:"
-msgstr ""
+msgstr "Courriel :"
 
 #: cms_app.py:14 cms_plugins.py:36 models.py:220
 msgid "People"
-msgstr ""
+msgstr "Personnes"
 
 #: cms_plugins.py:17
 msgid ""
 "Seems that there is no valid application hook for aldryn-people.Links can't "
 "be rendered without an app hook."
-msgstr ""
+msgstr "Il semble qu'il n'y a aucune accroche d'application valide pour les personnes d'Aldryn. Les liens ne peuvent pas être produits sans accroche d'application."
 
 #: cms_plugins.py:27
 msgid "People list"
-msgstr ""
+msgstr "Liste des personnes"
 
 #: cms_plugins.py:37
 msgid "Select and arrange specific people, or leave blank to use all."
-msgstr ""
+msgstr "Sélectionnez et organisez des personnes spécifiques, ou laissez vide pour utiliser tout le monde."
 
 #: cms_plugins.py:43
 msgid "Options"
-msgstr ""
+msgstr "Options"
 
 #: cms_toolbar.py:104
 msgid "Group list"
-msgstr ""
+msgstr "Liste du groupe"
 
 #: cms_toolbar.py:111
 msgid "Add new group"
-msgstr ""
+msgstr "Ajouter un nouveau groupe"
 
 #: cms_toolbar.py:115
 msgid "Edit group"
-msgstr ""
+msgstr "Modifier un groupe"
 
 #: cms_toolbar.py:122
 msgid "Person list"
-msgstr ""
+msgstr "Liste des personnes"
 
 #: cms_toolbar.py:131
 msgid "Add new person"
-msgstr ""
+msgstr "Ajouter une nouvelle personne"
 
 #: cms_toolbar.py:136
 msgid "Edit person"
-msgstr ""
+msgstr "Modifier la personne"
 
 #: cms_wizards.py:95 cms_wizards.py:123
 #, python-brace-format
@@ -152,161 +153,161 @@ msgstr ""
 
 #: cms_wizards.py:131
 msgid "New person"
-msgstr ""
+msgstr "Nouvelle personne"
 
 #: cms_wizards.py:134
 msgid "Create a new person."
-msgstr ""
+msgstr "Créer une nouvelle personne."
 
 #: cms_wizards.py:141
 msgid "New group"
-msgstr ""
+msgstr "Nouveau groupe"
 
 #: cms_wizards.py:144
 msgid "Create a new group."
-msgstr ""
+msgstr "Créer un nouveau groupe."
 
 #: menu.py:19
 msgid "Aldryn People: Person Menu"
-msgstr ""
+msgstr "Personnes d'Aldryn : Menu de la personne"
 
 #: menu.py:35
 #, python-brace-format
 msgid "person: {0}"
-msgstr ""
+msgstr "personne : {0}"
 
 #: menu.py:50
 msgid "Aldryn People: Group Menu"
-msgstr ""
+msgstr "Personnes d'Aldryn : Menu du groupe"
 
 #: menu.py:66
 #, python-brace-format
 msgid "group: {0}"
-msgstr ""
+msgstr "groupe : {0}"
 
 #: models.py:119 models.py:186
 msgid "name"
-msgstr ""
+msgstr "nom"
 
 #: models.py:120
 msgid "Provide this group's name."
-msgstr ""
+msgstr "Indiquer le nom de ce groupe."
 
 #: models.py:121 models.py:193
 msgid "description"
-msgstr ""
+msgstr "description"
 
 #: models.py:122
 msgid "slug"
-msgstr ""
+msgstr "slug"
 
 #: models.py:124 models.py:190
 msgid "Leave blank to auto-generate a unique slug."
-msgstr ""
+msgstr "Laissez vide pour générer un slug unique automatiquement."
 
 #: models.py:127
 msgid "address"
-msgstr ""
+msgstr "adresse"
 
 #: models.py:129
 msgid "postal code"
-msgstr ""
+msgstr "code postal"
 
 #: models.py:131
 msgid "city"
-msgstr ""
+msgstr "ville"
 
 #: models.py:133 models.py:197
 msgid "phone"
-msgstr ""
+msgstr "téléphone"
 
 #: models.py:135 models.py:201
 msgid "fax"
-msgstr ""
+msgstr "fax"
 
 #: models.py:137 models.py:203
 msgid "email"
-msgstr ""
+msgstr "courriel"
 
 #: models.py:139 models.py:205
 msgid "website"
-msgstr ""
+msgstr "site web"
 
 #: models.py:159
 msgid "Group"
-msgstr ""
+msgstr "Groupe"
 
 #: models.py:164
 #, python-brace-format
 msgid "Group: {0}"
-msgstr ""
+msgstr "Groupe : {0}"
 
 #: models.py:187
 msgid "Provide this person's name."
-msgstr ""
+msgstr "Indiquez le nom de cette personne."
 
 #: models.py:188
 msgid "unique slug"
-msgstr ""
+msgstr "slug unique"
 
 #: models.py:191
 msgid "role"
-msgstr ""
+msgstr "rôle"
 
 #: models.py:199
 msgid "mobile"
-msgstr ""
+msgstr "mobile"
 
 #: models.py:208
 msgid ""
-"Choose and order the groups for this person, the first will be the \"primary "
-"group\"."
-msgstr ""
+"Choose and order the groups for this person, the first will be the \"primary"
+" group\"."
+msgstr "Choisissez et ordonnez les groupes pour cette personne ; le premier sera le « groupe principal »."
 
 #: models.py:213
 msgid "enable vCard download"
-msgstr ""
+msgstr "activer le téléchargement de la carte de visite"
 
 #: models.py:219
 msgid "Person"
-msgstr ""
+msgstr "Personne"
 
 #: models.py:340
 msgid "Standard"
-msgstr ""
+msgstr "Standard"
 
 #: models.py:341
 msgid "Feature"
-msgstr ""
+msgstr "Fonctionnalité"
 
 #: models.py:345
 msgid "Style"
-msgstr ""
+msgstr "Style"
 
 #: models.py:350
 msgid "Select and arrange specific people, or, leave blank to select all."
-msgstr ""
+msgstr "Sélectionnez et organisez des personnes spécifiques, ou laissez vide pour sélectionner tout le monde."
 
 #: models.py:370
 msgid "group by group"
-msgstr ""
+msgstr "groupe par groupe"
 
 #: models.py:372
 msgid "Group people by their group."
-msgstr ""
+msgstr "Grouper les personnes selon leur groupe."
 
 #: models.py:375
 msgid "show ungrouped"
-msgstr ""
+msgstr "afficher dégroupé"
 
 #: models.py:377
 msgid "When using \"group by group\", show ungrouped people too."
-msgstr ""
+msgstr "Lorsque vous utilisez « grouper par groupe », montrer également les personnes sans groupe."
 
 #: models.py:380
 msgid "Show links to Detail Page"
-msgstr ""
+msgstr "Montrer les liens vers la page de détails"
 
 #: models.py:382
 msgid "Show links to download vCard"
-msgstr ""
+msgstr "Montrer les liens pour télécharger la carte de visite"
