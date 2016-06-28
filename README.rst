@@ -4,8 +4,6 @@ Aldryn People for django CMS
 
 |PyPI Version| |Build Status| |Coverage Status| |codeclimate| |requires_io|
 
-|Browser Matrix|
-
 Aldryn People allows you to:
 
 - add people and groups of people to your website
