@@ -1,6 +1,6 @@
-#############
-Aldryn People
-#############
+############################
+Aldryn People for django CMS
+############################
 
 |PyPI Version| |Build Status| |Coverage Status| |codeclimate| |requires_io|
 
