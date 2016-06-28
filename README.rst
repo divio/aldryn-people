@@ -44,8 +44,6 @@ Requirements
 .. |codeclimate| image:: https://codeclimate.com/github/aldryn/aldryn-people/badges/gpa.svg
    :target: https://codeclimate.com/github/aldryn/aldryn-people
    :alt: Code Climate
-.. |Browser Matrix| image:: https://saucelabs.com/browser-matrix/aldryn-jobs.svg
-   :target: https://saucelabs.com/u/aldryn-jobs
 .. |requires_io| image:: https://requires.io/github/aldryn/aldryn-people/requirements.svg?branch=master
    :target: https://requires.io/github/aldryn/aldryn-people/requirements/?branch=master
    :alt: Requirements Status
