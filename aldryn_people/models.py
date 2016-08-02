@@ -55,6 +55,7 @@ from .utils import get_additional_styles
 loose_version = LooseVersion(get_version())
 
 if loose_version < LooseVersion('1.7.0'):
+    LTE_DJANGO_1_6 = True
     # Prior to 1.7 it is pretty straight forward
     user_model = get_user_model()
     if user_model not in default_revision_manager.get_registered_models():
@@ -66,6 +67,8 @@ else:
     from django.apps import apps
     from django.apps.config import MODELS_MODULE_NAME
     from django.core.exceptions import AppRegistryNotReady
+
+    LTE_DJANGO_1_6 = False
 
     def get_model(app_label, model_name):
         """
@@ -350,6 +353,24 @@ class BasePeoplePlugin(CMSPlugin):
         help_text=_('Select and arrange specific people, or, leave blank to '
                     'select all.')
     )
+
+    # Add an app namespace to related_name to avoid field name clashes
+    # with any other plugins that have a field with the same name as the
+    # lowercase of the class name of this model.
+    # https://github.com/divio/django-cms/issues/5030
+    if LTE_DJANGO_1_6:
+        # related_name='%(app_label)s_%(class)s' does not work on  Django 1.6
+        cmsplugin_ptr = models.OneToOneField(
+            CMSPlugin,
+            related_name='+',
+            parent_link=True,
+        )
+    else:
+        cmsplugin_ptr = models.OneToOneField(
+            CMSPlugin,
+            related_name='%(app_label)s_%(class)s',
+            parent_link=True,
+        )
 
     class Meta:
         abstract = True

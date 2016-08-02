@@ -6,6 +6,7 @@ CHANGELOG
 ------------------
 
 * Updated translations
+* Fixed related_name inconsistency with django CMS 3.3.1
 
 
 1.2.1 (2016-05-17)
