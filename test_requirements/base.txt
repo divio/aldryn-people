@@ -7,13 +7,16 @@ flake8
 python-coveralls>=2.4.2
 six
 
+# Needed to prevent djangocms-text-ckeditor
+# from installing latest html5lib
+html5lib<0.99999999
+
 # docs
 sphinx
 sphinx-rtd-theme
 
 # The following are for aldryn-search
 django-appconf>=0.6
-django-haystack>=2.0.0
 django-spurl
 django-standard-form
 aldryn-search

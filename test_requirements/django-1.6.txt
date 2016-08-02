@@ -7,5 +7,6 @@ django>=1.6,<1.7
 South>=1.0.2
 django-reversion<1.8.3
 django-mptt<0.8
+django-haystack<2.5
 
 -r base.txt
