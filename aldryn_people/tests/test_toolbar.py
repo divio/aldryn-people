@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 from django.test import TransactionTestCase
 
-from ..cms_toolbar import get_admin_url
+from ..cms_toolbars import get_admin_url
 
 
 class TestToolbarUtils(TransactionTestCase):

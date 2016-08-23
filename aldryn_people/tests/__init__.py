@@ -26,7 +26,7 @@ from djangocms_helper.utils import create_user
 from ..models import Group, Person
 
 
-APP_MODULE = 'aldryn_people.cms_app'
+APP_MODULE = 'aldryn_people.cms_apps'
 DEFAULT_PEOPLE_NAMESPACE = 'aldryn_people'
 
 
@@ -64,7 +64,7 @@ class CleanUpMixin(object):
         except AppAlreadyRegistered:
             # there is an issue with discover apps, or i'm using it wrong.
             # setting discovered to True solves it. Maybe that is due to import
-            # from aldryn_events.cms_app which registers EventListAppHook
+            # from aldryn_events.cms_apps which registers EventListAppHook
             apphook_pool.discovered = True
             apphooks = apphook_pool.get_apphooks()
 
