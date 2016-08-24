@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# kurdyma <transifex.com@kurdyenviolien.nl>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Aldryn People\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-20 14:32+0200\n"
-"PO-Revision-Date: 2016-06-20 12:32+0000\n"
-"Last-Translator: Angelo Dini <finalangeljp@hotmail.com>\n"
+"POT-Creation-Date: 2016-08-23 16:27-0400\n"
+"PO-Revision-Date: 2016-06-27 10:43+0000\n"
+"Last-Translator: kurdyma <transifex.com@kurdyenviolien.nl>\n"
 "Language-Team: Dutch (http://www.transifex.com/divio/aldryn-people/language/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,15 +20,15 @@ msgstr ""
 
 #: admin.py:56 admin.py:94
 msgid "Contact (untranslated)"
-msgstr ""
+msgstr "Contact (onvertaald)"
 
 #: admin.py:76
 msgid "# Groups"
-msgstr ""
+msgstr "# Groepen"
 
 #: admin.py:109
 msgid "# People"
-msgstr ""
+msgstr "# Mensen"
 
 #: boilerplates/bootstrap3/templates/aldryn_people/group_list.html:13
 #: boilerplates/bootstrap3/templates/aldryn_people/plugins/standard/people_list.html:26
@@ -36,7 +37,7 @@ msgstr ""
 #: templates/aldryn_people/group_list.html:12
 #: templates/aldryn_people/plugins/standard/people_list.html:25
 msgid "Ungrouped"
-msgstr ""
+msgstr "Zonder groep"
 
 #: boilerplates/bootstrap3/templates/aldryn_people/includes/group.html:13
 #: boilerplates/bootstrap3/templates/aldryn_people/includes/person.html:27
@@ -47,28 +48,28 @@ msgstr ""
 #: templates/aldryn_people/includes/group.html:9
 #: templates/aldryn_people/includes/person.html:31
 msgid "Phone:"
-msgstr ""
+msgstr "Telefoon:"
 
 #: boilerplates/bootstrap3/templates/aldryn_people/includes/group.html:17
 #: boilerplates/bootstrap3/templates/aldryn_people/includes/person.html:35
 #: templates/aldryn_people/includes/group.html:13
 #: templates/aldryn_people/includes/person.html:39
 msgid "Fax:"
-msgstr ""
+msgstr "Fax:"
 
 #: boilerplates/bootstrap3/templates/aldryn_people/includes/group.html:21
 #: boilerplates/bootstrap3/templates/aldryn_people/includes/person.html:39
 #: templates/aldryn_people/includes/group.html:17
 #: templates/aldryn_people/includes/person.html:43
 msgid "Email:"
-msgstr ""
+msgstr "Email:"
 
 #: boilerplates/bootstrap3/templates/aldryn_people/includes/group.html:26
 #: boilerplates/bootstrap3/templates/aldryn_people/includes/person.html:44
 #: templates/aldryn_people/includes/group.html:21
 #: templates/aldryn_people/includes/person.html:47
 msgid "Website:"
-msgstr ""
+msgstr "Website:"
 
 #: boilerplates/bootstrap3/templates/aldryn_people/includes/group.html:34
 #: boilerplates/legacy/templates/aldryn_people/plugins/feature/people_list.html:14
@@ -76,236 +77,236 @@ msgstr ""
 #: boilerplates/legacy/templates/aldryn_people/plugins/standard/people_list.html:16
 #: templates/aldryn_people/includes/group.html:27
 msgid "Address:"
-msgstr ""
+msgstr "Adres:"
 
 #: boilerplates/bootstrap3/templates/aldryn_people/includes/person.html:31
 #: boilerplates/legacy/templates/aldryn_people/includes/people_item.html:12
 #: templates/aldryn_people/includes/person.html:35
 msgid "Mobile:"
-msgstr ""
+msgstr "Mobiel:"
 
 #: boilerplates/bootstrap3/templates/aldryn_people/includes/person.html:57
 #: boilerplates/legacy/templates/aldryn_people/includes/people_item.html:15
 #: templates/aldryn_people/includes/person.html:57
 msgid "Download vCard"
-msgstr ""
+msgstr "Download vCard"
 
-#: boilerplates/legacy/templates/aldryn_people/group_list.html:7 models.py:160
+#: boilerplates/legacy/templates/aldryn_people/group_list.html:7 models.py:163
 msgid "Groups"
-msgstr ""
+msgstr "Groepen"
 
 #: boilerplates/legacy/templates/aldryn_people/includes/people_item.html:13
 msgid "E-Mail:"
-msgstr ""
+msgstr "Email:"
 
-#: cms_app.py:14 cms_plugins.py:36 models.py:220
+#: cms_apps.py:14 cms_plugins.py:36 models.py:223
 msgid "People"
-msgstr ""
+msgstr "Mensen"
 
 #: cms_plugins.py:17
 msgid ""
 "Seems that there is no valid application hook for aldryn-people.Links can't "
 "be rendered without an app hook."
-msgstr ""
+msgstr "Het lijkt erop dat er geen geldige application hook voor aldryn-people.Links gerenderd kan worden zonder een app hook."
 
 #: cms_plugins.py:27
 msgid "People list"
-msgstr ""
+msgstr "Mensen lijst"
 
 #: cms_plugins.py:37
 msgid "Select and arrange specific people, or leave blank to use all."
-msgstr ""
+msgstr "Selecteer en arrangeer specifieke mensen, of laat leeg om alles te gebruiken."
 
 #: cms_plugins.py:43
 msgid "Options"
-msgstr ""
+msgstr "Opties"
 
-#: cms_toolbar.py:104
+#: cms_toolbars.py:104
 msgid "Group list"
-msgstr ""
+msgstr "Groep lijst"
 
-#: cms_toolbar.py:111
+#: cms_toolbars.py:111
 msgid "Add new group"
-msgstr ""
+msgstr "Voeg een nieuwe groep toe"
 
-#: cms_toolbar.py:115
+#: cms_toolbars.py:115
 msgid "Edit group"
-msgstr ""
+msgstr "Bewerk groep"
 
-#: cms_toolbar.py:122
+#: cms_toolbars.py:122
 msgid "Person list"
-msgstr ""
+msgstr "Personen lijst"
 
-#: cms_toolbar.py:131
+#: cms_toolbars.py:131
 msgid "Add new person"
-msgstr ""
+msgstr "Voeg een nieuw persoon toe"
 
-#: cms_toolbar.py:136
+#: cms_toolbars.py:136
 msgid "Edit person"
-msgstr ""
+msgstr "Bewerk persoon"
 
 #: cms_wizards.py:95 cms_wizards.py:123
 #, python-brace-format
 msgid "Initial version of {object_repr}. {trans_info}"
-msgstr ""
+msgstr "Initiele versie van {object_repr}. {trans_info}"
 
 #: cms_wizards.py:131
 msgid "New person"
-msgstr ""
+msgstr "Nieuw persoon"
 
 #: cms_wizards.py:134
 msgid "Create a new person."
-msgstr ""
+msgstr "Creeer een nieuw persoon."
 
 #: cms_wizards.py:141
 msgid "New group"
-msgstr ""
+msgstr "Nieuwe groep"
 
 #: cms_wizards.py:144
 msgid "Create a new group."
-msgstr ""
+msgstr "Creeer een nieuwe groep"
 
 #: menu.py:19
 msgid "Aldryn People: Person Menu"
-msgstr ""
+msgstr "Aldryn People: Personen Menu"
 
 #: menu.py:35
 #, python-brace-format
 msgid "person: {0}"
-msgstr ""
+msgstr "persoon: {0}"
 
 #: menu.py:50
 msgid "Aldryn People: Group Menu"
-msgstr ""
+msgstr "Aldryn People: Groep Menu"
 
 #: menu.py:66
 #, python-brace-format
 msgid "group: {0}"
-msgstr ""
+msgstr "groep: {0}"
 
-#: models.py:119 models.py:186
+#: models.py:122 models.py:189
 msgid "name"
-msgstr ""
+msgstr "naam"
 
-#: models.py:120
+#: models.py:123
 msgid "Provide this group's name."
-msgstr ""
+msgstr "Geef deze groepsnaam."
 
-#: models.py:121 models.py:193
+#: models.py:124 models.py:196
 msgid "description"
-msgstr ""
+msgstr "beschrijving"
 
-#: models.py:122
+#: models.py:125
 msgid "slug"
-msgstr ""
+msgstr "slug"
 
-#: models.py:124 models.py:190
+#: models.py:127 models.py:193
 msgid "Leave blank to auto-generate a unique slug."
-msgstr ""
+msgstr "Laat leeg om een unieke slug te creeeren."
 
-#: models.py:127
+#: models.py:130
 msgid "address"
-msgstr ""
+msgstr "adres"
 
-#: models.py:129
+#: models.py:132
 msgid "postal code"
-msgstr ""
+msgstr "postcode"
 
-#: models.py:131
+#: models.py:134
 msgid "city"
-msgstr ""
+msgstr "stad"
 
-#: models.py:133 models.py:197
+#: models.py:136 models.py:200
 msgid "phone"
-msgstr ""
+msgstr "telefoon"
 
-#: models.py:135 models.py:201
+#: models.py:138 models.py:204
 msgid "fax"
-msgstr ""
+msgstr "fax"
 
-#: models.py:137 models.py:203
+#: models.py:140 models.py:206
 msgid "email"
-msgstr ""
+msgstr "email"
 
-#: models.py:139 models.py:205
+#: models.py:142 models.py:208
 msgid "website"
-msgstr ""
+msgstr "website"
 
-#: models.py:159
+#: models.py:162
 msgid "Group"
-msgstr ""
+msgstr "Groep"
 
-#: models.py:164
+#: models.py:167
 #, python-brace-format
 msgid "Group: {0}"
-msgstr ""
+msgstr "Groep: {0}"
 
-#: models.py:187
+#: models.py:190
 msgid "Provide this person's name."
-msgstr ""
-
-#: models.py:188
-msgid "unique slug"
-msgstr ""
+msgstr "Geef deze persoonsnaam."
 
 #: models.py:191
+msgid "unique slug"
+msgstr "unieke slug"
+
+#: models.py:194
 msgid "role"
-msgstr ""
+msgstr "rol"
 
-#: models.py:199
+#: models.py:202
 msgid "mobile"
-msgstr ""
+msgstr "mobiel"
 
-#: models.py:208
+#: models.py:211
 msgid ""
 "Choose and order the groups for this person, the first will be the \"primary"
 " group\"."
-msgstr ""
+msgstr "Kies en orden de groepen voor deze persoon; de eerste keuze is de \"primaire groep\"."
 
-#: models.py:213
+#: models.py:216
 msgid "enable vCard download"
-msgstr ""
+msgstr "maak vCard download mogelijk"
 
-#: models.py:219
+#: models.py:222
 msgid "Person"
-msgstr ""
+msgstr "Persoon"
 
-#: models.py:340
+#: models.py:343
 msgid "Standard"
-msgstr ""
+msgstr "Standaard"
 
-#: models.py:341
+#: models.py:344
 msgid "Feature"
-msgstr ""
+msgstr "Kenmerk"
 
-#: models.py:345
+#: models.py:348
 msgid "Style"
-msgstr ""
+msgstr "Stijl"
 
-#: models.py:350
+#: models.py:353
 msgid "Select and arrange specific people, or, leave blank to select all."
-msgstr ""
+msgstr "Selecteer en arrangeer specifieke mensen, of laat leeg om alles te selecteren."
 
-#: models.py:370
+#: models.py:391
 msgid "group by group"
-msgstr ""
+msgstr "groepeer per groep"
 
-#: models.py:372
+#: models.py:393
 msgid "Group people by their group."
-msgstr ""
+msgstr "Groepeer mensen middels hun groep."
 
-#: models.py:375
+#: models.py:396
 msgid "show ungrouped"
-msgstr ""
+msgstr "laat ongegroepeerden zien"
 
-#: models.py:377
+#: models.py:398
 msgid "When using \"group by group\", show ungrouped people too."
-msgstr ""
+msgstr "Als \"groepeer per groep\" gebruikt wordt, laat dan ook ongegroepeerden zien."
 
-#: models.py:380
+#: models.py:401
 msgid "Show links to Detail Page"
-msgstr ""
+msgstr "Laat link naar Detail Pagina zien"
 
-#: models.py:382
+#: models.py:403
 msgid "Show links to download vCard"
-msgstr ""
+msgstr "Laat link naar download vCard zien"
