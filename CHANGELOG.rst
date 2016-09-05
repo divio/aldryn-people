@@ -2,7 +2,7 @@ CHANGELOG
 =========
 
 
-1.2.2 (UNRELEASED)
+1.2.2 (2016-09-05)
 ------------------
 
 * Updated translations
