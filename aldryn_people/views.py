@@ -12,11 +12,7 @@ from parler.views import TranslatableSlugMixin
 from . import DEFAULT_APP_NAMESPACE
 from .models import Group, Person
 
-try:
-    from django.contrib.sites.shortcuts import get_current_site
-except ImportError:
-    # Django 1.6
-    from django.contrib.sites.models import get_current_site
+from django.contrib.sites.shortcuts import get_current_site
 
 
 def get_language(request):

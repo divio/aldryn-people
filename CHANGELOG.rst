@@ -6,6 +6,7 @@ CHANGELOG
 ----------------------
 
 * Drop Django<1.8 support
+* Drop Python<2.7 support
 * Make django-reversion support optional
 * Django 1.10 and 1.11 support (without django-reversion support)
 
