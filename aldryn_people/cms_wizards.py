@@ -1,18 +1,17 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.core.urlresolvers import reverse, NoReverseMatch
-from django.db import transaction
-from django.utils.translation import ugettext_lazy as _, ugettext
-
-from cms.wizards.wizard_pool import wizard_pool
-from cms.wizards.wizard_base import Wizard
 from cms.wizards.forms import BaseFormMixin
-
+from cms.wizards.wizard_base import Wizard
+from cms.wizards.wizard_pool import wizard_pool
+from django.core.urlresolvers import NoReverseMatch, reverse
+from django.db import transaction
+from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext
 from parler.forms import TranslatableModelForm
 
-from .settings import ENABLE_REVERSION
 from .models import Group, Person
+from .settings import ENABLE_REVERSION
 
 
 def has_published_apphook():
@@ -92,11 +91,11 @@ class CreatePeoplePersonForm(BaseFormMixin, TranslatableModelForm):
                         revision_context_manager.set_user(self.user)
                     object_repr = build_obj_repr(person)
                     translation_info = get_translation_info_message(person)
-                    revision_context_manager.set_comment(
-                        ugettext(
-                            "Initial version of {object_repr}. {trans_info}".format(
-                                object_repr=object_repr,
-                                trans_info=translation_info)))
+                    revision_context_manager.set_comment(ugettext(
+                        "Initial version of {object_repr}. {trans_info}".format(
+                            object_repr=object_repr,
+                            trans_info=translation_info)
+                    ))
         return person
 
 
@@ -125,11 +124,11 @@ class CreatePeopleGroupForm(BaseFormMixin, TranslatableModelForm):
                         revision_context_manager.set_user(self.user)
                     object_repr = build_obj_repr(group)
                     translation_info = get_translation_info_message(group)
-                    revision_context_manager.set_comment(
-                        ugettext(
-                            "Initial version of {object_repr}. {trans_info}".format(
-                                object_repr=object_repr,
-                                trans_info=translation_info)))
+                    revision_context_manager.set_comment(ugettext(
+                        "Initial version of {object_repr}. {trans_info}".format(
+                            object_repr=object_repr,
+                            trans_info=translation_info)
+                    ))
 
             return group
 

@@ -383,4 +383,3 @@ if ENABLE_REVERSION:
     # Add the reversion decorators here
     Group = version_controlled_content(Group)
     Person = version_controlled_content(Person, follow=['groups', 'user'])
-

@@ -4,7 +4,13 @@ from __future__ import unicode_literals
 
 from unittest import skipIf
 
+import six
+from django.db import transaction
+
+from . import BasePeopleTest
+from ..models import Group, Person
 from ..settings import ENABLE_REVERSION
+
 if ENABLE_REVERSION:
     try:
         from reversion import revision_context_manager
@@ -12,13 +18,6 @@ if ENABLE_REVERSION:
     except ImportError:
         from reversion.revisions import revision_context_manager
         from reversion.revisions import default_revision_manager
-
-import six
-
-from django.db import transaction
-
-from . import BasePeopleTest
-from ..models import Person, Group
 
 
 @skipIf(not ENABLE_REVERSION, 'django-reversion not enabled')

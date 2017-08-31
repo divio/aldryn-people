@@ -2,13 +2,13 @@
 
 from __future__ import unicode_literals
 
-from django.utils.translation import ugettext as _, get_language_from_request
-from six import iteritems
-
 from cms.toolbar_base import CMSToolbar
 from cms.toolbar_pool import toolbar_pool
 from cms.utils.urlutils import admin_reverse
+from django.utils.translation import ugettext as _
+from django.utils.translation import get_language_from_request
 from parler.models import TranslatableModel
+from six import iteritems
 
 from .models import Group, Person
 

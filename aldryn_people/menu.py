@@ -2,10 +2,10 @@
 
 from __future__ import unicode_literals
 
-from django.core.urlresolvers import NoReverseMatch
-from django.utils.translation import get_language_from_request, ugettext as _
-
 from cms.menu_bases import CMSAttachMenu
+from django.core.urlresolvers import NoReverseMatch
+from django.utils.translation import ugettext as _
+from django.utils.translation import get_language_from_request
 from menus.base import NavigationNode
 from menus.menu_pool import menu_pool
 
@@ -40,6 +40,7 @@ class PersonMenu(CMSAttachMenu):
                 nodes.append(node)
         return nodes
 
+
 menu_pool.register_menu(PersonMenu)
 
 
@@ -70,5 +71,6 @@ class GroupMenu(CMSAttachMenu):
                 )
                 nodes.append(node)
         return nodes
+
 
 menu_pool.register_menu(GroupMenu)

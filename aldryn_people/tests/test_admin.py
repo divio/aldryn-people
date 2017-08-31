@@ -2,13 +2,11 @@
 
 from __future__ import unicode_literals
 
+from cms.utils.urlutils import admin_reverse
 from django.contrib import admin
 
-from cms.utils.urlutils import admin_reverse
-
-from ..admin import PersonAdmin
-
 from . import BasePeopleTest
+from ..admin import PersonAdmin
 
 
 class TestPersonAdmin(BasePeopleTest):

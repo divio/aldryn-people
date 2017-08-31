@@ -3,22 +3,20 @@
 from __future__ import unicode_literals
 
 from aldryn_people.utils import get_valid_languages
+from django.http import Http404, HttpResponse
+from django.utils.translation import get_language_from_request
+from django.views.generic import DetailView, ListView
+from menus.utils import set_language_changer
+from parler.views import TranslatableSlugMixin
+
+from . import DEFAULT_APP_NAMESPACE
+from .models import Group, Person
 
 try:
     from django.contrib.sites.shortcuts import get_current_site
 except ImportError:
     # Django 1.6
     from django.contrib.sites.models import get_current_site
-
-from django.http import Http404, HttpResponse
-from django.views.generic import DetailView, ListView
-from django.utils.translation import get_language_from_request
-
-from menus.utils import set_language_changer
-from parler.views import TranslatableSlugMixin
-
-from . import DEFAULT_APP_NAMESPACE
-from .models import Group, Person
 
 
 def get_language(request):

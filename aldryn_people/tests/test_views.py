@@ -2,15 +2,13 @@
 
 from __future__ import unicode_literals
 
+from cms.utils.i18n import force_language
 from django.core.urlresolvers import reverse
 from django.http import Http404
 from django.test.client import RequestFactory
 
-from cms.utils.i18n import force_language
-
+from . import BasePeopleTest, CMSRequestBasedTest, DefaultApphookMixin
 from ..views import DownloadVcardView
-
-from . import DefaultApphookMixin, BasePeopleTest, CMSRequestBasedTest
 
 
 class TestDownloadVcardView(DefaultApphookMixin,

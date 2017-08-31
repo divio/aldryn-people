@@ -3,19 +3,23 @@
 from __future__ import unicode_literals
 
 from django.test import TransactionTestCase
-from django.utils.translation import override, force_text
-
-from ..models import Person, Group
+from django.utils.translation import force_text, override
 
 from . import (
-    DefaultSetupMixin, DefaultApphookMixin, CleanUpMixin, BasePeopleTest,
+    BasePeopleTest,
+    CleanUpMixin,
+    DefaultApphookMixin,
+    DefaultSetupMixin,
 )
+from ..models import Group, Person
 
 
-class TestBasicPeopleModels(DefaultSetupMixin,
-                            DefaultApphookMixin,
-                            CleanUpMixin,
-                            TransactionTestCase):
+class TestBasicPeopleModels(
+    DefaultSetupMixin,
+    DefaultApphookMixin,
+    CleanUpMixin,
+    TransactionTestCase,
+):
 
     def setUp(self):
         super(TestBasicPeopleModels, self).setUp()

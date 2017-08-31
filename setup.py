@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from setuptools import setup, find_packages
 from aldryn_people import __version__
+from setuptools import find_packages, setup
 
 REQUIREMENTS = [
     'Django>=1.8,<1.12',

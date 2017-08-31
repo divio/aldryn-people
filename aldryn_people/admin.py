@@ -2,25 +2,26 @@
 
 from __future__ import unicode_literals
 
+from aldryn_translation_tools.admin import AllTranslationsMixin
 from django.conf import settings
 from django.contrib import admin
 from django.db.models import Count
-
 from django.utils.translation import ugettext_lazy as _
-
 from parler.admin import TranslatableAdmin
-from aldryn_translation_tools.admin import AllTranslationsMixin
+
+from .models import Group, Person
 # We are using VersionedPlaceholderAdminMixin because atm (0.1.0)
 # it also contains important methods and changes to provide
 # translations support in revisions. Be aware that this might
 # be changed in further releases.
 from .settings import ENABLE_REVERSION
+
 if ENABLE_REVERSION:
     from aldryn_reversion.admin import VersionedPlaceholderAdminMixin
 else:
-    from cms.admin.placeholderadmin import PlaceholderAdminMixin as VersionedPlaceholderAdminMixin
-
-from .models import Person, Group
+    from cms.admin.placeholderadmin import (
+        PlaceholderAdminMixin as VersionedPlaceholderAdminMixin
+    )
 
 
 class PersonAdmin(VersionedPlaceholderAdminMixin,

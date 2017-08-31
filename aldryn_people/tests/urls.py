@@ -2,13 +2,12 @@
 
 from __future__ import unicode_literals
 
+from cms.utils.conf import get_cms_setting
 from django.conf import settings
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, patterns, url
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-
-from cms.utils.conf import get_cms_setting
 
 admin.autodiscover()
 

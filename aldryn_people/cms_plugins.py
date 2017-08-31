@@ -4,14 +4,12 @@ from __future__ import unicode_literals
 
 from collections import defaultdict
 
-from django.utils.translation import ugettext_lazy as _
-
+from aldryn_people import DEFAULT_APP_NAMESPACE, models
 from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
+from django.utils.translation import ugettext_lazy as _
 
-from aldryn_people import models, DEFAULT_APP_NAMESPACE
 from .utils import get_valid_languages
-
 
 NAMESPACE_ERROR = _(
     "Seems that there is no valid application hook for aldryn-people."
@@ -86,5 +84,6 @@ class PeoplePlugin(CMSPluginBase):
             context['people_groups'] = []
             context['groupless_people'] = people.none()
         return context
+
 
 plugin_pool.register_plugin(PeoplePlugin)

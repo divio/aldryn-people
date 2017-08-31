@@ -2,9 +2,9 @@
 from __future__ import unicode_literals
 
 import os
-import django
-
 from distutils.version import LooseVersion
+
+import django
 from cms import __version__ as cms_string_version
 
 cms_version = LooseVersion(cms_string_version)
@@ -120,6 +120,7 @@ def boolean_ish(var):
     else:
         return bool(var)
 
+
 ENABLE_REVERSION = boolean_ish(os.environ.get('ENABLE_REVERSION', ''))
 if ENABLE_REVERSION:
     HELPER_SETTINGS['INSTALLED_APPS'].extend([
@@ -182,6 +183,7 @@ if cms_version < LooseVersion('3.2.0'):
 def run():
     from djangocms_helper import runner
     runner.cms('aldryn_people', extra_args=[])  # , extra_args=['--boilerplate']
+
 
 if __name__ == "__main__":
     run()

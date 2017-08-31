@@ -4,9 +4,8 @@ from __future__ import unicode_literals
 
 from aldryn_people.search_indexes import PeopleIndex
 
-from ..models import Person
-
 from . import BasePeopleTest
+from ..models import Person
 
 
 class TestPeopleIndex(BasePeopleTest):
