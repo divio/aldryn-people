@@ -14,7 +14,11 @@ from aldryn_translation_tools.admin import AllTranslationsMixin
 # it also contains important methods and changes to provide
 # translations support in revisions. Be aware that this might
 # be changed in further releases.
-from aldryn_reversion.admin import VersionedPlaceholderAdminMixin
+from .settings import ENABLE_REVERSION
+if ENABLE_REVERSION:
+    from aldryn_reversion.admin import VersionedPlaceholderAdminMixin
+else:
+    from cms.admin.placeholderadmin import PlaceholderAdminMixin as VersionedPlaceholderAdminMixin
 
 from .models import Person, Group
 

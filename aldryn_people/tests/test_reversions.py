@@ -2,12 +2,16 @@
 
 from __future__ import unicode_literals
 
-try:
-    from reversion import revision_context_manager
-    from reversion import default_revision_manager
-except ImportError:
-    from reversion.revisions import revision_context_manager
-    from reversion.revisions import default_revision_manager
+from unittest import skipIf
+
+from ..settings import ENABLE_REVERSION
+if ENABLE_REVERSION:
+    try:
+        from reversion import revision_context_manager
+        from reversion import default_revision_manager
+    except ImportError:
+        from reversion.revisions import revision_context_manager
+        from reversion.revisions import default_revision_manager
 
 import six
 
@@ -17,6 +21,7 @@ from . import BasePeopleTest
 from ..models import Person, Group
 
 
+@skipIf(not ENABLE_REVERSION, 'django-reversion not enabled')
 class RevisionTestCase(BasePeopleTest):
     data_raw = {
         'group': {

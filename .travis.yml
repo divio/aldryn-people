@@ -18,14 +18,20 @@ env:
     #   FE strategy: only test on Django/CMS3.3 combinations, but place tests on
     #                different Python ENVs if possible.
     - TOXENV=flake8
+    - TOXENV=py36-dj111-cms35
+    - TOXENV=py36-dj110-cms34
+    - TOXENV=py35-dj19-cms34-reversion
     - TOXENV=py35-dj19-cms34
     - TOXENV=py35-dj19-cms33-fe FE=1
     - TOXENV=py34-dj19-cms34
     - TOXENV=py34-dj19-cms33
     - TOXENV=py34-dj19-cms32
+    - TOXENV=py27-dj111-cms34
+    - TOXENV=py27-dj110-cms34
     - TOXENV=py27-dj19-cms34
     - TOXENV=py27-dj19-cms33
     - TOXENV=py27-dj19-cms32
+    - TOXENV=py35-dj18-cms34-reversion
     - TOXENV=py35-dj18-cms34
     - TOXENV=py35-dj18-cms33
     - TOXENV=py35-dj18-cms32
@@ -34,8 +40,6 @@ env:
     - TOXENV=py27-dj18-cms34
     - TOXENV=py27-dj18-cms33-fe FE=1
     - TOXENV=py27-dj18-cms32
-    - TOXENV=py34-dj17-cms32
-    - TOXENV=py27-dj16-cms32
 
 cache:
   directories:

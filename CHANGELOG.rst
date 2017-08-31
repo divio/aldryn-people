@@ -2,6 +2,14 @@ CHANGELOG
 =========
 
 
+1.3 (not released yet)
+----------------------
+
+* Drop Django<1.8 support
+* Make django-reversion support optional
+* Django 1.10 and 1.11 support (without django-reversion support)
+
+
 1.2.2 (2016-09-05)
 ------------------
 

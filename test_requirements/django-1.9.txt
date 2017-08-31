@@ -1,5 +1,4 @@
 django>=1.9,<1.10
-django-reversion>=1.10.2
 django-haystack
 
 -r base.txt

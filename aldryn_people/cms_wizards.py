@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from __future__ import unicode_literals
 
 from django.core.urlresolvers import reverse, NoReverseMatch
@@ -11,10 +10,8 @@ from cms.wizards.wizard_base import Wizard
 from cms.wizards.forms import BaseFormMixin
 
 from parler.forms import TranslatableModelForm
-from reversion.revisions import revision_context_manager
-from aldryn_reversion.utils import (
-    build_obj_repr, get_translation_info_message,
-)
+
+from .settings import ENABLE_REVERSION
 from .models import Group, Person
 
 
@@ -81,20 +78,25 @@ class CreatePeoplePersonForm(BaseFormMixin, TranslatableModelForm):
         """
         person = super(CreatePeoplePersonForm, self).save(commit=False)
 
-        # Ensure we make an initial revision
-        with transaction.atomic():
-            with revision_context_manager.create_revision():
-                person.save()
-                self.save_m2m()
-                if self.user:
-                    revision_context_manager.set_user(self.user)
-                object_repr = build_obj_repr(person)
-                translation_info = get_translation_info_message(person)
-                revision_context_manager.set_comment(
-                    ugettext(
-                        "Initial version of {object_repr}. {trans_info}".format(
-                            object_repr=object_repr,
-                            trans_info=translation_info)))
+        if ENABLE_REVERSION:
+            from reversion.revisions import revision_context_manager
+            from aldryn_reversion.utils import (
+                build_obj_repr, get_translation_info_message,
+            )
+            # Ensure we make an initial revision
+            with transaction.atomic():
+                with revision_context_manager.create_revision():
+                    person.save()
+                    self.save_m2m()
+                    if self.user:
+                        revision_context_manager.set_user(self.user)
+                    object_repr = build_obj_repr(person)
+                    translation_info = get_translation_info_message(person)
+                    revision_context_manager.set_comment(
+                        ugettext(
+                            "Initial version of {object_repr}. {trans_info}".format(
+                                object_repr=object_repr,
+                                trans_info=translation_info)))
         return person
 
 
@@ -110,21 +112,26 @@ class CreatePeopleGroupForm(BaseFormMixin, TranslatableModelForm):
         """
         group = super(CreatePeopleGroupForm, self).save(commit=False)
 
-        # Ensure we make an initial revision
-        with transaction.atomic():
-            with revision_context_manager.create_revision():
-                group.save()
-                if self.user:
-                    revision_context_manager.set_user(self.user)
-                object_repr = build_obj_repr(group)
-                translation_info = get_translation_info_message(group)
-                revision_context_manager.set_comment(
-                    ugettext(
-                        "Initial version of {object_repr}. {trans_info}".format(
-                            object_repr=object_repr,
-                            trans_info=translation_info)))
+        if ENABLE_REVERSION:
+            from aldryn_reversion.utils import (
+                build_obj_repr, get_translation_info_message,
+            )
+            from reversion.revisions import revision_context_manager
+            # Ensure we make an initial revision
+            with transaction.atomic():
+                with revision_context_manager.create_revision():
+                    group.save()
+                    if self.user:
+                        revision_context_manager.set_user(self.user)
+                    object_repr = build_obj_repr(group)
+                    translation_info = get_translation_info_message(group)
+                    revision_context_manager.set_comment(
+                        ugettext(
+                            "Initial version of {object_repr}. {trans_info}".format(
+                                object_repr=object_repr,
+                                trans_info=translation_info)))
 
-        return group
+            return group
 
 
 people_person_wizard = PeoplePersonWizard(

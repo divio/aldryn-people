@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from __future__ import unicode_literals
 
 import base64
@@ -12,13 +11,6 @@ except ImportError:
     from urllib import parse as urlparse
 import warnings
 
-from reversion.revisions import (
-    default_revision_manager, RegistrationError
-)
-
-from distutils.version import LooseVersion
-from django import get_version
-from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.core.urlresolvers import reverse, NoReverseMatch
 from django.db import models
@@ -45,30 +37,19 @@ from cms.utils.i18n import get_current_language, get_default_language
 from djangocms_text_ckeditor.fields import HTMLField
 from filer.fields.image import FilerImageField
 from parler.models import TranslatableModel, TranslatedFields
-from aldryn_reversion.core import version_controlled_content
-
 
 from .utils import get_additional_styles
+from .settings import ENABLE_REVERSION
 
-# NOTE: We use LooseVersion and not StrictVersion because sometimes Aldryn uses
-# patched build with version numbers of the form X.Y.Z.postN.
-loose_version = LooseVersion(get_version())
 
-if loose_version < LooseVersion('1.7.0'):
-    LTE_DJANGO_1_6 = True
-    # Prior to 1.7 it is pretty straight forward
-    user_model = get_user_model()
-    if user_model not in default_revision_manager.get_registered_models():
-        default_revision_manager.register(user_model)
-else:
+if ENABLE_REVERSION:
+    # TODO: I'm not sure if/why this is needed
     # otherwise it is a pain, but thanks to solution of getting model from
     # https://github.com/django-oscar/django-oscar/commit/c479a1
     # we can do almost the same thing from the different side.
     from django.apps import apps
     from django.apps.config import MODELS_MODULE_NAME
     from django.core.exceptions import AppRegistryNotReady
-
-    LTE_DJANGO_1_6 = False
 
     def get_model(app_label, model_name):
         """
@@ -107,13 +88,13 @@ else:
     user_model_object = get_model(model_app_name, model_model)
     # and try to register, if we have a registration error - that means that
     # it has been registered already
+    from reversion.revisions import default_revision_manager, RegistrationError
     try:
         default_revision_manager.register(user_model_object)
     except RegistrationError:
         pass
 
 
-@version_controlled_content
 @python_2_unicode_compatible
 class Group(TranslationHelperMixin, TranslatedAutoSlugifyMixin,
             TranslatableModel):
@@ -179,7 +160,6 @@ class Group(TranslationHelperMixin, TranslatedAutoSlugifyMixin,
             return reverse('aldryn_people:group-detail', kwargs=kwargs)
 
 
-@version_controlled_content(follow=['groups', 'user'])
 @python_2_unicode_compatible
 class Person(TranslationHelperMixin, TranslatedAutoSlugifyMixin,
              TranslatableModel):
@@ -358,19 +338,11 @@ class BasePeoplePlugin(CMSPlugin):
     # with any other plugins that have a field with the same name as the
     # lowercase of the class name of this model.
     # https://github.com/divio/django-cms/issues/5030
-    if LTE_DJANGO_1_6:
-        # related_name='%(app_label)s_%(class)s' does not work on  Django 1.6
-        cmsplugin_ptr = models.OneToOneField(
-            CMSPlugin,
-            related_name='+',
-            parent_link=True,
-        )
-    else:
-        cmsplugin_ptr = models.OneToOneField(
-            CMSPlugin,
-            related_name='%(app_label)s_%(class)s',
-            parent_link=True,
-        )
+    cmsplugin_ptr = models.OneToOneField(
+        CMSPlugin,
+        related_name='%(app_label)s_%(class)s',
+        parent_link=True,
+    )
 
     class Meta:
         abstract = True
@@ -404,3 +376,11 @@ class PeoplePlugin(BasePeoplePlugin):
 
     class Meta:
         abstract = False
+
+
+if ENABLE_REVERSION:
+    from aldryn_reversion.core import version_controlled_content
+    # Add the reversion decorators here
+    Group = version_controlled_content(Group)
+    Person = version_controlled_content(Person, follow=['groups', 'user'])
+

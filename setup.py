@@ -3,21 +3,20 @@ from setuptools import setup, find_packages
 from aldryn_people import __version__
 
 REQUIREMENTS = [
-    'Django>=1.6,<1.10',
+    'Django>=1.8,<1.12',
     'aldryn-boilerplates',
     'aldryn-common>=0.1.3',
-    'aldryn-reversion>=1.0.4',
     'aldryn-translation-tools>=0.1.0',
-    'django-cms>=3.2',
+    'django-cms>=3.4',
     'django-parler>=1.4',
-    'django-filer>=0.9.9',
+    'django-filer>=1.2',
     'djangocms-text-ckeditor',
     'easy-thumbnails',
     'phonenumbers',
     'six',
 
     # DO NOT REMOVE THE FOLLOWING, IT IS REQUIRED FOR EXISTING MIGRATIONS
-    'django-phonenumber-field>=0.7.2',
+    # 'django-phonenumber-field>=0.7.2',
 ]
 
 # https://pypi.python.org/pypi?%3Aaction=list_classifiers
@@ -57,6 +56,9 @@ setup(
     license='LICENSE.txt',
     platforms=['OS Independent'],
     install_requires=REQUIREMENTS,
+    extras_require={
+        'reversion': ['aldryn-reversion']
+    },
     classifiers=CLASSIFIERS,
     long_description=open('README.rst').read(),
     include_package_data=True,

@@ -17,15 +17,19 @@ class TestPersonAppHook(BasePeopleTest):
         """
         self.page.application_urls = 'PeopleApp'
         self.page.application_namespace = 'aldryn_people'
+        self.page.save()
         self.page.publish(self.language)
 
         person = Person.objects.create(
             name='Michael', phone='0785214521', email='michael@mit.ch',
             slug='michael'
         )
+
         # By slug
         url = reverse(
-            'aldryn_people:person-detail', kwargs={'slug': person.slug})
+            'aldryn_people:person-detail',
+            kwargs={'slug': person.slug}
+        )
         response = self.client.get(url)
         self.assertContains(response, 'Michael')
 

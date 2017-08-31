@@ -23,4 +23,14 @@ class Form(forms.BaseForm):
                 'user_threshold'))
         except (ValueError, TypeError):
             pass
+        settings['INSTALLED_APPS'].extend([
+            'aldryn_boilerplates',
+            'aldryn_common',
+            'aldryn_people',
+            'aldryn_translation_tools',
+            'easy_thumbnails',
+            'filer',
+            'parler',
+            'sortedm2m',
+        ])
         return settings

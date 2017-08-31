@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-
 from __future__ import unicode_literals
 
+import os
 import django
 
 from distutils.version import LooseVersion
@@ -39,13 +39,11 @@ HELPER_SETTINGS = {
     'HAYSTACK_CONNECTIONS': HAYSTACK_CONNECTIONS,
     'INSTALLED_APPS': [
         'aldryn_common',
-        'aldryn_reversion',
         'aldryn_translation_tools',
         'djangocms_text_ckeditor',
         'easy_thumbnails',
         'filer',
         'parler',
-        'reversion',
         'sortedm2m',
     ],
     'THUMBNAIL_PROCESSORS': (
@@ -66,7 +64,7 @@ HELPER_SETTINGS = {
         1: [
             {
                 'code': 'de',
-                'name': 'Deutsche',
+                'name': 'Deutsch',
                 'fallbacks': ['en', ]  # FOR TESTING DO NOT ADD 'fr' HERE
             },
             {
@@ -112,6 +110,23 @@ HELPER_SETTINGS = {
     },
     'PARLER_ENABLE_CACHING': False,
 }
+
+
+def boolean_ish(var):
+    var = '{}'.format(var)
+    var = var.lower()
+    if var in ('false', 'nope', '0', 'none', 'no'):
+        return False
+    else:
+        return bool(var)
+
+ENABLE_REVERSION = boolean_ish(os.environ.get('ENABLE_REVERSION', ''))
+if ENABLE_REVERSION:
+    HELPER_SETTINGS['INSTALLED_APPS'].extend([
+        'aldryn_reversion',
+        'reversion',
+    ])
+    HELPER_SETTINGS['ALDRYN_PEOPLE_ENABLE_REVERSION'] = True
 
 # This set of MW classes should work for Django 1.6 and 1.7.
 MIDDLEWARE_CLASSES_16_17 = [
