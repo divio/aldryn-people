@@ -18,8 +18,8 @@ env:
     #   FE strategy: only test on Django/CMS3.3 combinations, but place tests on
     #                different Python ENVs if possible.
     - TOXENV=flake8
-    - TOXENV=py36-dj111-cms35
-    - TOXENV=py36-dj110-cms34
+    - TOXENV=py35-dj111-cms35
+    - TOXENV=py35-dj110-cms34
     - TOXENV=py35-dj19-cms34-reversion
     - TOXENV=py35-dj19-cms34
     - TOXENV=py35-dj19-cms33-fe FE=1
