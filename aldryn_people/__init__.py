@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-__version__ = '1.3.0.dev'
+__version__ = '1.3.0.dev2'
 
 DEFAULT_APP_NAMESPACE = 'aldryn_people'
 
