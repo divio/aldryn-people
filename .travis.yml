@@ -14,10 +14,6 @@ env:
     - secure: oJG/hKhutnzSFCSF8xUuMWmTxeuRp2eU9HBi/7JWVxd3AwDkKu3jtldQ0Vg/2iSofRzzG0wZpUKdgGa4ObOpOou5wWtq68OAVbJkHAtOB7U3HR4deVuQRZdR8GXWWS9G+H1B8PbFCVPzQrsnxHs/k0oBLUgAW8XfFfkhzzYGFKk=
 
 matrix:
-  # Matrix-size reduction strategies:
-  #   PY strategy: do not test 3.3 at all.
-  #   FE strategy: only test on Django/CMS3.3 combinations, but place tests on
-  #                different Python ENVs if possible.
   include:
     - python: '3.5'
       env: TOXENV=flake8
@@ -33,12 +29,6 @@ matrix:
       env: TOXENV=py35-dj19-cms34
     - python: '3.5'
       env: TOXENV=py35-dj19-cms33-fe FE=1
-    - python: '3.4'
-      env: TOXENV=py34-dj19-cms34
-    - python: '3.4'
-      env: TOXENV=py34-dj19-cms33
-    - python: '3.4'
-      env: TOXENV=py34-dj19-cms32
     - python: '2.7'
       env: TOXENV=py27-dj111-cms34
     - python: '2.7'
@@ -57,10 +47,6 @@ matrix:
       env: TOXENV=py35-dj18-cms33
     - python: '3.5'
       env: TOXENV=py35-dj18-cms32
-    - python: '3.4'
-      env: TOXENV=py34-dj18-cms34
-    - python: '3.4'
-      env: TOXENV=py34-dj18-cms33
     - python: '2.7'
       env: TOXENV=py27-dj18-cms34
     - python: '2.7'
