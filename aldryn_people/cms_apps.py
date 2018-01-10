@@ -12,7 +12,11 @@ from . import DEFAULT_APP_NAMESPACE
 
 class PeopleApp(CMSApp):
     name = _('People')
-    urls = ['aldryn_people.urls']
     app_name = DEFAULT_APP_NAMESPACE
+    urls = ['aldryn_people.urls']  # COMPAT: CMS3.2
+
+    def get_urls(self, *args, **kwargs):
+        return self.urls
+
 
 apphook_pool.register(PeopleApp)

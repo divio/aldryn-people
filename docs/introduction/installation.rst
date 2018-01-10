@@ -30,7 +30,6 @@ In your project's ``settings.py`` make sure you have all of::
     'aldryn_common',
     'aldryn_boilerplates',
     'aldryn_people',
-    'aldryn_reversion',
     'parler',
     'aldryn_translation_tools',
     'sortedm2m',

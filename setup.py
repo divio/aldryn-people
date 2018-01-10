@@ -6,7 +6,6 @@ REQUIREMENTS = [
     'Django>=1.6,<1.10',
     'aldryn-boilerplates',
     'aldryn-common>=0.1.3',
-    'aldryn-reversion>=1.0.4',
     'aldryn-translation-tools>=0.1.0',
     'django-cms>=3.2',
     'django-parler>=1.4',
@@ -17,7 +16,7 @@ REQUIREMENTS = [
     'six',
 
     # DO NOT REMOVE THE FOLLOWING, IT IS REQUIRED FOR EXISTING MIGRATIONS
-    'django-phonenumber-field>=0.7.2',
+    'django-phonenumber-field>=0.7.2,<2.0.0',
 ]
 
 # https://pypi.python.org/pypi?%3Aaction=list_classifiers

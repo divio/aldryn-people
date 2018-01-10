@@ -12,25 +12,10 @@ except ImportError:
     from urllib import parse as urlparse
 import warnings
 
-from reversion.revisions import (
-    default_revision_manager, RegistrationError
-)
-
-from distutils.version import LooseVersion
-from django import get_version
-from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.core.urlresolvers import reverse, NoReverseMatch
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
-try:
-    # Python>=2.7
-    from importlib import import_module
-except ImportError:
-    # Python==2.6
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore", DeprecationWarning)
-        from django.utils.importlib import import_module
 
 from django.utils.translation import ugettext_lazy as _, override, force_text
 from six import text_type
@@ -45,75 +30,11 @@ from cms.utils.i18n import get_current_language, get_default_language
 from djangocms_text_ckeditor.fields import HTMLField
 from filer.fields.image import FilerImageField
 from parler.models import TranslatableModel, TranslatedFields
-from aldryn_reversion.core import version_controlled_content
 
 
 from .utils import get_additional_styles
 
-# NOTE: We use LooseVersion and not StrictVersion because sometimes Aldryn uses
-# patched build with version numbers of the form X.Y.Z.postN.
-loose_version = LooseVersion(get_version())
 
-if loose_version < LooseVersion('1.7.0'):
-    LTE_DJANGO_1_6 = True
-    # Prior to 1.7 it is pretty straight forward
-    user_model = get_user_model()
-    if user_model not in default_revision_manager.get_registered_models():
-        default_revision_manager.register(user_model)
-else:
-    # otherwise it is a pain, but thanks to solution of getting model from
-    # https://github.com/django-oscar/django-oscar/commit/c479a1
-    # we can do almost the same thing from the different side.
-    from django.apps import apps
-    from django.apps.config import MODELS_MODULE_NAME
-    from django.core.exceptions import AppRegistryNotReady
-
-    LTE_DJANGO_1_6 = False
-
-    def get_model(app_label, model_name):
-        """
-        Fetches a Django model using the app registry.
-        This doesn't require that an app with the given app label exists,
-        which makes it safe to call when the registry is being populated.
-        All other methods to access models might raise an exception about the
-        registry not being ready yet.
-        Raises LookupError if model isn't found.
-        """
-        try:
-            return apps.get_model(app_label, model_name)
-        except AppRegistryNotReady:
-            if apps.apps_ready and not apps.models_ready:
-                # If this function is called while `apps.populate()` is
-                # loading models, ensure that the module that defines the
-                # target model has been imported and try looking the model up
-                # in the app registry. This effectively emulates
-                # `from path.to.app.models import Model` where we use
-                # `Model = get_model('app', 'Model')` instead.
-                app_config = apps.get_app_config(app_label)
-                # `app_config.import_models()` cannot be used here because it
-                # would interfere with `apps.populate()`.
-                import_module('%s.%s' % (app_config.name, MODELS_MODULE_NAME))
-                # In order to account for case-insensitivity of model_name,
-                # look up the model through a private API of the app registry.
-                return apps.get_registered_model(app_label, model_name)
-            else:
-                # This must be a different case (e.g. the model really doesn't
-                # exist). We just re-raise the exception.
-                raise
-
-    # now get the real user model
-    user_model = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
-    model_app_name, model_model = user_model.split('.')
-    user_model_object = get_model(model_app_name, model_model)
-    # and try to register, if we have a registration error - that means that
-    # it has been registered already
-    try:
-        default_revision_manager.register(user_model_object)
-    except RegistrationError:
-        pass
-
-
-@version_controlled_content
 @python_2_unicode_compatible
 class Group(TranslationHelperMixin, TranslatedAutoSlugifyMixin,
             TranslatableModel):
@@ -122,7 +43,8 @@ class Group(TranslationHelperMixin, TranslatedAutoSlugifyMixin,
         name=models.CharField(_('name'), max_length=255,
                               help_text=_("Provide this group's name.")),
         description=HTMLField(_('description'), blank=True),
-        slug=models.SlugField(_('slug'), max_length=255, default='',
+        slug=models.SlugField(
+            _('slug'), max_length=255, default='',
             blank=True,
             help_text=_("Leave blank to auto-generate a unique slug.")),
     )
@@ -179,22 +101,21 @@ class Group(TranslationHelperMixin, TranslatedAutoSlugifyMixin,
             return reverse('aldryn_people:group-detail', kwargs=kwargs)
 
 
-@version_controlled_content(follow=['groups', 'user'])
 @python_2_unicode_compatible
 class Person(TranslationHelperMixin, TranslatedAutoSlugifyMixin,
              TranslatableModel):
     slug_source_field_name = 'name'
 
     translations = TranslatedFields(
-        name=models.CharField(_('name'), max_length=255, blank=False,
+        name=models.CharField(
+            _('name'), max_length=255, blank=False,
             default='', help_text=_("Provide this person's name.")),
-        slug=models.SlugField(_('unique slug'), max_length=255, blank=True,
+        slug=models.SlugField(
+            _('unique slug'), max_length=255, blank=True,
             default='',
             help_text=_("Leave blank to auto-generate a unique slug.")),
-        function=models.CharField(_('role'),
-            max_length=255, blank=True, default=''),
-        description=HTMLField(_('description'),
-            blank=True, default='')
+        function=models.CharField(_('role'), max_length=255, blank=True, default=''),
+        description=HTMLField(_('description'), blank=True, default='')
     )
     phone = models.CharField(
         verbose_name=_('phone'), null=True, blank=True, max_length=100)
@@ -358,19 +279,11 @@ class BasePeoplePlugin(CMSPlugin):
     # with any other plugins that have a field with the same name as the
     # lowercase of the class name of this model.
     # https://github.com/divio/django-cms/issues/5030
-    if LTE_DJANGO_1_6:
-        # related_name='%(app_label)s_%(class)s' does not work on  Django 1.6
-        cmsplugin_ptr = models.OneToOneField(
-            CMSPlugin,
-            related_name='+',
-            parent_link=True,
-        )
-    else:
-        cmsplugin_ptr = models.OneToOneField(
-            CMSPlugin,
-            related_name='%(app_label)s_%(class)s',
-            parent_link=True,
-        )
+    cmsplugin_ptr = models.OneToOneField(
+        CMSPlugin,
+        related_name='%(app_label)s_%(class)s',
+        parent_link=True,
+    )
 
     class Meta:
         abstract = True

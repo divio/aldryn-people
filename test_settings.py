@@ -39,13 +39,11 @@ HELPER_SETTINGS = {
     'HAYSTACK_CONNECTIONS': HAYSTACK_CONNECTIONS,
     'INSTALLED_APPS': [
         'aldryn_common',
-        'aldryn_reversion',
         'aldryn_translation_tools',
         'djangocms_text_ckeditor',
         'easy_thumbnails',
         'filer',
         'parler',
-        'reversion',
         'sortedm2m',
     ],
     'THUMBNAIL_PROCESSORS': (

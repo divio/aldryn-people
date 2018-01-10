@@ -5,21 +5,17 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.contrib import admin
 from django.db.models import Count
+from cms.admin.placeholderadmin import PlaceholderAdminMixin
 
 from django.utils.translation import ugettext_lazy as _
 
 from parler.admin import TranslatableAdmin
 from aldryn_translation_tools.admin import AllTranslationsMixin
-# We are using VersionedPlaceholderAdminMixin because atm (0.1.0)
-# it also contains important methods and changes to provide
-# translations support in revisions. Be aware that this might
-# be changed in further releases.
-from aldryn_reversion.admin import VersionedPlaceholderAdminMixin
 
 from .models import Person, Group
 
 
-class PersonAdmin(VersionedPlaceholderAdminMixin,
+class PersonAdmin(PlaceholderAdminMixin,
                   AllTranslationsMixin,
                   TranslatableAdmin):
 
@@ -77,7 +73,7 @@ class PersonAdmin(VersionedPlaceholderAdminMixin,
     num_groups.admin_order_field = 'group_count'
 
 
-class GroupAdmin(VersionedPlaceholderAdminMixin,
+class GroupAdmin(PlaceholderAdminMixin,
                  AllTranslationsMixin,
                  TranslatableAdmin):
 
