@@ -46,9 +46,8 @@ install:
   - pip install coveralls
 
 before_script:
-  - if [ "$FE" == 1 ]; then nvm install 0.12.7 && nvm use 0.12.7; fi
+  - if [ "$FE" == 1 ]; then nvm install 6 && nvm use 6; fi
   - if [ "$FE" == 1 ]; then npm config set spin false; fi
-  - if [ "$FE" == 1 ]; then npm install -g npm@2; fi
   - if [ "$FE" == 1 ]; then npm install -g gulp@3.9.0; fi
   - if [ "$FE" == 1 ]; then npm install -g codeclimate-test-reporter; fi
   - if [ "$FE" == 1 ]; then npm install; fi
