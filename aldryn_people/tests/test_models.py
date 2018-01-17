@@ -2,7 +2,7 @@
 
 from __future__ import unicode_literals
 
-from django.test import TransactionTestCase
+from django.test import override_settings, TransactionTestCase
 from django.utils.translation import override, force_text
 
 from ..models import Person, Group
@@ -12,15 +12,11 @@ from . import (
 )
 
 
+@override_settings(ROOT_URLCONF='aldryn_people.tests.urls')
 class TestBasicPeopleModels(DefaultSetupMixin,
                             DefaultApphookMixin,
                             CleanUpMixin,
                             TransactionTestCase):
-
-    def setUp(self):
-        super(TestBasicPeopleModels, self).setUp()
-        # get some time to reload urls
-        self.client.get(self.app_hook_page.get_absolute_url())
 
     def test_create_person(self):
         """We can create a person with a name."""
@@ -151,7 +147,7 @@ class TestPersonModelTranslation(BasePeopleTest):
                     'TITLE:function1\r\n'
                     'END:VCARD\r\n')
         self.assertEqual(
-            person1.get_vcard(),
+            person1.get_vcard().decode('utf-8'),
             vcard_en
         )
         # Test with a group and other fields populated
@@ -187,7 +183,7 @@ class TestPersonModelTranslation(BasePeopleTest):
                     'URL:www.groupwebsite.com\r\n'
                     'END:VCARD\r\n')
         self.assertEqual(
-            person1.get_vcard(),
+            person1.get_vcard().decode('utf-8'),
             vcard_en
         )
         # Ensure this works for other langs too
@@ -210,7 +206,7 @@ class TestPersonModelTranslation(BasePeopleTest):
                     'END:VCARD\r\n')
         with override('de'):
             self.assertEqual(
-                person1.get_vcard(),
+                person1.get_vcard().decode('utf-8'),
                 vcard_de
             )
 

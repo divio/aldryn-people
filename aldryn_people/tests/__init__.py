@@ -10,16 +10,16 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.sites.models import Site
 from django.core.urlresolvers import clear_url_caches
 from django.db import IntegrityError
-from django.test import RequestFactory, TestCase
+from django.test import override_settings, RequestFactory, TestCase
 from django.utils.translation import override
 
 from cms import api
 from cms.apphook_pool import apphook_pool
 from cms.appresolver import clear_app_resolvers
 from cms.exceptions import AppAlreadyRegistered
-from cms.models import Title
+from cms.models import Title, Page
 from cms.test_utils.testcases import BaseCMSTestCase
-from cms.utils import get_cms_setting
+from cms.utils.conf import get_cms_setting
 from cms.utils.i18n import get_language_list, force_language
 from djangocms_helper.utils import create_user
 
@@ -171,6 +171,7 @@ class DefaultSetupMixin(object):
         return page.reload()
 
 
+@override_settings(ROOT_URLCONF='aldryn_people.tests.urls')
 class BasePeopleTest(DefaultSetupMixin,
                      CleanUpMixin,
                      BaseCMSTestCase,
@@ -182,7 +183,7 @@ class BasePeopleTest(DefaultSetupMixin,
         optionally "as" a specified language."""
         try:
             new_obj = obj.__class__.objects.language(language).get(id=obj.id)
-        except:
+        except obj.__class__.DoesNotExist:
             new_obj = obj.__class__.objects.get(id=obj.id)
         return new_obj
 
@@ -190,15 +191,14 @@ class BasePeopleTest(DefaultSetupMixin,
         try:
             # In Python3, this method has been renamed (poorly)
             return self.assertCountEqual(a, b)
-        except:
-            # In 2.6, assertItemsEqual() doesn't sort first
-            return self.assertItemsEqual(sorted(a), sorted(b))
+        except AttributeError:
+            return self.assertItemsEqual(a, b)
 
     def mktranslation(self, obj, lang, **kwargs):
         """Simple method of adding a translation to an existing object."""
         try:
             obj.set_current_language(lang)
-        except:
+        except:  # noqa: This is a 3rd-party app, so we don't know for sure which kinds of errors may be raised here
             try:
                 obj.translate(lang)
             except IntegrityError:
@@ -266,7 +266,7 @@ class CMSRequestBasedTest(CleanUpMixin, TestCase):
         try:
             page_title = Title.objects.get(title=base_title)
             return page_title.page.get_draft_object()
-        except:
+        except (Title.DoesNotExist, Page.DoesNotExist):
             pass
 
         # No? Okay, create one.

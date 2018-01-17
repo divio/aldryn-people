@@ -40,6 +40,7 @@ class PersonMenu(CMSAttachMenu):
                 nodes.append(node)
         return nodes
 
+
 menu_pool.register_menu(PersonMenu)
 
 
@@ -70,5 +71,6 @@ class GroupMenu(CMSAttachMenu):
                 )
                 nodes.append(node)
         return nodes
+
 
 menu_pool.register_menu(GroupMenu)

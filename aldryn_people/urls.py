@@ -2,7 +2,7 @@
 
 from __future__ import unicode_literals
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
 from aldryn_people.views import (
     DownloadVcardView,
@@ -11,7 +11,7 @@ from aldryn_people.views import (
     PersonDetailView,
 )
 
-urlpatterns = patterns('',
+urlpatterns = [
     url(r'^group/(?P<pk>[0-9]+)/$',
         GroupDetailView.as_view(), name='group-detail'),
     url(r'^group/(?P<slug>[A-Za-z0-9_\-]+)/$',
@@ -29,4 +29,4 @@ urlpatterns = patterns('',
 
     url(r'^$',
         GroupListView.as_view(), name='group-list'),
-)
+]

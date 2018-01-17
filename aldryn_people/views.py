@@ -4,12 +4,7 @@ from __future__ import unicode_literals
 
 from aldryn_people.utils import get_valid_languages
 
-try:
-    from django.contrib.sites.shortcuts import get_current_site
-except ImportError:
-    # Django 1.6
-    from django.contrib.sites.models import get_current_site
-
+from django.contrib.sites.shortcuts import get_current_site
 from django.http import Http404, HttpResponse
 from django.views.generic import DetailView, ListView
 from django.utils.translation import get_language_from_request
@@ -71,7 +66,7 @@ class DownloadVcardView(AllowPKsTooMixin, TranslatableSlugMixin, DetailView):
         vcard = person.get_vcard(request)
         try:
             vcard = vcard.decode('utf-8').encode('ISO-8859-1')
-        except:
+        except UnicodeError:
             pass
         response = HttpResponse(vcard, content_type="text/x-vCard")
         response['Content-Disposition'] = 'attachment; filename="{0}"'.format(

@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 from aldryn_people import __version__
 
 REQUIREMENTS = [
-    'Django>=1.6,<1.10',
+    'Django>=1.8,<1.11',
     'aldryn-boilerplates',
     'aldryn-common>=0.1.3',
     'aldryn-translation-tools>=0.1.0',
@@ -24,15 +24,13 @@ CLASSIFIERS = [
     'Development Status :: 5 - Production/Stable',
     'Environment :: Web Environment',
     'Framework :: Django',
-    'Framework :: Django :: 1.6',
-    'Framework :: Django :: 1.7',
     'Framework :: Django :: 1.8',
     'Framework :: Django :: 1.9',
+    'Framework :: Django :: 1.10',
     'Intended Audience :: Developers',
     'License :: OSI Approved :: BSD License',
     'Operating System :: OS Independent',
     'Programming Language :: Python',
-    'Programming Language :: Python :: 2.6',
     'Programming Language :: Python :: 2.7',
     'Programming Language :: Python :: 3.3',
     'Programming Language :: Python :: 3.4',

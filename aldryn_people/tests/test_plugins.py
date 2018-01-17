@@ -3,6 +3,7 @@
 from __future__ import unicode_literals
 
 from django.core.urlresolvers import reverse
+from django.test import override_settings
 from django.utils.translation import force_text
 
 from cms import api
@@ -31,7 +32,7 @@ class TestPersonPlugins(DefaultApphookMixin, BasePeopleTest):
         self.page.publish(self.language)
 
         url = self.page.get_absolute_url()
-        response = self.client.get(url)
+        response = self.client.get(url, follow=True)
         self.assertContains(response, name)
 
     # This fails because of Sane Add Plugin (I suspect). This will be refactored
@@ -72,7 +73,7 @@ class TestPersonPlugins(DefaultApphookMixin, BasePeopleTest):
 
         self.page.publish(self.language)
         url = self.page.get_absolute_url()
-        response = self.client.get(url)
+        response = self.client.get(url, follow=True)
         self.assertContains(response, bobby.name)
         self.assertContains(response, cindy.name)
         self.assertNotContains(response, alice.name)
@@ -97,12 +98,13 @@ class TestPersonPlugins(DefaultApphookMixin, BasePeopleTest):
 
         self.page.publish(self.language)
         url = self.page.get_absolute_url()
-        response = self.client.get(url)
+        response = self.client.get(url, follow=True)
         self.assertContains(response, bobby.name)
         self.assertContains(response, cindy.name)
         self.assertContains(response, alice.name)
 
 
+@override_settings(ROOT_URLCONF='djangocms_helper.urls')
 class TestPeopleListPluginNoApphook(BasePeopleTest):
 
     def setUp(self):
@@ -168,13 +170,13 @@ class TestPeopleListPluginNoApphook(BasePeopleTest):
             # ensure that url is not the link to the home page and not app page
             app_page_len = len(app_page.get_absolute_url())
             self.assertGreater(len(person_url), app_page_len)
-        response = self.client.get(url)
+        response = self.client.get(url, follow=True)
         self.assertContains(response, person_url)
         # ensure that url is not shown if not enabled for plugin.
         list_plugin.show_links = False
         list_plugin.save()
         self.page.publish('en')
-        response = self.client.get(url)
+        response = self.client.get(url, follow=True)
         self.assertNotContains(response, person_url)
 
     def test_plugin_with_vcard_enabled_with_apphook(self):
@@ -188,13 +190,13 @@ class TestPeopleListPluginNoApphook(BasePeopleTest):
                 kwargs=vcard_kwargs)
         plugin = self.create_plugin(plugin_params={'show_vcard': True})
         url = self.page.get_absolute_url()
-        response = self.client.get(url)
+        response = self.client.get(url, follow=True)
         self.assertContains(response, self.person1.name)
         self.assertContains(response, person_vcard_url)
         # test that vcard download link is not shown if disabled
         plugin.show_vcard = False
         plugin.save()
         self.page.publish('en')
-        response = self.client.get(url)
+        response = self.client.get(url, follow=True)
         self.assertContains(response, self.person1.name)
         self.assertNotContains(response, person_vcard_url)

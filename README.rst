@@ -30,9 +30,9 @@ request, please review our
 Requirements
 ************
 
-* django CMS 3.0.12 or later
-* Django 1.6.9 or later (currently tested with 1.6.x, 1.7.x and 1.8.x)
-* Python 2.6 or 2.7 (at present we are held back with a dependency that is incompatible with Python 3)
+* Python 2.7, 3.3, 3.4, 3.5
+* django CMS 3.2 or later
+* Django 1.8 - 1.10
 
 
 .. |PyPI Version| image:: https://badge.fury.io/py/aldryn_people.svg

@@ -87,4 +87,5 @@ class PeoplePlugin(CMSPluginBase):
             context['groupless_people'] = people.none()
         return context
 
+
 plugin_pool.register_plugin(PeoplePlugin)

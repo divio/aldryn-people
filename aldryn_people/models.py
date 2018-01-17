@@ -254,7 +254,7 @@ class Person(TranslationHelperMixin, TranslatedAutoSlugifyMixin,
             if self.primary_group.website:
                 vcard.add_line('URL', self.primary_group.website)
 
-        return str(vcard)
+        return six.b('{}'.format(vcard))
 
 
 @python_2_unicode_compatible
