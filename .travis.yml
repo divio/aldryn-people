@@ -5,13 +5,6 @@ python: 3.5
 sudo: false
 
 env:
-  global:
-    # encrypted Sauce Labs sub-account user name
-    - secure: OIkBwlWwClimhBeKs4kT4Elkp9fx+pjEBKJlZY+TpIXsjqskKgSbsnDkBcQuW9cJoj4qCddRAKOzN/XD3tT+ZAbo/257lSMcDCdslqxehd/JJVCfglANGioMxHUmZ9F5EDrc+ZtnQ40O5tcFNHRgJXR92el931V379zs/9om8LY=
-    # encrypted Sauce Labs sub-account token
-    - secure: MWxL/6t1qI3TSIcBDDMtctIlvXjJtOCxMk0Xj4I7vzE5jvhBMhHT+1YBR8Wd8AykzbTmK5XAe4jhhBmlHannm5zRfmua9D+kpvGQH819V46setzluConoXTgPMWE7O9gtVeOiNBuLGD72ELO/X8ZbiYcO/JFsXbad5tNQZ3XTJo=
-    # encrypted Code Climate token
-    - secure: oJG/hKhutnzSFCSF8xUuMWmTxeuRp2eU9HBi/7JWVxd3AwDkKu3jtldQ0Vg/2iSofRzzG0wZpUKdgGa4ObOpOou5wWtq68OAVbJkHAtOB7U3HR4deVuQRZdR8GXWWS9G+H1B8PbFCVPzQrsnxHs/k0oBLUgAW8XfFfkhzzYGFKk=
   matrix:
     # Matrix-size reduction strategies:
     #   PY strategy: do not test 3.3 at all.
