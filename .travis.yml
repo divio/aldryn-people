@@ -28,7 +28,7 @@ env:
     - TOXENV=py27-dj19-cms34
     - TOXENV=py27-dj19-cms33
     - TOXENV=py27-dj19-cms32
-    # - TOXENV=py35-dj19-cms33-fe FE=1
+    - TOXENV=py35-dj19-cms33-fe FE=1
 
     - TOXENV=py35-dj18-cms34
     - TOXENV=py35-dj18-cms33
@@ -39,7 +39,7 @@ env:
     - TOXENV=py27-dj18-cms34
     - TOXENV=py27-dj18-cms33
     - TOXENV=py27-dj18-cms32
-    # - TOXENV=py27-dj18-cms33-fe FE=1
+    - TOXENV=py27-dj18-cms33-fe FE=1
 
 cache:
   directories:
