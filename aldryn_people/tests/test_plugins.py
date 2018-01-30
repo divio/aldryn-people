@@ -1,15 +1,11 @@
 # -*- coding: utf-8 -*-
-
 from __future__ import unicode_literals
 
 from django.core.urlresolvers import reverse
-from django.test import override_settings
 from django.utils.translation import force_text
 
 from cms import api
-# from cms.models import CMSPlugin
 from cms.utils.i18n import force_language
-# from cms.test_utils.testcases import URL_CMS_PLUGIN_ADD
 
 from aldryn_people import DEFAULT_APP_NAMESPACE
 from ..models import Person, Group
@@ -104,7 +100,6 @@ class TestPersonPlugins(DefaultApphookMixin, BasePeopleTest):
         self.assertContains(response, alice.name)
 
 
-@override_settings(ROOT_URLCONF='djangocms_helper.urls')
 class TestPeopleListPluginNoApphook(BasePeopleTest):
 
     def setUp(self):

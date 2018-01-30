@@ -1,29 +1,22 @@
 # -*- coding: utf-8 -*-
-
 from __future__ import unicode_literals
 
-from django.test import override_settings, TransactionTestCase
+from django.test import TransactionTestCase
 from django.utils.translation import override, force_text
 
 from ..models import Person, Group
 
-from . import (
-    DefaultSetupMixin, DefaultApphookMixin, CleanUpMixin, BasePeopleTest,
-)
+from . import BasePeopleTest, DefaultApphookMixin
 
 
-@override_settings(ROOT_URLCONF='aldryn_people.tests.urls')
-class TestBasicPeopleModels(DefaultSetupMixin,
-                            DefaultApphookMixin,
-                            CleanUpMixin,
-                            TransactionTestCase):
+class TestBasicPeopleModels(DefaultApphookMixin, BasePeopleTest):
 
     def test_create_person(self):
         """We can create a person with a name."""
         name = 'Tom Test'
         person = Person.objects.create(name=name)
+        person.refresh_from_db()
         self.assertEqual(person.name, name)
-        self.assertEqual(Person.objects.all()[0], person)
 
     def test_delete_person(self):
         """We can delete a person."""

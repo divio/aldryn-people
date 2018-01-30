@@ -10,7 +10,7 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.sites.models import Site
 from django.core.urlresolvers import clear_url_caches
 from django.db import IntegrityError
-from django.test import override_settings, RequestFactory, TestCase
+from django.test import RequestFactory, TestCase
 from django.utils.translation import override
 
 from cms import api
@@ -171,7 +171,6 @@ class DefaultSetupMixin(object):
         return page.reload()
 
 
-@override_settings(ROOT_URLCONF='aldryn_people.tests.urls')
 class BasePeopleTest(DefaultSetupMixin,
                      CleanUpMixin,
                      BaseCMSTestCase,
@@ -227,6 +226,8 @@ class BasePeopleTest(DefaultSetupMixin,
             self.group2 = Group(**self.data['group2']['de'])
         self.person2.save()
         self.group2.save()
+
+        self.reset_all()
 
     def set_defalut_person_objects_current_language(self, language):
         """
