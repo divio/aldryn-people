@@ -2,7 +2,7 @@ CHANGELOG
 =========
 
 
-master (unreleased)
+2.1.0 (2018-01-30)
 ------------------
 
 * Added Django 1.11 support
