@@ -32,7 +32,7 @@ Requirements
 
 * Python 2.7, 3.3, 3.4, 3.5
 * django CMS 3.2 or later
-* Django 1.8 - 1.10
+* Django 1.8 - 1.11
 
 
 .. |PyPI Version| image:: https://badge.fury.io/py/aldryn_people.svg
