@@ -37,16 +37,16 @@ py35default: &py35default
    - run: docker run -e COVERALLS_REPO_TOKEN py35 tox -e $CIRCLE_STAGE
 
 py35_requires: &py35_requires
-          requires:
-            - py35_base
+  requires:
+    - py35_base
 
 py34_requires: &py34_requires
-          requires:
-            - py34_base
+  requires:
+    - py34_base
 
 py27_requires: &py27_requires
-          requires:
-            - py27_base
+  requires:
+    - py27_base
 
 jobs:
   py27_base:
