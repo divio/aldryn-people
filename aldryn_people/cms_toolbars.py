@@ -2,13 +2,14 @@
 
 from __future__ import unicode_literals
 
-from django.utils.translation import ugettext as _, get_language_from_request
-from six import iteritems
+from django.utils.translation import get_language_from_request, ugettext as _
 
 from cms.toolbar_base import CMSToolbar
 from cms.toolbar_pool import toolbar_pool
 from cms.utils.urlutils import admin_reverse
+
 from parler.models import TranslatableModel
+from six import iteritems
 
 from .models import Group, Person
 
@@ -34,8 +35,7 @@ def get_obj_from_request(model, request,
         # field, then find it the Parler way.
         filter_kwargs = {slug_field: kwargs[slug_url_kwarg]}
         translated_fields = model._parler_meta.get_translated_fields()
-        if (issubclass(model, TranslatableModel) and
-                slug_url_kwarg in translated_fields):
+        if issubclass(model, TranslatableModel) and slug_url_kwarg in translated_fields:
             return mgr.active_translations(language, **filter_kwargs).first()
         else:
             # OK, do it the normal way.

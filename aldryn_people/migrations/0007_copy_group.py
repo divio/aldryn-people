@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import models, migrations
+from django.db import migrations
 
 
 def fk_to_m2m(apps, schema_editor):
@@ -13,6 +13,7 @@ def fk_to_m2m(apps, schema_editor):
         if person.group:
             person.groups.add(person.group)
             person.save()
+
 
 def m2m_to_fk(apps, schema_editor):
     """

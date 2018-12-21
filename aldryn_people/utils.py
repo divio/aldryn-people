@@ -2,10 +2,11 @@
 
 from __future__ import unicode_literals
 
-from cms.utils.i18n import force_language, get_language_object
 from django.conf import settings
 from django.contrib.sites.models import Site
-from django.core.urlresolvers import reverse, NoReverseMatch
+from django.urls import NoReverseMatch, reverse
+
+from cms.utils.i18n import force_language, get_language_object
 
 
 def get_additional_styles():

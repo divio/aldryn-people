@@ -2,11 +2,11 @@
 from __future__ import unicode_literals
 
 from django.test import TransactionTestCase
-from django.utils.translation import override, force_text
-
-from ..models import Person, Group
+from django.utils.encoding import force_text
+from django.utils.translation import override
 
 from . import BasePeopleTest, DefaultApphookMixin
+from ..models import Group, Person
 
 
 class TestBasicPeopleModels(DefaultApphookMixin, BasePeopleTest):

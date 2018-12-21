@@ -50,6 +50,7 @@ def _get_translation(object, MyModelTranslation):
             # Hope there is a single translation
             return translations.get()
 
+
 class Migration(migrations.Migration):
 
     dependencies = [

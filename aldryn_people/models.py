@@ -3,36 +3,34 @@
 from __future__ import unicode_literals
 
 import base64
+import warnings
+
+from django.conf import settings
+from django.db import models
+from django.urls import NoReverseMatch, reverse
+from django.utils.encoding import force_text, python_2_unicode_compatible
+from django.utils.translation import override, ugettext_lazy as _
+
+from cms.models.pluginmodel import CMSPlugin
+from cms.utils.i18n import get_current_language, get_default_language
+
 import six
+from aldryn_common.admin_fields.sortedm2m import SortedM2MModelField
+from aldryn_translation_tools.models import TranslatedAutoSlugifyMixin, TranslationHelperMixin
+from djangocms_text_ckeditor.fields import HTMLField
+from filer.fields.image import FilerImageField
+from parler.models import TranslatableModel, TranslatedFields
+from six import text_type
+
 from aldryn_people.vcard import Vcard
+
+from .utils import get_additional_styles
+
 
 try:
     import urlparse
 except ImportError:
     from urllib import parse as urlparse
-import warnings
-
-from django.conf import settings
-from django.core.urlresolvers import reverse, NoReverseMatch
-from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
-
-from django.utils.translation import ugettext_lazy as _, override, force_text
-from six import text_type
-
-from aldryn_common.admin_fields.sortedm2m import SortedM2MModelField
-from aldryn_translation_tools.models import (
-    TranslatedAutoSlugifyMixin,
-    TranslationHelperMixin,
-)
-from cms.models.pluginmodel import CMSPlugin
-from cms.utils.i18n import get_current_language, get_default_language
-from djangocms_text_ckeditor.fields import HTMLField
-from filer.fields.image import FilerImageField
-from parler.models import TranslatableModel, TranslatedFields
-
-
-from .utils import get_additional_styles
 
 
 @python_2_unicode_compatible
@@ -137,7 +135,7 @@ class Person(TranslationHelperMixin, TranslatedAutoSlugifyMixin,
         verbose_name=_('enable vCard download'), default=True)
     user = models.OneToOneField(
         getattr(settings, 'AUTH_USER_MODEL', 'auth.User'),
-        null=True, blank=True, related_name='persons')
+        null=True, blank=True, related_name='persons', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = _('Person')
@@ -236,8 +234,7 @@ class Person(TranslationHelperMixin, TranslatedAutoSlugifyMixin,
                 'name', default="Group: {0}".format(self.primary_group.pk))
             if group_name:
                 vcard.add_line('ORG', group_name)
-            if (self.primary_group.address or self.primary_group.city or
-                    self.primary_group.postal_code):
+            if self.primary_group.address or self.primary_group.city or self.primary_group.postal_code:
                 vcard.add_line('ADR', (
                     None, None,
                     self.primary_group.address,
@@ -283,13 +280,14 @@ class BasePeoplePlugin(CMSPlugin):
         CMSPlugin,
         related_name='%(app_label)s_%(class)s',
         parent_link=True,
+        on_delete=models.CASCADE,
     )
 
     class Meta:
         abstract = True
 
     def copy_relations(self, oldinstance):
-        self.people = oldinstance.people.all()
+        self.people.set(oldinstance.people.all())
 
     def get_selected_people(self):
         return self.people.select_related('visual')

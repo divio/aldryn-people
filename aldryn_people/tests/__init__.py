@@ -5,22 +5,23 @@ from __future__ import unicode_literals
 import sys
 
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
-from django.core.urlresolvers import clear_url_caches
 from django.db import IntegrityError
 from django.test import RequestFactory, TestCase
+from django.urls import clear_url_caches
 from django.utils.translation import override
 
 from cms import api
 from cms.apphook_pool import apphook_pool
 from cms.appresolver import clear_app_resolvers
 from cms.exceptions import AppAlreadyRegistered
-from cms.models import Title, Page
+from cms.models import Page, Title
 from cms.test_utils.testcases import BaseCMSTestCase
 from cms.utils.conf import get_cms_setting
-from cms.utils.i18n import get_language_list, force_language
+from cms.utils.i18n import force_language, get_language_list
+
 from djangocms_helper.utils import create_user
 
 from ..models import Group, Person

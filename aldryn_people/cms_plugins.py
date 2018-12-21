@@ -9,7 +9,8 @@ from django.utils.translation import ugettext_lazy as _
 from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
 
-from aldryn_people import models, DEFAULT_APP_NAMESPACE
+from aldryn_people import DEFAULT_APP_NAMESPACE, models
+
 from .utils import get_valid_languages
 
 

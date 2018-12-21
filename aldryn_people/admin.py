@@ -5,14 +5,14 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.contrib import admin
 from django.db.models import Count
-from cms.admin.placeholderadmin import PlaceholderAdminMixin
-
 from django.utils.translation import ugettext_lazy as _
 
-from parler.admin import TranslatableAdmin
-from aldryn_translation_tools.admin import AllTranslationsMixin
+from cms.admin.placeholderadmin import PlaceholderAdminMixin
 
-from .models import Person, Group
+from aldryn_translation_tools.admin import AllTranslationsMixin
+from parler.admin import TranslatableAdmin
+
+from .models import Group, Person
 
 
 class PersonAdmin(PlaceholderAdminMixin,

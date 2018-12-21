@@ -25,14 +25,19 @@ feedback in the form of issues and pull requests. Before submitting your pull
 request, please review our
 `guidelines for Aldryn Addons <http://docs.aldryn.com/en/latest/reference/addons/index.html>`_.
 
+We're grateful to all contributors who have helped create and maintain this package.
+
+Contributors are listed at `contributions page
+<https://github.com/aldryn/aldryn-translation-tools/graphs/contributors>`_.
+
 
 ************
 Requirements
 ************
 
-* Python 2.7, 3.3, 3.4, 3.5
-* django CMS 3.2 or later
-* Django 1.8 - 1.11
+* Python 2.7, 3.4, 3.5, 3.6
+* django CMS 3.4.5, 3.5, 3.6
+* Django 1.11, 2.0, 2.1
 
 
 .. |PyPI Version| image:: https://badge.fury.io/py/aldryn_people.svg

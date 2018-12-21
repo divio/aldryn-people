@@ -4,12 +4,8 @@ from __future__ import unicode_literals
 
 from django.conf.urls import url
 
-from aldryn_people.views import (
-    DownloadVcardView,
-    GroupDetailView,
-    GroupListView,
-    PersonDetailView,
-)
+from aldryn_people.views import DownloadVcardView, GroupDetailView, GroupListView, PersonDetailView
+
 
 urlpatterns = [
     url(r'^group/(?P<pk>[0-9]+)/$',

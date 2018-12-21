@@ -1,5 +1,6 @@
 from itertools import chain
 from re import sub
+
 from six import iteritems, string_types
 
 

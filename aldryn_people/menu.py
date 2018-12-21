@@ -2,10 +2,11 @@
 
 from __future__ import unicode_literals
 
-from django.core.urlresolvers import NoReverseMatch
+from django.urls import NoReverseMatch
 from django.utils.translation import get_language_from_request, ugettext as _
 
 from cms.menu_bases import CMSAttachMenu
+
 from menus.base import NavigationNode
 from menus.menu_pool import menu_pool
 

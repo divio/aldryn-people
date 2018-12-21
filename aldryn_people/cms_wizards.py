@@ -2,12 +2,12 @@
 
 from __future__ import unicode_literals
 
-from django.core.urlresolvers import reverse, NoReverseMatch
+from django.urls import NoReverseMatch, reverse
 from django.utils.translation import ugettext_lazy as _
 
-from cms.wizards.wizard_pool import wizard_pool
-from cms.wizards.wizard_base import Wizard
 from cms.wizards.forms import BaseFormMixin
+from cms.wizards.wizard_base import Wizard
+from cms.wizards.wizard_pool import wizard_pool
 
 from parler.forms import TranslatableModelForm
 

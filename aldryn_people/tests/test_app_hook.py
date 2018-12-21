@@ -2,11 +2,10 @@
 
 from __future__ import unicode_literals
 
-from django.core.urlresolvers import reverse
-
-from ..models import Person
+from django.urls import reverse
 
 from . import BasePeopleTest
+from ..models import Person
 
 
 class TestPersonAppHook(BasePeopleTest):

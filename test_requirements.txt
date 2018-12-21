@@ -1,0 +1,22 @@
+phonenumbers
+djangocms-text-ckeditor
+django-haystack
+aldryn-boilerplates
+aldryn-common
+aldryn-translation-tools
+coverage
+djangocms-helper
+tox
+flake8
+python-coveralls
+six
+
+# docs
+sphinx
+sphinx-rtd-theme
+
+# The following are for aldryn-search
+django-appconf
+django-spurl
+django-standard-form
+aldryn-search

@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
+
 from aldryn_people import __version__
 
+
 REQUIREMENTS = [
-    'Django>=1.8,<2.0',
+    'Django>=1.11',
     'aldryn-boilerplates',
-    'aldryn-common>=0.1.3',
-    'aldryn-translation-tools>=0.1.0',
-    'django-cms>=3.2',
-    'django-parler>=1.4',
-    'django-filer>=0.9.9',
+    'aldryn-common',
+    'aldryn-translation-tools',
+    'django-cms>=3.4.5',
+    'django-parler',
+    'django-filer',
     'djangocms-text-ckeditor',
     'easy-thumbnails',
     'phonenumbers',
@@ -24,16 +26,14 @@ CLASSIFIERS = [
     'Development Status :: 5 - Production/Stable',
     'Environment :: Web Environment',
     'Framework :: Django',
-    'Framework :: Django :: 1.8',
-    'Framework :: Django :: 1.9',
-    'Framework :: Django :: 1.10',
     'Framework :: Django :: 1.11',
+    'Framework :: Django :: 2.0',
+    'Framework :: Django :: 2.1',
     'Intended Audience :: Developers',
     'License :: OSI Approved :: BSD License',
     'Operating System :: OS Independent',
     'Programming Language :: Python',
     'Programming Language :: Python :: 2.7',
-    'Programming Language :: Python :: 3.3',
     'Programming Language :: Python :: 3.4',
     'Programming Language :: Python :: 3.5',
     'Programming Language :: Python :: 3.6',

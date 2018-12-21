@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import template
 
-from phonenumbers import parse, format_number, PhoneNumberFormat
+from phonenumbers import PhoneNumberFormat, format_number, parse
 from phonenumbers.phonenumberutil import NumberParseException
 
 

@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.core.urlresolvers import reverse
-from django.utils.translation import force_text
+from django.urls import reverse
+from django.utils.encoding import force_text
 
 from cms import api
 from cms.utils.i18n import force_language
 
 from aldryn_people import DEFAULT_APP_NAMESPACE
-from ..models import Person, Group
-from ..cms_plugins import PeoplePlugin
 
-from . import DefaultApphookMixin, BasePeopleTest
+from . import BasePeopleTest, DefaultApphookMixin
+from ..cms_plugins import PeoplePlugin
+from ..models import Group, Person
 
 
 class TestPersonPlugins(DefaultApphookMixin, BasePeopleTest):
@@ -23,7 +23,7 @@ class TestPersonPlugins(DefaultApphookMixin, BasePeopleTest):
         name = 'Donald'
         Person.objects.create(name=name)
         plugin = api.add_plugin(self.placeholder, PeoplePlugin, self.language)
-        plugin.people = Person.objects.all()
+        plugin.people.set(Person.objects.all())
         self.assertEqual(force_text(plugin), force_text(plugin.pk))
         self.page.publish(self.language)
 
@@ -62,7 +62,7 @@ class TestPersonPlugins(DefaultApphookMixin, BasePeopleTest):
 
         # Add a plugin where ungrouped people are not shown
         plugin = api.add_plugin(self.placeholder, PeoplePlugin, self.language)
-        plugin.people = Person.objects.all()
+        plugin.people.set(Person.objects.all())
         plugin.group_by_group = True
         plugin.show_ungrouped = False
         plugin.save()
@@ -87,7 +87,7 @@ class TestPersonPlugins(DefaultApphookMixin, BasePeopleTest):
 
         # Now, add a new plugin where ungrouped people are shown
         plugin = api.add_plugin(self.placeholder, PeoplePlugin, self.language)
-        plugin.people = Person.objects.all()
+        plugin.people.set(Person.objects.all())
         plugin.group_by_group = True
         plugin.show_ungrouped = True
         plugin.save()

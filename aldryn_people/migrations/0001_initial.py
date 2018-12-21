@@ -3,9 +3,10 @@ from __future__ import unicode_literals
 
 from django.db import models, migrations
 import django.db.models.deletion
+from django.conf import settings
+
 import djangocms_text_ckeditor.fields
 import filer.fields.image
-from django.conf import settings
 import sortedm2m.fields
 
 
@@ -43,7 +44,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=255, verbose_name='name')),
                 ('description', djangocms_text_ckeditor.fields.HTMLField(verbose_name='description', blank=True)),
                 ('language_code', models.CharField(max_length=15, db_index=True)),
-                ('master', models.ForeignKey(related_name='translations', editable=False, to='aldryn_people.Group', null=True)),
+                ('master', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='translations', editable=False, to='aldryn_people.Group', null=True)),
             ],
             options={
                 'abstract': False,
@@ -54,7 +55,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='PeoplePlugin',
             fields=[
-                ('cmsplugin_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='cms.CMSPlugin')),
+                ('cmsplugin_ptr', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, parent_link=True, auto_created=True, primary_key=True, serialize=False, to='cms.CMSPlugin')),
                 ('style', models.CharField(default='standard', max_length=50, verbose_name='Style', choices=[('standard', 'Standard'), ('feature', 'Feature')])),
                 ('group_by_group', models.BooleanField(default=True, help_text='when checked, people are grouped by their group', verbose_name='group by group')),
                 ('show_links', models.BooleanField(default=False, verbose_name='Show links to Detail Page')),
@@ -77,8 +78,8 @@ class Migration(migrations.Migration):
                 ('website', models.URLField(null=True, verbose_name='website', blank=True)),
                 ('slug', models.CharField(max_length=255, unique=True, null=True, verbose_name='unique slug', blank=True)),
                 ('vcard_enabled', models.BooleanField(default=True, verbose_name='enable vCard download')),
-                ('group', models.ForeignKey(verbose_name='group', blank=True, to='aldryn_people.Group', null=True)),
-                ('user', models.ForeignKey(null=True, blank=True, to=settings.AUTH_USER_MODEL, unique=True)),
+                ('group', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, verbose_name='group', blank=True, to='aldryn_people.Group', null=True)),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, null=True, blank=True, to=settings.AUTH_USER_MODEL, unique=True)),
                 ('visual', filer.fields.image.FilerImageField(on_delete=django.db.models.deletion.SET_NULL, default=None, blank=True, to='filer.Image', null=True)),
             ],
             options={
@@ -94,7 +95,7 @@ class Migration(migrations.Migration):
                 ('function', models.CharField(default='', max_length=255, verbose_name='function', blank=True)),
                 ('description', djangocms_text_ckeditor.fields.HTMLField(default='', verbose_name='Description', blank=True)),
                 ('language_code', models.CharField(max_length=15, db_index=True)),
-                ('master', models.ForeignKey(related_name='translations', editable=False, to='aldryn_people.Person', null=True)),
+                ('master', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='translations', editable=False, to='aldryn_people.Person', null=True)),
             ],
             options={
                 'abstract': False,
